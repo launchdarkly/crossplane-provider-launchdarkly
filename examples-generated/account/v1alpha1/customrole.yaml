@@ -1,0 +1,24 @@
+apiVersion: account.launchdarkly.com/v1alpha1
+kind: CustomRole
+metadata:
+  annotations:
+    meta.upbound.io/example-id: account/v1alpha1/customrole
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: This is an example role
+    key: example-role-key-1
+    name: example role
+    policyStatements:
+    - actions:
+      - '*'
+      effect: allow
+      resources:
+      - proj/*:env/production:flag/*
+    - actions:
+      - '*'
+      effect: allow
+      resources:
+      - proj/*:env/production

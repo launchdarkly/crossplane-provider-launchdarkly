@@ -1,0 +1,20 @@
+apiVersion: account.launchdarkly.com/v1alpha1
+kind: CustomRole
+metadata:
+  name: no-production-access
+spec:
+  forProvider:
+    description: "Managed with Crossplane LaunchDarkly Provider (generated with Upjet)"
+    name: no production access
+    key: global-non-prod
+    policyStatements:
+      - actions:
+          - 'createFlag'
+        effect: allow
+        resources:
+          - 'proj/*:env/*:flag/*'
+      - actions:
+          - '*'
+        effect: allow
+        notResources:
+          - 'proj/*:env/production:flag/*'

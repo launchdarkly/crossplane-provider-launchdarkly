@@ -1,0 +1,14 @@
+apiVersion: account.launchdarkly.com/v1alpha1
+kind: User
+metadata:
+  annotations:
+    meta.upbound.io/example-id: account/v1alpha1/user
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    email: example.user@example.com
+    firstName: Jesse
+    lastName: Smith
+    role: writer

@@ -1,0 +1,54 @@
+---
+apiVersion: account.launchdarkly.com/v1alpha1
+kind: Team
+metadata:
+  name: product-manager-team
+spec:
+  forProvider:
+    description: "Team for all Product Managers"
+    name: Product Managers
+    key: product-manager-team
+    customRoleKeys:
+      - global-non-prod
+      - product-manager-tag-access
+---
+apiVersion: account.launchdarkly.com/v1alpha1
+kind: CustomRole
+metadata:
+  name: no-production-access
+spec:
+  forProvider:
+    description: "Managed with Crossplane LaunchDarkly Provider (generated with Upjet)"
+    name: no production access
+    key: global-non-prod
+    policyStatements:
+      - actions:
+          - 'createFlag'
+        effect: allow
+        resources:
+          - 'proj/*:env/*:flag/*'
+      - actions:
+          - '*'
+        effect: allow
+        notResources:
+          - 'proj/*:env/production:flag/*'
+---
+apiVersion: account.launchdarkly.com/v1alpha1
+kind: CustomRole
+metadata:
+  name: allow-product-manager-tag
+spec:
+  forProvider:
+    description: "Allow Product Managers to toggle flags and change targeting for flags wtih the product-manager tag"
+    name: Product Manager tag access
+    key: product-manager-tag-access
+    policyStatements:
+      - actions:
+          - 'updateOn'
+          - 'updateRules'
+          - 'updateRulesWithMeasuredRollout'
+          - 'updateScheduledChanges'
+          - 'updateTargets'
+        effect: allow
+        resources:
+          - 'proj/*:env/*:flag/*;product-manager'

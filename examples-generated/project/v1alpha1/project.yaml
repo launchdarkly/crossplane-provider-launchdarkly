@@ -1,0 +1,31 @@
+apiVersion: project.launchdarkly.com/v1alpha1
+kind: Project
+metadata:
+  annotations:
+    meta.upbound.io/example-id: project/v1alpha1/project
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    environments:
+    - approvalSettings:
+      - canApplyDeclinedChanges: false
+        canReviewOwnRequest: false
+        minNumApprovals: 3
+        requiredApprovalTags:
+        - approvals_required
+      color: EEEEEE
+      key: production
+      name: Production
+      tags:
+      - terraform
+    - color: "000000"
+      key: staging
+      name: Staging
+      tags:
+      - terraform
+    key: example-project
+    name: Example project
+    tags:
+    - terraform

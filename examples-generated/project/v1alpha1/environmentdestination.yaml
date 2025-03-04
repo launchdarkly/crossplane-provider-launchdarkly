@@ -1,0 +1,21 @@
+apiVersion: project.launchdarkly.com/v1alpha1
+kind: EnvironmentDestination
+metadata:
+  annotations:
+    meta.upbound.io/example-id: project/v1alpha1/environmentdestination
+  labels:
+    testing.upbound.io/example-name: kinesis_example
+  name: kinesis-example
+spec:
+  forProvider:
+    config:
+      region: us-east-1
+      role_arn: arn:aws:iam::123456789012:role/marketingadmin
+      stream_name: cat-stream
+    envKey: example-env
+    kind: kinesis
+    name: example-kinesis-dest
+    "on": true
+    projectKey: example-project
+    tags:
+    - terraform

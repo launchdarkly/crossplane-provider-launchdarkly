@@ -1,0 +1,12 @@
+apiVersion: account.launchdarkly.com/v1alpha1
+kind: AccessToken
+metadata:
+  annotations:
+    meta.upbound.io/example-id: account/v1alpha1/accesstoken
+  labels:
+    testing.upbound.io/example-name: reader_token
+  name: reader-token
+spec:
+  forProvider:
+    name: Reader token managed by Terraform
+    role: reader

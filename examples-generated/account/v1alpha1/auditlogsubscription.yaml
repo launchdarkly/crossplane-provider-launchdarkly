@@ -1,0 +1,24 @@
+apiVersion: account.launchdarkly.com/v1alpha1
+kind: AuditLogSubscription
+metadata:
+  annotations:
+    meta.upbound.io/example-id: account/v1alpha1/auditlogsubscription
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    config:
+    - api_key: yoursecretkey
+      host_url: https://api.datadoghq.com
+    integrationKey: datadog
+    name: Example Datadog Subscription
+    statements:
+    - actions:
+      - '*'
+      effect: allow
+      resources:
+      - proj/*:env/*:flag/*
+    tags:
+    - integrations
+    - terraform

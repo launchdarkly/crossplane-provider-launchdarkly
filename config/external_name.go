@@ -9,8 +9,24 @@ import "github.com/crossplane/upjet/pkg/config"
 // ExternalNameConfigs contains all external name configurations for this
 // provider.
 var ExternalNameConfigs = map[string]config.ExternalName{
-	// Import requires using a randomly generated ID from provider: nl-2e21sda
-	"null_resource": config.IdentifierFromProvider,
+	// IAM
+	"launchdarkly_access_token":      config.IdentifierFromProvider,
+	"launchdarkly_custom_role":       config.IdentifierFromProvider,
+	"launchdarkly_team":              config.IdentifierFromProvider,
+	"launchdarkly_team_member":       config.IdentifierFromProvider,
+	"launchdarkly_team_role_mapping": config.IdentifierFromProvider,
+
+	// Project-specific resources
+	"launchdarkly_project":                  config.IdentifierFromProvider,
+	"launchdarkly_environment":              config.IdentifierFromProvider,
+	"launchdarkly_feature_flag":             config.IdentifierFromProvider,
+	"launchdarkly_feature_flag_environment": config.IdentifierFromProvider,
+	"launchdarkly_segment":                  config.IdentifierFromProvider,
+
+	// Miscellaneous
+	"launchdarkly_audit_log_subscription": config.IdentifierFromProvider,
+	"launchdarkly_destination":            config.IdentifierFromProvider,
+	"launchdarkly_webhook":                config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the

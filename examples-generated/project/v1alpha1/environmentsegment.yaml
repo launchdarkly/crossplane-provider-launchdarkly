@@ -1,0 +1,39 @@
+apiVersion: project.launchdarkly.com/v1alpha1
+kind: EnvironmentSegment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: project/v1alpha1/environmentsegment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: This segment is managed by Terraform
+    envKey: staging
+    excluded:
+    - user3
+    - user4
+    included:
+    - user1
+    - user2
+    includedContexts:
+    - contextKind: account
+      values:
+      - account1
+      - account2
+    key: example-segment-key
+    name: example segment
+    projectKey: example-project
+    rules:
+    - clauses:
+      - attribute: country
+        contextKind: location-data
+        negate: false
+        op: startsWith
+        values:
+        - en
+        - de
+        - un
+    tags:
+    - segment-tag-1
+    - segment-tag-2
