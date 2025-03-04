@@ -1,0 +1,14 @@
+apiVersion: account.launchdarkly.com/v1alpha1
+kind: TeamRoleMapping
+metadata:
+  annotations:
+    meta.upbound.io/example-id: account/v1alpha1/teamrolemapping
+  labels:
+    testing.upbound.io/example-name: platform_team
+  name: platform-team
+spec:
+  forProvider:
+    customRoleKeys:
+    - platform
+    - nomad-administrators
+    teamKey: platform_team

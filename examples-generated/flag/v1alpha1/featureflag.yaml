@@ -1,0 +1,36 @@
+apiVersion: flag.launchdarkly.com/v1alpha1
+kind: FeatureFlag
+metadata:
+  annotations:
+    meta.upbound.io/example-id: flag/v1alpha1/featureflag
+  labels:
+    testing.upbound.io/example-name: building_materials
+  name: building-materials
+spec:
+  forProvider:
+    clientSideAvailability:
+    - usingEnvironmentId: false
+      usingMobileKey: true
+    defaults:
+    - offVariation: 0
+      onVariation: 2
+    description: this is a multivariate flag with string variations.
+    key: building-materials
+    name: Building materials
+    projectKey: example-project
+    tags:
+    - example
+    - terraform
+    - multivariate
+    - building-materials
+    variationType: string
+    variations:
+    - description: Watch out for wind.
+      name: Straw
+      value: straw
+    - description: Sturdier than straw
+      name: Sticks
+      value: sticks
+    - description: The strongest variation
+      name: Bricks
+      value: bricks

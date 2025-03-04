@@ -1,0 +1,26 @@
+apiVersion: account.launchdarkly.com/v1alpha1
+kind: Webhook
+metadata:
+  annotations:
+    meta.upbound.io/example-id: account/v1alpha1/webhook
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    name: Example Webhook
+    "on": true
+    statements:
+    - actions:
+      - '*'
+      effect: allow
+      resources:
+      - proj/*:env/production:flag/*
+    - actions:
+      - '*'
+      effect: allow
+      resources:
+      - proj/test:env/production:segment/*
+    tags:
+    - terraform
+    url: http://webhooks.com/webhook

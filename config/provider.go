@@ -8,14 +8,26 @@ import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
 
-	ujconfig "github.com/crossplane/upjet/pkg/config"
+	"github.com/launchdarkly/provider-launchdarkly/config/accesstoken"
+	"github.com/launchdarkly/provider-launchdarkly/config/auditlogsubscription"
+	"github.com/launchdarkly/provider-launchdarkly/config/customrole"
+	"github.com/launchdarkly/provider-launchdarkly/config/destination"
+	"github.com/launchdarkly/provider-launchdarkly/config/environment"
+	"github.com/launchdarkly/provider-launchdarkly/config/featureflag"
+	"github.com/launchdarkly/provider-launchdarkly/config/featureflagenvironment"
+	"github.com/launchdarkly/provider-launchdarkly/config/project"
+	"github.com/launchdarkly/provider-launchdarkly/config/segment"
+	"github.com/launchdarkly/provider-launchdarkly/config/team"
+	"github.com/launchdarkly/provider-launchdarkly/config/teammember"
+	"github.com/launchdarkly/provider-launchdarkly/config/teamrolemapping"
+	"github.com/launchdarkly/provider-launchdarkly/config/webhook"
 
-	"github.com/upbound/upjet-provider-template/config/null"
+	ujconfig "github.com/crossplane/upjet/pkg/config"
 )
 
 const (
-	resourcePrefix = "template"
-	modulePath     = "github.com/upbound/upjet-provider-template"
+	resourcePrefix = "launchdarkly"
+	modulePath     = "github.com/launchdarkly/provider-launchdarkly"
 )
 
 //go:embed schema.json
@@ -27,7 +39,7 @@ var providerMetadata string
 // GetProvider returns provider configuration
 func GetProvider() *ujconfig.Provider {
 	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
-		ujconfig.WithRootGroup("template.upbound.io"),
+		ujconfig.WithRootGroup("launchdarkly.com"),
 		ujconfig.WithIncludeList(ExternalNameConfigured()),
 		ujconfig.WithFeaturesPackage("internal/features"),
 		ujconfig.WithDefaultResourceOptions(
@@ -36,7 +48,19 @@ func GetProvider() *ujconfig.Provider {
 
 	for _, configure := range []func(provider *ujconfig.Provider){
 		// add custom config functions
-		null.Configure,
+		accesstoken.Configure,
+		auditlogsubscription.Configure,
+		customrole.Configure,
+		destination.Configure,
+		environment.Configure,
+		featureflag.Configure,
+		featureflagenvironment.Configure,
+		project.Configure,
+		segment.Configure,
+		team.Configure,
+		teammember.Configure,
+		teamrolemapping.Configure,
+		webhook.Configure,
 	} {
 		configure(pc)
 	}

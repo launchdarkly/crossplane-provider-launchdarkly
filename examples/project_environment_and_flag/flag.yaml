@@ -1,0 +1,30 @@
+---
+apiVersion: flag.launchdarkly.com/v1alpha1
+kind: FeatureFlag
+metadata:
+  name: my-first-string-flag
+spec:
+  forProvider:
+    clientSideAvailability:
+      - usingEnvironmentId: true # Enable client-side SDKs (JS, React, etc) to use this flag
+        usingMobileKey: false # Don't enable mobile SDKs (iOS, Android) to use this flag
+    defaults:
+      - offVariation: 0 # Default to the "Off" variation when the flag is off
+        onVariation: 2 # Default to the "Bricks" variation when the flag is on
+    description: this is a multivariate flag with string variations.
+    key: my-first-string-flag
+    name: My First String Flag
+    projectKey: crossplane-project
+    tags:
+      - managed-by-crossplane
+    variationType: string
+    variations:
+      - description: Variation 1
+        name: Variation 1
+        value: Never gonna give you up
+      - description: Variation 2
+        name: Variation 2
+        value: Never gonna let you down
+      - description: Variation 3
+        name: Variation 3
+        value: Never gonna run around and desert you

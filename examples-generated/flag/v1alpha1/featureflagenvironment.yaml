@@ -1,0 +1,53 @@
+apiVersion: flag.launchdarkly.com/v1alpha1
+kind: FeatureFlagEnvironment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: flag/v1alpha1/featureflagenvironment
+  labels:
+    testing.upbound.io/example-name: number_ff_env
+  name: number-ff-env
+spec:
+  forProvider:
+    contextTargets:
+    - contextKind: account
+      values:
+      - accountX
+      variation: 1
+    envKey: staging
+    fallthrough:
+    - bucketBy: accountId
+      contextKind: account
+      rolloutWeights:
+      - 60000
+      - 40000
+      - 0
+    flagId: ${launchdarkly_feature_flag.number.id}
+    offVariation: 2
+    "on": true
+    prerequisites:
+    - flagKey: building-materials
+      variation: 0
+    rules:
+    - clauses:
+      - attribute: country
+        negate: false
+        op: startsWith
+        values:
+        - aus
+        - de
+        - united
+      - attribute: segmentMatch
+        negate: false
+        op: segmentMatch
+        values:
+        - ${launchdarkly_segment.example.key}
+      description: example targeting rule with two clauses
+      variation: 0
+    targets:
+    - values:
+      - user0
+      variation: 0
+    - values:
+      - user1
+      - user2
+      variation: 1

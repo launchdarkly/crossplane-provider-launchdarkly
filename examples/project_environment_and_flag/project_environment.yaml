@@ -1,0 +1,41 @@
+---
+apiVersion: project.launchdarkly.com/v1alpha1
+kind: Project
+metadata:
+  name: crossplane-project
+spec:
+  forProvider:
+    key: crossplane-project
+    name: Crossplane-managed Project
+    tags:
+      - managed-by-crossplane
+    environments:
+      - key: production
+        name: Production
+        approvalSettings:
+          - canApplyDeclinedChanges: false
+            canReviewOwnRequest: false
+            minNumApprovals: 3
+            requiredApprovalTags:
+              - approvals_required
+        color: ABCDEF
+        tags:
+          - managed-by-crossplane
+      - key: staging
+        name: Staging
+        color: "000000"
+        tags:
+          - managed-by-crossplane
+---
+apiVersion: project.launchdarkly.com/v1alpha1
+kind: Environment
+metadata:
+  name: name-dev-environment
+spec:
+  forProvider:
+    key: name-dev
+    name: Name Dev Environment
+    projectKey: crossplane-project
+    color: FFFFFF
+    tags:
+      - managed-by-crossplane

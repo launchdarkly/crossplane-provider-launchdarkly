@@ -1,0 +1,17 @@
+apiVersion: project.launchdarkly.com/v1alpha1
+kind: Environment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: project/v1alpha1/environment
+  labels:
+    testing.upbound.io/example-name: staging
+  name: staging
+spec:
+  forProvider:
+    color: ff00ff
+    key: staging
+    name: Staging
+    projectKey: example-project
+    tags:
+    - terraform
+    - staging
