@@ -1,4 +1,4 @@
-module github.com/launchdarkly/provider-launchdarkly
+module github.com/launchdarkly/crossplane-provider-launchdarkly
 
 go 1.21
 

@@ -21,8 +21,8 @@ import (
 	"github.com/pkg/errors"
 	ctrl "sigs.k8s.io/controller-runtime"
 
-	v1alpha1 "github.com/launchdarkly/provider-launchdarkly/apis/flag/v1alpha1"
-	features "github.com/launchdarkly/provider-launchdarkly/internal/features"
+	v1alpha1 "github.com/launchdarkly/crossplane-provider-launchdarkly/apis/flag/v1alpha1"
+	features "github.com/launchdarkly/crossplane-provider-launchdarkly/internal/features"
 )
 
 // Setup adds a controller that reconciles FeatureFlag managed resources.

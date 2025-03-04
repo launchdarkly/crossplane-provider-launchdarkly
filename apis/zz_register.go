@@ -10,11 +10,11 @@ package apis
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 
-	v1alpha1 "github.com/launchdarkly/provider-launchdarkly/apis/account/v1alpha1"
-	v1alpha1flag "github.com/launchdarkly/provider-launchdarkly/apis/flag/v1alpha1"
-	v1alpha1project "github.com/launchdarkly/provider-launchdarkly/apis/project/v1alpha1"
-	v1alpha1apis "github.com/launchdarkly/provider-launchdarkly/apis/v1alpha1"
-	v1beta1 "github.com/launchdarkly/provider-launchdarkly/apis/v1beta1"
+	v1alpha1 "github.com/launchdarkly/crossplane-provider-launchdarkly/apis/account/v1alpha1"
+	v1alpha1flag "github.com/launchdarkly/crossplane-provider-launchdarkly/apis/flag/v1alpha1"
+	v1alpha1project "github.com/launchdarkly/crossplane-provider-launchdarkly/apis/project/v1alpha1"
+	v1alpha1apis "github.com/launchdarkly/crossplane-provider-launchdarkly/apis/v1alpha1"
+	v1beta1 "github.com/launchdarkly/crossplane-provider-launchdarkly/apis/v1beta1"
 )
 
 func init() {

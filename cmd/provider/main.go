@@ -31,12 +31,12 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 	"sigs.k8s.io/controller-runtime/pkg/metrics"
 
-	"github.com/launchdarkly/provider-launchdarkly/apis"
-	"github.com/launchdarkly/provider-launchdarkly/apis/v1alpha1"
-	"github.com/launchdarkly/provider-launchdarkly/config"
-	"github.com/launchdarkly/provider-launchdarkly/internal/clients"
-	"github.com/launchdarkly/provider-launchdarkly/internal/controller"
-	"github.com/launchdarkly/provider-launchdarkly/internal/features"
+	"github.com/launchdarkly/crossplane-provider-launchdarkly/apis"
+	"github.com/launchdarkly/crossplane-provider-launchdarkly/apis/v1alpha1"
+	"github.com/launchdarkly/crossplane-provider-launchdarkly/config"
+	"github.com/launchdarkly/crossplane-provider-launchdarkly/internal/clients"
+	"github.com/launchdarkly/crossplane-provider-launchdarkly/internal/controller"
+	"github.com/launchdarkly/crossplane-provider-launchdarkly/internal/features"
 )
 
 func main() {

@@ -15,7 +15,7 @@ import (
 
 	"github.com/crossplane/upjet/pkg/terraform"
 
-	"github.com/launchdarkly/provider-launchdarkly/apis/v1beta1"
+	"github.com/launchdarkly/crossplane-provider-launchdarkly/apis/v1beta1"
 )
 
 const (
