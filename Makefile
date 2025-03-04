@@ -2,7 +2,7 @@
 # Setup Project
 
 PROJECT_NAME ?= provider-launchdarkly
-PROJECT_REPO ?= github.com/launchdarkly/$(PROJECT_NAME)
+PROJECT_REPO ?= github.com/launchdarkly/crossplane-$(PROJECT_NAME)
 
 export TERRAFORM_VERSION ?= 1.5.7
 

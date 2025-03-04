@@ -11,7 +11,7 @@ import (
 
 	"github.com/crossplane/upjet/pkg/pipeline"
 
-	"github.com/launchdarkly/provider-launchdarkly/config"
+	"github.com/launchdarkly/crossplane-provider-launchdarkly/config"
 )
 
 func main() {
