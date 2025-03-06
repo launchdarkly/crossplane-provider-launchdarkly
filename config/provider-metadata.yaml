@@ -316,6 +316,7 @@ resources:
         argumentDocs:
             api_key: (String, Sensitive) The environment's SDK key.
             approval_settings: (Block List) (see below for nested schema)
+            auto_apply_approved_changes: (Boolean) Automatically apply changes that have been approved by all reviewers. This field is only applicable for approval service kinds other than launchdarkly.
             can_apply_declined_changes: (Boolean) Set to true if changes can be applied as long as the min_num_approvals is met, regardless of whether any reviewers have declined a request. Defaults to true.
             can_review_own_request: (Boolean) Set to true if requesters can approve or decline their own request. They may always comment. Defaults to false.
             client_side_id: (String, Sensitive) The environment's client-side ID.
@@ -324,7 +325,7 @@ resources:
             critical: (Boolean) Denotes whether the environment is critical.
             default_track_events: (Boolean) Set to true to enable data export for every flag created in this environment after you configure this argument. This field will default to false when not set. To learn more, read Data Export.
             default_ttl: (Number) The TTL for the environment. This must be between 0 and 60 minutes. The TTL setting only applies to environments using the PHP SDK. This field will default to 0 when not set. To learn more, read TTL settings.
-            detail_column: (String) The name of the ServiceNow Change Request column LaunchDarkly uses to populate detailed approval request information.
+            detail_column: (String) The name of the ServiceNow Change Request column LaunchDarkly uses to populate detailed approval request information. This is most commonly "justification".
             id: (String) The ID of this resource.
             key: (String) The project-unique key for the environment. A change in this field will force the destruction of the existing resource and the creation of a new one.
             min_num_approvals: (Number) The number of approvals required before an approval request can be applied. This number must be between 1 and 5. Defaults to 1.
@@ -333,10 +334,10 @@ resources:
             project_key: (String) The LaunchDarkly project key. A change in this field will force the destruction of the existing resource and the creation of a new one.
             require_comments: (Boolean) Set to true if this environment requires comments for flag and segment changes. This field will default to false when not set.
             required: (Boolean) Set to true for changes to flags in this environment to require approval. You may only set required to true if required_approval_tags is not set and vice versa. Defaults to false.
-            required_approval_tags: (List of String) An array of tags used to specify which flags with those tags require approval. You may only set required_approval_tags if required is not set to true and vice versa.
+            required_approval_tags: (List of String) An array of tags used to specify which flags with those tags require approval. You may only set required_approval_tags if required is set to false and vice versa.
             secure_mode: (Boolean) Set to true to ensure a user of the client-side SDK cannot impersonate another user. This field will default to false when not set.
             service_config: '(Map of String) The configuration for the service associated with this approval. This is specific to each approval service. For a service_kind of servicenow, the following fields apply:'
-            service_kind: (String) The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are servicenow, launchdarkly.
+            service_kind: (String) The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are servicenow, launchdarkly. If you use a value other than launchdarkly, you must have already configured the integration in the LaunchDarkly UI or your apply will fail.
             tags: (Set of String) Tags associated with your resource.
             template: (String) The sys_id of the Standard Change Request Template in ServiceNow that LaunchDarkly will use when creating the change request.
         importStatements:
@@ -864,6 +865,7 @@ resources:
         argumentDocs:
             api_key: (String, Sensitive) The environment's SDK key.
             approval_settings: (Block List) (see below for nested schema)
+            auto_apply_approved_changes: (Boolean) Automatically apply changes that have been approved by all reviewers. This field is only applicable for approval service kinds other than launchdarkly.
             can_apply_declined_changes: (Boolean) Set to true if changes can be applied as long as the min_num_approvals is met, regardless of whether any reviewers have declined a request. Defaults to true.
             can_review_own_request: (Boolean) Set to true if requesters can approve or decline their own request. They may always comment. Defaults to false.
             client_side_id: (String, Sensitive) The environment's client-side ID.
@@ -873,7 +875,7 @@ resources:
             default_client_side_availability: (Block List) A block describing which client-side SDKs can use new flags by default. (see below for nested schema)
             default_track_events: (Boolean) Set to true to enable data export for every flag created in this environment after you configure this argument. This field will default to false when not set. To learn more, read Data Export.
             default_ttl: (Number) The TTL for the environment. This must be between 0 and 60 minutes. The TTL setting only applies to environments using the PHP SDK. This field will default to 0 when not set. To learn more, read TTL settings.
-            detail_column: (String) The name of the ServiceNow Change Request column LaunchDarkly uses to populate detailed approval request information.
+            detail_column: (String) The name of the ServiceNow Change Request column LaunchDarkly uses to populate detailed approval request information. This is most commonly "justification".
             environments: '(Block List, Min: 1) List of nested environments blocks describing LaunchDarkly environments that belong to the project. When managing LaunchDarkly projects in Terraform, you should always manage your environments as nested project resources.'
             environments.key: (String) The project's unique key. A change in this field will force the destruction of the existing resource and the creation of a new one.
             environments.name: (String) The project's name.
@@ -885,10 +887,10 @@ resources:
             name: (String) The name of the environment.
             require_comments: (Boolean) Set to true if this environment requires comments for flag and segment changes. This field will default to false when not set.
             required: (Boolean) Set to true for changes to flags in this environment to require approval. You may only set required to true if required_approval_tags is not set and vice versa. Defaults to false.
-            required_approval_tags: (List of String) An array of tags used to specify which flags with those tags require approval. You may only set required_approval_tags if required is not set to true and vice versa.
+            required_approval_tags: (List of String) An array of tags used to specify which flags with those tags require approval. You may only set required_approval_tags if required is set to false and vice versa.
             secure_mode: (Boolean) Set to true to ensure a user of the client-side SDK cannot impersonate another user. This field will default to false when not set.
             service_config: '(Map of String) The configuration for the service associated with this approval. This is specific to each approval service. For a service_kind of servicenow, the following fields apply:'
-            service_kind: (String) The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are servicenow, launchdarkly.
+            service_kind: (String) The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are servicenow, launchdarkly. If you use a value other than launchdarkly, you must have already configured the integration in the LaunchDarkly UI or your apply will fail.
             tags: (Set of String) Tags associated with your resource.
             template: (String) The sys_id of the Standard Change Request Template in ServiceNow that LaunchDarkly will use when creating the change request.
             using_environment_id: (Boolean)
