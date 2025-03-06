@@ -1,9 +1,6 @@
 name: Terraform Provider Version Bump
 
 on:
-  push:
-    branches:
-      - hbarrow/REL-6319/add-github-action-to-bump-terraform-provider-version
   workflow_dispatch:
 
 env:
