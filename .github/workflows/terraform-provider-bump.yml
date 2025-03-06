@@ -29,15 +29,13 @@ jobs:
           submodules: true
 
       - name: Setup Go
-        uses: actions/setup-go@6edd4406fa81c3da01a34fa6f6343087c207a568 # v3
+        uses: actions/setup-go@0a12ed9d6a96ab950c8f026ed9f722fe0da7ef32 # v5
         with:
           go-version: ${{ env.GO_VERSION }}
 
-      - name: Find Go Caches
+      - name: Find the Go Build Cache
         id: go
-        run: |
-          echo "cache=$(make go.cachedir)" >> $GITHUB_OUTPUT
-          echo "modcache=$(make go.mod.cachedir)" >> $GITHUB_OUTPUT
+        run: echo "cache=$(make go.cachedir)" >> $GITHUB_OUTPUT
 
       - name: Cache the Go Build Cache
         uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4
@@ -49,7 +47,7 @@ jobs:
       - name: Cache Go Dependencies
         uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4
         with:
-          path: ${{ steps.go.outputs.modcache }}
+          path: .work/pkg
           key: ${{ runner.os }}-pkg-${{ hashFiles('**/go.sum') }}
           restore-keys: ${{ runner.os }}-pkg-
 
