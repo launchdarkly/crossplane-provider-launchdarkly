@@ -31,12 +31,9 @@ type CustomRoleInitParameters struct {
 	// A name for the custom role. This must be unique within your organization.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Block Set, Deprecated) (see below for nested schema)
-	Policy []PolicyInitParameters `json:"policy,omitempty" tf:"policy,omitempty"`
-
 	// (Block List) An array of the policy statements that define the permissions for the custom role. This field accepts role attributes. To use role attributes, use the syntax $${roleAttribute/<YOUR_ROLE_ATTRIBUTE>} in lieu of your usual resource keys. (see below for nested schema)
 	// An array of the policy statements that define the permissions for the custom role. This field accepts [role attributes](https://docs.launchdarkly.com/home/getting-started/vocabulary#role-attribute). To use role attributes, use the syntax `$${roleAttribute/<YOUR_ROLE_ATTRIBUTE>}` in lieu of your usual resource keys.
-	PolicyStatements []CustomRolePolicyStatementsInitParameters `json:"policyStatements,omitempty" tf:"policy_statements,omitempty"`
+	PolicyStatements []PolicyStatementsInitParameters `json:"policyStatements,omitempty" tf:"policy_statements,omitempty"`
 }
 
 type CustomRoleObservation struct {
@@ -60,12 +57,9 @@ type CustomRoleObservation struct {
 	// A name for the custom role. This must be unique within your organization.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Block Set, Deprecated) (see below for nested schema)
-	Policy []PolicyObservation `json:"policy,omitempty" tf:"policy,omitempty"`
-
 	// (Block List) An array of the policy statements that define the permissions for the custom role. This field accepts role attributes. To use role attributes, use the syntax $${roleAttribute/<YOUR_ROLE_ATTRIBUTE>} in lieu of your usual resource keys. (see below for nested schema)
 	// An array of the policy statements that define the permissions for the custom role. This field accepts [role attributes](https://docs.launchdarkly.com/home/getting-started/vocabulary#role-attribute). To use role attributes, use the syntax `$${roleAttribute/<YOUR_ROLE_ATTRIBUTE>}` in lieu of your usual resource keys.
-	PolicyStatements []CustomRolePolicyStatementsObservation `json:"policyStatements,omitempty" tf:"policy_statements,omitempty"`
+	PolicyStatements []PolicyStatementsObservation `json:"policyStatements,omitempty" tf:"policy_statements,omitempty"`
 }
 
 type CustomRoleParameters struct {
@@ -90,17 +84,13 @@ type CustomRoleParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Block Set, Deprecated) (see below for nested schema)
-	// +kubebuilder:validation:Optional
-	Policy []PolicyParameters `json:"policy,omitempty" tf:"policy,omitempty"`
-
 	// (Block List) An array of the policy statements that define the permissions for the custom role. This field accepts role attributes. To use role attributes, use the syntax $${roleAttribute/<YOUR_ROLE_ATTRIBUTE>} in lieu of your usual resource keys. (see below for nested schema)
 	// An array of the policy statements that define the permissions for the custom role. This field accepts [role attributes](https://docs.launchdarkly.com/home/getting-started/vocabulary#role-attribute). To use role attributes, use the syntax `$${roleAttribute/<YOUR_ROLE_ATTRIBUTE>}` in lieu of your usual resource keys.
 	// +kubebuilder:validation:Optional
-	PolicyStatements []CustomRolePolicyStatementsParameters `json:"policyStatements,omitempty" tf:"policy_statements,omitempty"`
+	PolicyStatements []PolicyStatementsParameters `json:"policyStatements,omitempty" tf:"policy_statements,omitempty"`
 }
 
-type CustomRolePolicyStatementsInitParameters struct {
+type PolicyStatementsInitParameters struct {
 
 	// (List of String)
 	// The list of action specifiers defining the actions to which the statement applies.
@@ -124,7 +114,7 @@ type CustomRolePolicyStatementsInitParameters struct {
 	Resources []*string `json:"resources,omitempty" tf:"resources,omitempty"`
 }
 
-type CustomRolePolicyStatementsObservation struct {
+type PolicyStatementsObservation struct {
 
 	// (List of String)
 	// The list of action specifiers defining the actions to which the statement applies.
@@ -148,7 +138,7 @@ type CustomRolePolicyStatementsObservation struct {
 	Resources []*string `json:"resources,omitempty" tf:"resources,omitempty"`
 }
 
-type CustomRolePolicyStatementsParameters struct {
+type PolicyStatementsParameters struct {
 
 	// (List of String)
 	// The list of action specifiers defining the actions to which the statement applies.
@@ -175,45 +165,6 @@ type CustomRolePolicyStatementsParameters struct {
 	// The list of resource specifiers defining the resources to which the statement applies.
 	// +kubebuilder:validation:Optional
 	Resources []*string `json:"resources,omitempty" tf:"resources,omitempty"`
-}
-
-type PolicyInitParameters struct {
-
-	// (List of String)
-	Actions []*string `json:"actions,omitempty" tf:"actions,omitempty"`
-
-	// (String)
-	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
-
-	// (List of String)
-	Resources []*string `json:"resources,omitempty" tf:"resources,omitempty"`
-}
-
-type PolicyObservation struct {
-
-	// (List of String)
-	Actions []*string `json:"actions,omitempty" tf:"actions,omitempty"`
-
-	// (String)
-	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
-
-	// (List of String)
-	Resources []*string `json:"resources,omitempty" tf:"resources,omitempty"`
-}
-
-type PolicyParameters struct {
-
-	// (List of String)
-	// +kubebuilder:validation:Optional
-	Actions []*string `json:"actions" tf:"actions,omitempty"`
-
-	// (String)
-	// +kubebuilder:validation:Optional
-	Effect *string `json:"effect" tf:"effect,omitempty"`
-
-	// (List of String)
-	// +kubebuilder:validation:Optional
-	Resources []*string `json:"resources" tf:"resources,omitempty"`
 }
 
 // CustomRoleSpec defines the desired state of CustomRole

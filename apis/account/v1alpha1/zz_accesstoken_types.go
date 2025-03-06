@@ -24,10 +24,6 @@ type AccessTokenInitParameters struct {
 	// The default API version for this token. Defaults to the latest API version. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	DefaultAPIVersion *float64 `json:"defaultApiVersion,omitempty" tf:"default_api_version,omitempty"`
 
-	// (Number, Deprecated) An expiration time for the current token secret, expressed as a Unix epoch time. Replace the computed token secret with a new value. The expired secret will no longer be able to authorize usage of the LaunchDarkly API. This field argument is deprecated. Please update your config to remove expire to maintain compatibility with future versions
-	// An expiration time for the current token secret, expressed as a Unix epoch time. Replace the computed token secret with a new value. The expired secret will no longer be able to authorize usage of the LaunchDarkly API. This field argument is **deprecated**. Please update your config to remove `expire` to maintain compatibility with future versions
-	Expire *float64 `json:"expire,omitempty" tf:"expire,omitempty"`
-
 	// in or custom role. Using polices. May be specified more than once. (see below for nested schema)
 	// Define inline custom roles. An array of statements represented as config blocks with three attributes: effect, resources, actions. May be used in place of a built-in or custom role. [Using polices](https://docs.launchdarkly.com/home/members/role-policies). May be specified more than once.
 	InlineRoles []InlineRolesInitParameters `json:"inlineRoles,omitempty" tf:"inline_roles,omitempty"`
@@ -35,10 +31,6 @@ type AccessTokenInitParameters struct {
 	// friendly name for the access token.
 	// A human-friendly name for the access token.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// in or custom role. May be specified more than once. This field argument is deprecated. Update your config to use inline_role to maintain compatibility with future versions. (see below for nested schema)
-	// Define inline custom roles. An array of statements represented as config blocks with three attributes: effect, resources, actions. May be used in place of a built-in or custom role. May be specified more than once. This field argument is **deprecated**. Update your config to use `inline_role` to maintain compatibility with future versions.
-	PolicyStatements []PolicyStatementsInitParameters `json:"policyStatements,omitempty" tf:"policy_statements,omitempty"`
 
 	// in LaunchDarkly role. Can be reader, writer, or admin
 	// A built-in LaunchDarkly role. Can be `reader`, `writer`, or `admin`
@@ -60,10 +52,6 @@ type AccessTokenObservation struct {
 	// The default API version for this token. Defaults to the latest API version. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	DefaultAPIVersion *float64 `json:"defaultApiVersion,omitempty" tf:"default_api_version,omitempty"`
 
-	// (Number, Deprecated) An expiration time for the current token secret, expressed as a Unix epoch time. Replace the computed token secret with a new value. The expired secret will no longer be able to authorize usage of the LaunchDarkly API. This field argument is deprecated. Please update your config to remove expire to maintain compatibility with future versions
-	// An expiration time for the current token secret, expressed as a Unix epoch time. Replace the computed token secret with a new value. The expired secret will no longer be able to authorize usage of the LaunchDarkly API. This field argument is **deprecated**. Please update your config to remove `expire` to maintain compatibility with future versions
-	Expire *float64 `json:"expire,omitempty" tf:"expire,omitempty"`
-
 	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -74,10 +62,6 @@ type AccessTokenObservation struct {
 	// friendly name for the access token.
 	// A human-friendly name for the access token.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// in or custom role. May be specified more than once. This field argument is deprecated. Update your config to use inline_role to maintain compatibility with future versions. (see below for nested schema)
-	// Define inline custom roles. An array of statements represented as config blocks with three attributes: effect, resources, actions. May be used in place of a built-in or custom role. May be specified more than once. This field argument is **deprecated**. Update your config to use `inline_role` to maintain compatibility with future versions.
-	PolicyStatements []PolicyStatementsObservation `json:"policyStatements,omitempty" tf:"policy_statements,omitempty"`
 
 	// in LaunchDarkly role. Can be reader, writer, or admin
 	// A built-in LaunchDarkly role. Can be `reader`, `writer`, or `admin`
@@ -101,11 +85,6 @@ type AccessTokenParameters struct {
 	// +kubebuilder:validation:Optional
 	DefaultAPIVersion *float64 `json:"defaultApiVersion,omitempty" tf:"default_api_version,omitempty"`
 
-	// (Number, Deprecated) An expiration time for the current token secret, expressed as a Unix epoch time. Replace the computed token secret with a new value. The expired secret will no longer be able to authorize usage of the LaunchDarkly API. This field argument is deprecated. Please update your config to remove expire to maintain compatibility with future versions
-	// An expiration time for the current token secret, expressed as a Unix epoch time. Replace the computed token secret with a new value. The expired secret will no longer be able to authorize usage of the LaunchDarkly API. This field argument is **deprecated**. Please update your config to remove `expire` to maintain compatibility with future versions
-	// +kubebuilder:validation:Optional
-	Expire *float64 `json:"expire,omitempty" tf:"expire,omitempty"`
-
 	// in or custom role. Using polices. May be specified more than once. (see below for nested schema)
 	// Define inline custom roles. An array of statements represented as config blocks with three attributes: effect, resources, actions. May be used in place of a built-in or custom role. [Using polices](https://docs.launchdarkly.com/home/members/role-policies). May be specified more than once.
 	// +kubebuilder:validation:Optional
@@ -115,11 +94,6 @@ type AccessTokenParameters struct {
 	// A human-friendly name for the access token.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// in or custom role. May be specified more than once. This field argument is deprecated. Update your config to use inline_role to maintain compatibility with future versions. (see below for nested schema)
-	// Define inline custom roles. An array of statements represented as config blocks with three attributes: effect, resources, actions. May be used in place of a built-in or custom role. May be specified more than once. This field argument is **deprecated**. Update your config to use `inline_role` to maintain compatibility with future versions.
-	// +kubebuilder:validation:Optional
-	PolicyStatements []PolicyStatementsParameters `json:"policyStatements,omitempty" tf:"policy_statements,omitempty"`
 
 	// in LaunchDarkly role. Can be reader, writer, or admin
 	// A built-in LaunchDarkly role. Can be `reader`, `writer`, or `admin`
@@ -183,86 +157,6 @@ type InlineRolesObservation struct {
 }
 
 type InlineRolesParameters struct {
-
-	// (List of String) The list of action specifiers defining the actions to which the statement applies.
-	// Either actions or not_actions must be specified. For a list of available actions read Actions reference.
-	// The list of action specifiers defining the actions to which the statement applies.
-	// Either `actions` or `not_actions` must be specified. For a list of available actions read [Actions reference](https://docs.launchdarkly.com/home/account-security/custom-roles/actions#actions-reference).
-	// +kubebuilder:validation:Optional
-	Actions []*string `json:"actions,omitempty" tf:"actions,omitempty"`
-
-	// (String) Either allow or deny. This argument defines whether the statement allows or denies access to the named resources and actions.
-	// Either `allow` or `deny`. This argument defines whether the statement allows or denies access to the named resources and actions.
-	// +kubebuilder:validation:Optional
-	Effect *string `json:"effect" tf:"effect,omitempty"`
-
-	// (List of String) The list of action specifiers defining the actions to which the statement does not apply.
-	// The list of action specifiers defining the actions to which the statement does not apply.
-	// +kubebuilder:validation:Optional
-	NotActions []*string `json:"notActions,omitempty" tf:"not_actions,omitempty"`
-
-	// (List of String) The list of resource specifiers defining the resources to which the statement does not apply.
-	// The list of resource specifiers defining the resources to which the statement does not apply.
-	// +kubebuilder:validation:Optional
-	NotResources []*string `json:"notResources,omitempty" tf:"not_resources,omitempty"`
-
-	// (List of String) The list of resource specifiers defining the resources to which the statement applies.
-	// The list of resource specifiers defining the resources to which the statement applies.
-	// +kubebuilder:validation:Optional
-	Resources []*string `json:"resources,omitempty" tf:"resources,omitempty"`
-}
-
-type PolicyStatementsInitParameters struct {
-
-	// (List of String) The list of action specifiers defining the actions to which the statement applies.
-	// Either actions or not_actions must be specified. For a list of available actions read Actions reference.
-	// The list of action specifiers defining the actions to which the statement applies.
-	// Either `actions` or `not_actions` must be specified. For a list of available actions read [Actions reference](https://docs.launchdarkly.com/home/account-security/custom-roles/actions#actions-reference).
-	Actions []*string `json:"actions,omitempty" tf:"actions,omitempty"`
-
-	// (String) Either allow or deny. This argument defines whether the statement allows or denies access to the named resources and actions.
-	// Either `allow` or `deny`. This argument defines whether the statement allows or denies access to the named resources and actions.
-	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
-
-	// (List of String) The list of action specifiers defining the actions to which the statement does not apply.
-	// The list of action specifiers defining the actions to which the statement does not apply.
-	NotActions []*string `json:"notActions,omitempty" tf:"not_actions,omitempty"`
-
-	// (List of String) The list of resource specifiers defining the resources to which the statement does not apply.
-	// The list of resource specifiers defining the resources to which the statement does not apply.
-	NotResources []*string `json:"notResources,omitempty" tf:"not_resources,omitempty"`
-
-	// (List of String) The list of resource specifiers defining the resources to which the statement applies.
-	// The list of resource specifiers defining the resources to which the statement applies.
-	Resources []*string `json:"resources,omitempty" tf:"resources,omitempty"`
-}
-
-type PolicyStatementsObservation struct {
-
-	// (List of String) The list of action specifiers defining the actions to which the statement applies.
-	// Either actions or not_actions must be specified. For a list of available actions read Actions reference.
-	// The list of action specifiers defining the actions to which the statement applies.
-	// Either `actions` or `not_actions` must be specified. For a list of available actions read [Actions reference](https://docs.launchdarkly.com/home/account-security/custom-roles/actions#actions-reference).
-	Actions []*string `json:"actions,omitempty" tf:"actions,omitempty"`
-
-	// (String) Either allow or deny. This argument defines whether the statement allows or denies access to the named resources and actions.
-	// Either `allow` or `deny`. This argument defines whether the statement allows or denies access to the named resources and actions.
-	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
-
-	// (List of String) The list of action specifiers defining the actions to which the statement does not apply.
-	// The list of action specifiers defining the actions to which the statement does not apply.
-	NotActions []*string `json:"notActions,omitempty" tf:"not_actions,omitempty"`
-
-	// (List of String) The list of resource specifiers defining the resources to which the statement does not apply.
-	// The list of resource specifiers defining the resources to which the statement does not apply.
-	NotResources []*string `json:"notResources,omitempty" tf:"not_resources,omitempty"`
-
-	// (List of String) The list of resource specifiers defining the resources to which the statement applies.
-	// The list of resource specifiers defining the resources to which the statement applies.
-	Resources []*string `json:"resources,omitempty" tf:"resources,omitempty"`
-}
-
-type PolicyStatementsParameters struct {
 
 	// (List of String) The list of action specifiers defining the actions to which the statement applies.
 	// Either actions or not_actions must be specified. For a list of available actions read Actions reference.
