@@ -44,6 +44,10 @@ type DefaultClientSideAvailabilityParameters struct {
 
 type EnvironmentsApprovalSettingsInitParameters struct {
 
+	// (Boolean) Automatically apply changes that have been approved by all reviewers. This field is only applicable for approval service kinds other than launchdarkly.
+	// Automatically apply changes that have been approved by all reviewers. This field is only applicable for approval service kinds other than `launchdarkly`.
+	AutoApplyApprovedChanges *bool `json:"autoApplyApprovedChanges,omitempty" tf:"auto_apply_approved_changes,omitempty"`
+
 	// (Boolean) Set to true if changes can be applied as long as the min_num_approvals is met, regardless of whether any reviewers have declined a request. Defaults to true.
 	// Set to `true` if changes can be applied as long as the `min_num_approvals` is met, regardless of whether any reviewers have declined a request. Defaults to `true`.
 	CanApplyDeclinedChanges *bool `json:"canApplyDeclinedChanges,omitempty" tf:"can_apply_declined_changes,omitempty"`
@@ -60,25 +64,29 @@ type EnvironmentsApprovalSettingsInitParameters struct {
 	// Set to `true` for changes to flags in this environment to require approval. You may only set `required` to true if `required_approval_tags` is not set and vice versa. Defaults to `false`.
 	Required *bool `json:"required,omitempty" tf:"required,omitempty"`
 
-	// (List of String) An array of tags used to specify which flags with those tags require approval. You may only set required_approval_tags if required is not set to true and vice versa.
-	// An array of tags used to specify which flags with those tags require approval. You may only set `required_approval_tags` if `required` is not set to `true` and vice versa.
+	// (List of String) An array of tags used to specify which flags with those tags require approval. You may only set required_approval_tags if required is set to false and vice versa.
+	// An array of tags used to specify which flags with those tags require approval. You may only set `required_approval_tags` if `required` is set to `false` and vice versa.
 	RequiredApprovalTags []*string `json:"requiredApprovalTags,omitempty" tf:"required_approval_tags,omitempty"`
 
 	// (Map of String) The configuration for the service associated with this approval. This is specific to each approval service. For a service_kind of servicenow, the following fields apply:
 	// The configuration for the service associated with this approval. This is specific to each approval service. For a `service_kind` of `servicenow`, the following fields apply:
 	//
 	// - `template` (String) The sys_id of the Standard Change Request Template in ServiceNow that LaunchDarkly will use when creating the change request.
-	// - `detail_column` (String) The name of the ServiceNow Change Request column LaunchDarkly uses to populate detailed approval request information.
+	// - `detail_column` (String) The name of the ServiceNow Change Request column LaunchDarkly uses to populate detailed approval request information. This is most commonly "justification".
 	// +mapType=granular
 	ServiceConfig map[string]*string `json:"serviceConfig,omitempty" tf:"service_config,omitempty"`
 
-	// (String) The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are servicenow, launchdarkly.
-	// The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are `servicenow`, `launchdarkly`.
+	// (String) The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are servicenow, launchdarkly. If you use a value other than launchdarkly, you must have already configured the integration in the LaunchDarkly UI or your apply will fail.
+	// The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are `servicenow`, `launchdarkly`. If you use a value other than `launchdarkly`, you must have already configured the integration in the LaunchDarkly UI or your apply will fail.
 	ServiceKind *string `json:"serviceKind,omitempty" tf:"service_kind,omitempty"`
 }
 
 type EnvironmentsApprovalSettingsObservation struct {
 
+	// (Boolean) Automatically apply changes that have been approved by all reviewers. This field is only applicable for approval service kinds other than launchdarkly.
+	// Automatically apply changes that have been approved by all reviewers. This field is only applicable for approval service kinds other than `launchdarkly`.
+	AutoApplyApprovedChanges *bool `json:"autoApplyApprovedChanges,omitempty" tf:"auto_apply_approved_changes,omitempty"`
+
 	// (Boolean) Set to true if changes can be applied as long as the min_num_approvals is met, regardless of whether any reviewers have declined a request. Defaults to true.
 	// Set to `true` if changes can be applied as long as the `min_num_approvals` is met, regardless of whether any reviewers have declined a request. Defaults to `true`.
 	CanApplyDeclinedChanges *bool `json:"canApplyDeclinedChanges,omitempty" tf:"can_apply_declined_changes,omitempty"`
@@ -95,25 +103,30 @@ type EnvironmentsApprovalSettingsObservation struct {
 	// Set to `true` for changes to flags in this environment to require approval. You may only set `required` to true if `required_approval_tags` is not set and vice versa. Defaults to `false`.
 	Required *bool `json:"required,omitempty" tf:"required,omitempty"`
 
-	// (List of String) An array of tags used to specify which flags with those tags require approval. You may only set required_approval_tags if required is not set to true and vice versa.
-	// An array of tags used to specify which flags with those tags require approval. You may only set `required_approval_tags` if `required` is not set to `true` and vice versa.
+	// (List of String) An array of tags used to specify which flags with those tags require approval. You may only set required_approval_tags if required is set to false and vice versa.
+	// An array of tags used to specify which flags with those tags require approval. You may only set `required_approval_tags` if `required` is set to `false` and vice versa.
 	RequiredApprovalTags []*string `json:"requiredApprovalTags,omitempty" tf:"required_approval_tags,omitempty"`
 
 	// (Map of String) The configuration for the service associated with this approval. This is specific to each approval service. For a service_kind of servicenow, the following fields apply:
 	// The configuration for the service associated with this approval. This is specific to each approval service. For a `service_kind` of `servicenow`, the following fields apply:
 	//
 	// - `template` (String) The sys_id of the Standard Change Request Template in ServiceNow that LaunchDarkly will use when creating the change request.
-	// - `detail_column` (String) The name of the ServiceNow Change Request column LaunchDarkly uses to populate detailed approval request information.
+	// - `detail_column` (String) The name of the ServiceNow Change Request column LaunchDarkly uses to populate detailed approval request information. This is most commonly "justification".
 	// +mapType=granular
 	ServiceConfig map[string]*string `json:"serviceConfig,omitempty" tf:"service_config,omitempty"`
 
-	// (String) The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are servicenow, launchdarkly.
-	// The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are `servicenow`, `launchdarkly`.
+	// (String) The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are servicenow, launchdarkly. If you use a value other than launchdarkly, you must have already configured the integration in the LaunchDarkly UI or your apply will fail.
+	// The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are `servicenow`, `launchdarkly`. If you use a value other than `launchdarkly`, you must have already configured the integration in the LaunchDarkly UI or your apply will fail.
 	ServiceKind *string `json:"serviceKind,omitempty" tf:"service_kind,omitempty"`
 }
 
 type EnvironmentsApprovalSettingsParameters struct {
 
+	// (Boolean) Automatically apply changes that have been approved by all reviewers. This field is only applicable for approval service kinds other than launchdarkly.
+	// Automatically apply changes that have been approved by all reviewers. This field is only applicable for approval service kinds other than `launchdarkly`.
+	// +kubebuilder:validation:Optional
+	AutoApplyApprovedChanges *bool `json:"autoApplyApprovedChanges,omitempty" tf:"auto_apply_approved_changes,omitempty"`
+
 	// (Boolean) Set to true if changes can be applied as long as the min_num_approvals is met, regardless of whether any reviewers have declined a request. Defaults to true.
 	// Set to `true` if changes can be applied as long as the `min_num_approvals` is met, regardless of whether any reviewers have declined a request. Defaults to `true`.
 	// +kubebuilder:validation:Optional
@@ -134,8 +147,8 @@ type EnvironmentsApprovalSettingsParameters struct {
 	// +kubebuilder:validation:Optional
 	Required *bool `json:"required,omitempty" tf:"required,omitempty"`
 
-	// (List of String) An array of tags used to specify which flags with those tags require approval. You may only set required_approval_tags if required is not set to true and vice versa.
-	// An array of tags used to specify which flags with those tags require approval. You may only set `required_approval_tags` if `required` is not set to `true` and vice versa.
+	// (List of String) An array of tags used to specify which flags with those tags require approval. You may only set required_approval_tags if required is set to false and vice versa.
+	// An array of tags used to specify which flags with those tags require approval. You may only set `required_approval_tags` if `required` is set to `false` and vice versa.
 	// +kubebuilder:validation:Optional
 	RequiredApprovalTags []*string `json:"requiredApprovalTags,omitempty" tf:"required_approval_tags,omitempty"`
 
@@ -143,13 +156,13 @@ type EnvironmentsApprovalSettingsParameters struct {
 	// The configuration for the service associated with this approval. This is specific to each approval service. For a `service_kind` of `servicenow`, the following fields apply:
 	//
 	// - `template` (String) The sys_id of the Standard Change Request Template in ServiceNow that LaunchDarkly will use when creating the change request.
-	// - `detail_column` (String) The name of the ServiceNow Change Request column LaunchDarkly uses to populate detailed approval request information.
+	// - `detail_column` (String) The name of the ServiceNow Change Request column LaunchDarkly uses to populate detailed approval request information. This is most commonly "justification".
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	ServiceConfig map[string]*string `json:"serviceConfig,omitempty" tf:"service_config,omitempty"`
 
-	// (String) The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are servicenow, launchdarkly.
-	// The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are `servicenow`, `launchdarkly`.
+	// (String) The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are servicenow, launchdarkly. If you use a value other than launchdarkly, you must have already configured the integration in the LaunchDarkly UI or your apply will fail.
+	// The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are `servicenow`, `launchdarkly`. If you use a value other than `launchdarkly`, you must have already configured the integration in the LaunchDarkly UI or your apply will fail.
 	// +kubebuilder:validation:Optional
 	ServiceKind *string `json:"serviceKind,omitempty" tf:"service_kind,omitempty"`
 }

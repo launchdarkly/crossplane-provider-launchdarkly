@@ -101,6 +101,11 @@ spec:
                           description: (Block List) (see below for nested schema)
                           items:
                             properties:
+                              autoApplyApprovedChanges:
+                                description: |-
+                                  (Boolean) Automatically apply changes that have been approved by all reviewers. This field is only applicable for approval service kinds other than launchdarkly.
+                                  Automatically apply changes that have been approved by all reviewers. This field is only applicable for approval service kinds other than `launchdarkly`.
+                                type: boolean
                               canApplyDeclinedChanges:
                                 description: |-
                                   (Boolean) Set to true if changes can be applied as long as the min_num_approvals is met, regardless of whether any reviewers have declined a request. Defaults to true.
@@ -123,8 +128,8 @@ spec:
                                 type: boolean
                               requiredApprovalTags:
                                 description: |-
-                                  (List of String) An array of tags used to specify which flags with those tags require approval. You may only set required_approval_tags if required is not set to true and vice versa.
-                                  An array of tags used to specify which flags with those tags require approval. You may only set `required_approval_tags` if `required` is not set to `true` and vice versa.
+                                  (List of String) An array of tags used to specify which flags with those tags require approval. You may only set required_approval_tags if required is set to false and vice versa.
+                                  An array of tags used to specify which flags with those tags require approval. You may only set `required_approval_tags` if `required` is set to `false` and vice versa.
                                 items:
                                   type: string
                                 type: array
@@ -137,13 +142,13 @@ spec:
 
 
                                   - `template` (String) The sys_id of the Standard Change Request Template in ServiceNow that LaunchDarkly will use when creating the change request.
-                                  - `detail_column` (String) The name of the ServiceNow Change Request column LaunchDarkly uses to populate detailed approval request information.
+                                  - `detail_column` (String) The name of the ServiceNow Change Request column LaunchDarkly uses to populate detailed approval request information. This is most commonly "justification".
                                 type: object
                                 x-kubernetes-map-type: granular
                               serviceKind:
                                 description: |-
-                                  (String) The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are servicenow, launchdarkly.
-                                  The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are `servicenow`, `launchdarkly`.
+                                  (String) The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are servicenow, launchdarkly. If you use a value other than launchdarkly, you must have already configured the integration in the LaunchDarkly UI or your apply will fail.
+                                  The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are `servicenow`, `launchdarkly`. If you use a value other than `launchdarkly`, you must have already configured the integration in the LaunchDarkly UI or your apply will fail.
                                 type: string
                             type: object
                           type: array
@@ -261,6 +266,11 @@ spec:
                           description: (Block List) (see below for nested schema)
                           items:
                             properties:
+                              autoApplyApprovedChanges:
+                                description: |-
+                                  (Boolean) Automatically apply changes that have been approved by all reviewers. This field is only applicable for approval service kinds other than launchdarkly.
+                                  Automatically apply changes that have been approved by all reviewers. This field is only applicable for approval service kinds other than `launchdarkly`.
+                                type: boolean
                               canApplyDeclinedChanges:
                                 description: |-
                                   (Boolean) Set to true if changes can be applied as long as the min_num_approvals is met, regardless of whether any reviewers have declined a request. Defaults to true.
@@ -283,8 +293,8 @@ spec:
                                 type: boolean
                               requiredApprovalTags:
                                 description: |-
-                                  (List of String) An array of tags used to specify which flags with those tags require approval. You may only set required_approval_tags if required is not set to true and vice versa.
-                                  An array of tags used to specify which flags with those tags require approval. You may only set `required_approval_tags` if `required` is not set to `true` and vice versa.
+                                  (List of String) An array of tags used to specify which flags with those tags require approval. You may only set required_approval_tags if required is set to false and vice versa.
+                                  An array of tags used to specify which flags with those tags require approval. You may only set `required_approval_tags` if `required` is set to `false` and vice versa.
                                 items:
                                   type: string
                                 type: array
@@ -297,13 +307,13 @@ spec:
 
 
                                   - `template` (String) The sys_id of the Standard Change Request Template in ServiceNow that LaunchDarkly will use when creating the change request.
-                                  - `detail_column` (String) The name of the ServiceNow Change Request column LaunchDarkly uses to populate detailed approval request information.
+                                  - `detail_column` (String) The name of the ServiceNow Change Request column LaunchDarkly uses to populate detailed approval request information. This is most commonly "justification".
                                 type: object
                                 x-kubernetes-map-type: granular
                               serviceKind:
                                 description: |-
-                                  (String) The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are servicenow, launchdarkly.
-                                  The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are `servicenow`, `launchdarkly`.
+                                  (String) The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are servicenow, launchdarkly. If you use a value other than launchdarkly, you must have already configured the integration in the LaunchDarkly UI or your apply will fail.
+                                  The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are `servicenow`, `launchdarkly`. If you use a value other than `launchdarkly`, you must have already configured the integration in the LaunchDarkly UI or your apply will fail.
                                 type: string
                             type: object
                           type: array
@@ -593,6 +603,11 @@ spec:
                           description: (Block List) (see below for nested schema)
                           items:
                             properties:
+                              autoApplyApprovedChanges:
+                                description: |-
+                                  (Boolean) Automatically apply changes that have been approved by all reviewers. This field is only applicable for approval service kinds other than launchdarkly.
+                                  Automatically apply changes that have been approved by all reviewers. This field is only applicable for approval service kinds other than `launchdarkly`.
+                                type: boolean
                               canApplyDeclinedChanges:
                                 description: |-
                                   (Boolean) Set to true if changes can be applied as long as the min_num_approvals is met, regardless of whether any reviewers have declined a request. Defaults to true.
@@ -615,8 +630,8 @@ spec:
                                 type: boolean
                               requiredApprovalTags:
                                 description: |-
-                                  (List of String) An array of tags used to specify which flags with those tags require approval. You may only set required_approval_tags if required is not set to true and vice versa.
-                                  An array of tags used to specify which flags with those tags require approval. You may only set `required_approval_tags` if `required` is not set to `true` and vice versa.
+                                  (List of String) An array of tags used to specify which flags with those tags require approval. You may only set required_approval_tags if required is set to false and vice versa.
+                                  An array of tags used to specify which flags with those tags require approval. You may only set `required_approval_tags` if `required` is set to `false` and vice versa.
                                 items:
                                   type: string
                                 type: array
@@ -629,13 +644,13 @@ spec:
 
 
                                   - `template` (String) The sys_id of the Standard Change Request Template in ServiceNow that LaunchDarkly will use when creating the change request.
-                                  - `detail_column` (String) The name of the ServiceNow Change Request column LaunchDarkly uses to populate detailed approval request information.
+                                  - `detail_column` (String) The name of the ServiceNow Change Request column LaunchDarkly uses to populate detailed approval request information. This is most commonly "justification".
                                 type: object
                                 x-kubernetes-map-type: granular
                               serviceKind:
                                 description: |-
-                                  (String) The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are servicenow, launchdarkly.
-                                  The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are `servicenow`, `launchdarkly`.
+                                  (String) The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are servicenow, launchdarkly. If you use a value other than launchdarkly, you must have already configured the integration in the LaunchDarkly UI or your apply will fail.
+                                  The kind of service associated with this approval. This determines which platform is used for requesting approval. Valid values are `servicenow`, `launchdarkly`. If you use a value other than `launchdarkly`, you must have already configured the integration in the LaunchDarkly UI or your apply will fail.
                                 type: string
                             type: object
                           type: array
