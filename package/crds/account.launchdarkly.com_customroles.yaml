@@ -97,25 +97,6 @@ spec:
                       (String) A name for the custom role. This must be unique within your organization.
                       A name for the custom role. This must be unique within your organization.
                     type: string
-                  policy:
-                    description: (Block Set, Deprecated) (see below for nested schema)
-                    items:
-                      properties:
-                        actions:
-                          description: (List of String)
-                          items:
-                            type: string
-                          type: array
-                        effect:
-                          description: (String)
-                          type: string
-                        resources:
-                          description: (List of String)
-                          items:
-                            type: string
-                          type: array
-                      type: object
-                    type: array
                   policyStatements:
                     description: |-
                       (Block List) An array of the policy statements that define the permissions for the custom role. This field accepts role attributes. To use role attributes, use the syntax $${roleAttribute/<YOUR_ROLE_ATTRIBUTE>} in lieu of your usual resource keys. (see below for nested schema)
@@ -192,25 +173,6 @@ spec:
                       (String) A name for the custom role. This must be unique within your organization.
                       A name for the custom role. This must be unique within your organization.
                     type: string
-                  policy:
-                    description: (Block Set, Deprecated) (see below for nested schema)
-                    items:
-                      properties:
-                        actions:
-                          description: (List of String)
-                          items:
-                            type: string
-                          type: array
-                        effect:
-                          description: (String)
-                          type: string
-                        resources:
-                          description: (List of String)
-                          items:
-                            type: string
-                          type: array
-                      type: object
-                    type: array
                   policyStatements:
                     description: |-
                       (Block List) An array of the policy statements that define the permissions for the custom role. This field accepts role attributes. To use role attributes, use the syntax $${roleAttribute/<YOUR_ROLE_ATTRIBUTE>} in lieu of your usual resource keys. (see below for nested schema)
@@ -458,25 +420,6 @@ spec:
                       (String) A name for the custom role. This must be unique within your organization.
                       A name for the custom role. This must be unique within your organization.
                     type: string
-                  policy:
-                    description: (Block Set, Deprecated) (see below for nested schema)
-                    items:
-                      properties:
-                        actions:
-                          description: (List of String)
-                          items:
-                            type: string
-                          type: array
-                        effect:
-                          description: (String)
-                          type: string
-                        resources:
-                          description: (List of String)
-                          items:
-                            type: string
-                          type: array
-                      type: object
-                    type: array
                   policyStatements:
                     description: |-
                       (Block List) An array of the policy statements that define the permissions for the custom role. This field accepts role attributes. To use role attributes, use the syntax $${roleAttribute/<YOUR_ROLE_ATTRIBUTE>} in lieu of your usual resource keys. (see below for nested schema)
