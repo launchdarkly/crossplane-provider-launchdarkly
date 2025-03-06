@@ -318,10 +318,6 @@ type ProjectInitParameters struct {
 	// -> **Note:** Mixing the use of nested `environments` blocks and [`launchdarkly_environment`](/docs/providers/launchdarkly/r/environment.html) resources is not recommended.
 	Environments []EnvironmentsInitParameters `json:"environments,omitempty" tf:"environments,omitempty"`
 
-	// side SDKs by default. Please migrate to default_client_side_availability to maintain future compatibility.
-	// Whether feature flags created under the project should be available to client-side SDKs by default. Please migrate to `default_client_side_availability` to maintain future compatibility.
-	IncludeInSnippet *bool `json:"includeInSnippet,omitempty" tf:"include_in_snippet,omitempty"`
-
 	// unique key for the environment. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// The project's unique key. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
@@ -351,10 +347,6 @@ type ProjectObservation struct {
 	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// side SDKs by default. Please migrate to default_client_side_availability to maintain future compatibility.
-	// Whether feature flags created under the project should be available to client-side SDKs by default. Please migrate to `default_client_side_availability` to maintain future compatibility.
-	IncludeInSnippet *bool `json:"includeInSnippet,omitempty" tf:"include_in_snippet,omitempty"`
-
 	// unique key for the environment. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// The project's unique key. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
@@ -382,11 +374,6 @@ type ProjectParameters struct {
 	// -> **Note:** Mixing the use of nested `environments` blocks and [`launchdarkly_environment`](/docs/providers/launchdarkly/r/environment.html) resources is not recommended.
 	// +kubebuilder:validation:Optional
 	Environments []EnvironmentsParameters `json:"environments,omitempty" tf:"environments,omitempty"`
-
-	// side SDKs by default. Please migrate to default_client_side_availability to maintain future compatibility.
-	// Whether feature flags created under the project should be available to client-side SDKs by default. Please migrate to `default_client_side_availability` to maintain future compatibility.
-	// +kubebuilder:validation:Optional
-	IncludeInSnippet *bool `json:"includeInSnippet,omitempty" tf:"include_in_snippet,omitempty"`
 
 	// unique key for the environment. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// The project's unique key. A change in this field will force the destruction of the existing resource and the creation of a new one.

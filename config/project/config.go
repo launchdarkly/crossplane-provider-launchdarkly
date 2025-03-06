@@ -7,5 +7,8 @@ func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("launchdarkly_project", func(r *config.Resource) {
 		r.ShortGroup = "project"
 		r.Kind = "Project"
+
+		// remove deprecated fields
+		delete(r.TerraformResource.Schema, "include_in_snippet")
 	})
 }

@@ -2170,11 +2170,6 @@ func (in *ProjectInitParameters) DeepCopyInto(out *ProjectInitParameters) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
-	if in.IncludeInSnippet != nil {
-		in, out := &in.IncludeInSnippet, &out.IncludeInSnippet
-		*out = new(bool)
-		**out = **in
-	}
 	if in.Key != nil {
 		in, out := &in.Key, &out.Key
 		*out = new(string)
@@ -2262,11 +2257,6 @@ func (in *ProjectObservation) DeepCopyInto(out *ProjectObservation) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.IncludeInSnippet != nil {
-		in, out := &in.IncludeInSnippet, &out.IncludeInSnippet
-		*out = new(bool)
-		**out = **in
-	}
 	if in.Key != nil {
 		in, out := &in.Key, &out.Key
 		*out = new(string)
@@ -2316,11 +2306,6 @@ func (in *ProjectParameters) DeepCopyInto(out *ProjectParameters) {
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
-	}
-	if in.IncludeInSnippet != nil {
-		in, out := &in.IncludeInSnippet, &out.IncludeInSnippet
-		*out = new(bool)
-		**out = **in
 	}
 	if in.Key != nil {
 		in, out := &in.Key, &out.Key
