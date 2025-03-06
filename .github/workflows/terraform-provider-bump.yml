@@ -1,6 +1,9 @@
 name: Terraform Provider Version Bump
 
 on:
+  push:
+    branches:
+      - hbarrow/REL-6319/add-github-action-to-bump-terraform-provider-version
   workflow_call:
     inputs:
       provider-source:
@@ -70,8 +73,8 @@ jobs:
         if: steps.bump-mk.outputs.bumped != ''
         uses: peter-evans/create-pull-request@153407881ec5c347639a548ade7d8ad1d6740e38 # v5.0.2
         with:
-          title: Bump native provider to version ${{ steps.bump-mk.outputs.version }}
-          commit-message: Bump native provider to version ${{ steps.bump-mk.outputs.version }}
+          title: Bump terraform provider to version ${{ steps.bump-mk.outputs.version }}
+          commit-message: Bump terraform provider to version ${{ steps.bump-mk.outputs.version }}
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           base: main
