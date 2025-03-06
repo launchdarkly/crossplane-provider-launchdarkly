@@ -4,19 +4,14 @@ on:
   push:
     branches:
       - hbarrow/REL-6319/add-github-action-to-bump-terraform-provider-version
-  workflow_call:
-    inputs:
-      provider-source:
-        description: "Provider namespace/name to check, e.g., hashicorp/aws"
-        required: true
-        type: string
+  workflow_dispatch:
 
 env:
   GO_VERSION: "1.21"
   PROVIDER_SOURCE: "launchdarkly/launchdarkly"
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
   id-token: write
 
