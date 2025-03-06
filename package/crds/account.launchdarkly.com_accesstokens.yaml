@@ -91,11 +91,6 @@ spec:
                       (Number) The default API version for this token. Defaults to the latest API version. A change in this field will force the destruction of the existing resource and the creation of a new one.
                       The default API version for this token. Defaults to the latest API version. A change in this field will force the destruction of the existing resource and the creation of a new one.
                     type: number
-                  expire:
-                    description: |-
-                      (Number, Deprecated) An expiration time for the current token secret, expressed as a Unix epoch time. Replace the computed token secret with a new value. The expired secret will no longer be able to authorize usage of the LaunchDarkly API. This field argument is deprecated. Please update your config to remove expire to maintain compatibility with future versions
-                      An expiration time for the current token secret, expressed as a Unix epoch time. Replace the computed token secret with a new value. The expired secret will no longer be able to authorize usage of the LaunchDarkly API. This field argument is **deprecated**. Please update your config to remove `expire` to maintain compatibility with future versions
-                    type: number
                   inlineRoles:
                     description: |-
                       in or custom role. Using polices. May be specified more than once. (see below for nested schema)
@@ -144,49 +139,6 @@ spec:
                       friendly name for the access token.
                       A human-friendly name for the access token.
                     type: string
-                  policyStatements:
-                    description: |-
-                      in or custom role. May be specified more than once. This field argument is deprecated. Update your config to use inline_role to maintain compatibility with future versions. (see below for nested schema)
-                      Define inline custom roles. An array of statements represented as config blocks with three attributes: effect, resources, actions. May be used in place of a built-in or custom role. May be specified more than once. This field argument is **deprecated**. Update your config to use `inline_role` to maintain compatibility with future versions.
-                    items:
-                      properties:
-                        actions:
-                          description: |-
-                            (List of String) The list of action specifiers defining the actions to which the statement applies.
-                            Either actions or not_actions must be specified. For a list of available actions read Actions reference.
-                            The list of action specifiers defining the actions to which the statement applies.
-                            Either `actions` or `not_actions` must be specified. For a list of available actions read [Actions reference](https://docs.launchdarkly.com/home/account-security/custom-roles/actions#actions-reference).
-                          items:
-                            type: string
-                          type: array
-                        effect:
-                          description: |-
-                            (String) Either allow or deny. This argument defines whether the statement allows or denies access to the named resources and actions.
-                            Either `allow` or `deny`. This argument defines whether the statement allows or denies access to the named resources and actions.
-                          type: string
-                        notActions:
-                          description: |-
-                            (List of String) The list of action specifiers defining the actions to which the statement does not apply.
-                            The list of action specifiers defining the actions to which the statement does not apply.
-                          items:
-                            type: string
-                          type: array
-                        notResources:
-                          description: |-
-                            (List of String) The list of resource specifiers defining the resources to which the statement does not apply.
-                            The list of resource specifiers defining the resources to which the statement does not apply.
-                          items:
-                            type: string
-                          type: array
-                        resources:
-                          description: |-
-                            (List of String) The list of resource specifiers defining the resources to which the statement applies.
-                            The list of resource specifiers defining the resources to which the statement applies.
-                          items:
-                            type: string
-                          type: array
-                      type: object
-                    type: array
                   role:
                     description: |-
                       in LaunchDarkly role. Can be reader, writer, or admin
@@ -224,11 +176,6 @@ spec:
                       (Number) The default API version for this token. Defaults to the latest API version. A change in this field will force the destruction of the existing resource and the creation of a new one.
                       The default API version for this token. Defaults to the latest API version. A change in this field will force the destruction of the existing resource and the creation of a new one.
                     type: number
-                  expire:
-                    description: |-
-                      (Number, Deprecated) An expiration time for the current token secret, expressed as a Unix epoch time. Replace the computed token secret with a new value. The expired secret will no longer be able to authorize usage of the LaunchDarkly API. This field argument is deprecated. Please update your config to remove expire to maintain compatibility with future versions
-                      An expiration time for the current token secret, expressed as a Unix epoch time. Replace the computed token secret with a new value. The expired secret will no longer be able to authorize usage of the LaunchDarkly API. This field argument is **deprecated**. Please update your config to remove `expire` to maintain compatibility with future versions
-                    type: number
                   inlineRoles:
                     description: |-
                       in or custom role. Using polices. May be specified more than once. (see below for nested schema)
@@ -277,49 +224,6 @@ spec:
                       friendly name for the access token.
                       A human-friendly name for the access token.
                     type: string
-                  policyStatements:
-                    description: |-
-                      in or custom role. May be specified more than once. This field argument is deprecated. Update your config to use inline_role to maintain compatibility with future versions. (see below for nested schema)
-                      Define inline custom roles. An array of statements represented as config blocks with three attributes: effect, resources, actions. May be used in place of a built-in or custom role. May be specified more than once. This field argument is **deprecated**. Update your config to use `inline_role` to maintain compatibility with future versions.
-                    items:
-                      properties:
-                        actions:
-                          description: |-
-                            (List of String) The list of action specifiers defining the actions to which the statement applies.
-                            Either actions or not_actions must be specified. For a list of available actions read Actions reference.
-                            The list of action specifiers defining the actions to which the statement applies.
-                            Either `actions` or `not_actions` must be specified. For a list of available actions read [Actions reference](https://docs.launchdarkly.com/home/account-security/custom-roles/actions#actions-reference).
-                          items:
-                            type: string
-                          type: array
-                        effect:
-                          description: |-
-                            (String) Either allow or deny. This argument defines whether the statement allows or denies access to the named resources and actions.
-                            Either `allow` or `deny`. This argument defines whether the statement allows or denies access to the named resources and actions.
-                          type: string
-                        notActions:
-                          description: |-
-                            (List of String) The list of action specifiers defining the actions to which the statement does not apply.
-                            The list of action specifiers defining the actions to which the statement does not apply.
-                          items:
-                            type: string
-                          type: array
-                        notResources:
-                          description: |-
-                            (List of String) The list of resource specifiers defining the resources to which the statement does not apply.
-                            The list of resource specifiers defining the resources to which the statement does not apply.
-                          items:
-                            type: string
-                          type: array
-                        resources:
-                          description: |-
-                            (List of String) The list of resource specifiers defining the resources to which the statement applies.
-                            The list of resource specifiers defining the resources to which the statement applies.
-                          items:
-                            type: string
-                          type: array
-                      type: object
-                    type: array
                   role:
                     description: |-
                       in LaunchDarkly role. Can be reader, writer, or admin
@@ -516,11 +420,6 @@ spec:
                       (Number) The default API version for this token. Defaults to the latest API version. A change in this field will force the destruction of the existing resource and the creation of a new one.
                       The default API version for this token. Defaults to the latest API version. A change in this field will force the destruction of the existing resource and the creation of a new one.
                     type: number
-                  expire:
-                    description: |-
-                      (Number, Deprecated) An expiration time for the current token secret, expressed as a Unix epoch time. Replace the computed token secret with a new value. The expired secret will no longer be able to authorize usage of the LaunchDarkly API. This field argument is deprecated. Please update your config to remove expire to maintain compatibility with future versions
-                      An expiration time for the current token secret, expressed as a Unix epoch time. Replace the computed token secret with a new value. The expired secret will no longer be able to authorize usage of the LaunchDarkly API. This field argument is **deprecated**. Please update your config to remove `expire` to maintain compatibility with future versions
-                    type: number
                   id:
                     description: (String) The ID of this resource.
                     type: string
@@ -572,49 +471,6 @@ spec:
                       friendly name for the access token.
                       A human-friendly name for the access token.
                     type: string
-                  policyStatements:
-                    description: |-
-                      in or custom role. May be specified more than once. This field argument is deprecated. Update your config to use inline_role to maintain compatibility with future versions. (see below for nested schema)
-                      Define inline custom roles. An array of statements represented as config blocks with three attributes: effect, resources, actions. May be used in place of a built-in or custom role. May be specified more than once. This field argument is **deprecated**. Update your config to use `inline_role` to maintain compatibility with future versions.
-                    items:
-                      properties:
-                        actions:
-                          description: |-
-                            (List of String) The list of action specifiers defining the actions to which the statement applies.
-                            Either actions or not_actions must be specified. For a list of available actions read Actions reference.
-                            The list of action specifiers defining the actions to which the statement applies.
-                            Either `actions` or `not_actions` must be specified. For a list of available actions read [Actions reference](https://docs.launchdarkly.com/home/account-security/custom-roles/actions#actions-reference).
-                          items:
-                            type: string
-                          type: array
-                        effect:
-                          description: |-
-                            (String) Either allow or deny. This argument defines whether the statement allows or denies access to the named resources and actions.
-                            Either `allow` or `deny`. This argument defines whether the statement allows or denies access to the named resources and actions.
-                          type: string
-                        notActions:
-                          description: |-
-                            (List of String) The list of action specifiers defining the actions to which the statement does not apply.
-                            The list of action specifiers defining the actions to which the statement does not apply.
-                          items:
-                            type: string
-                          type: array
-                        notResources:
-                          description: |-
-                            (List of String) The list of resource specifiers defining the resources to which the statement does not apply.
-                            The list of resource specifiers defining the resources to which the statement does not apply.
-                          items:
-                            type: string
-                          type: array
-                        resources:
-                          description: |-
-                            (List of String) The list of resource specifiers defining the resources to which the statement applies.
-                            The list of resource specifiers defining the resources to which the statement applies.
-                          items:
-                            type: string
-                          type: array
-                      type: object
-                    type: array
                   role:
                     description: |-
                       in LaunchDarkly role. Can be reader, writer, or admin

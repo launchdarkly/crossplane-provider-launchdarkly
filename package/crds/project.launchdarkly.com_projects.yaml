@@ -202,11 +202,6 @@ spec:
                           x-kubernetes-list-type: set
                       type: object
                     type: array
-                  includeInSnippet:
-                    description: |-
-                      side SDKs by default. Please migrate to default_client_side_availability to maintain future compatibility.
-                      Whether feature flags created under the project should be available to client-side SDKs by default. Please migrate to `default_client_side_availability` to maintain future compatibility.
-                    type: boolean
                   key:
                     description: |-
                       unique key for the environment. A change in this field will force the destruction of the existing resource and the creation of a new one.
@@ -367,11 +362,6 @@ spec:
                           x-kubernetes-list-type: set
                       type: object
                     type: array
-                  includeInSnippet:
-                    description: |-
-                      side SDKs by default. Please migrate to default_client_side_availability to maintain future compatibility.
-                      Whether feature flags created under the project should be available to client-side SDKs by default. Please migrate to `default_client_side_availability` to maintain future compatibility.
-                    type: boolean
                   key:
                     description: |-
                       unique key for the environment. A change in this field will force the destruction of the existing resource and the creation of a new one.
@@ -707,11 +697,6 @@ spec:
                   id:
                     description: (String) The ID of this resource.
                     type: string
-                  includeInSnippet:
-                    description: |-
-                      side SDKs by default. Please migrate to default_client_side_availability to maintain future compatibility.
-                      Whether feature flags created under the project should be available to client-side SDKs by default. Please migrate to `default_client_side_availability` to maintain future compatibility.
-                    type: boolean
                   key:
                     description: |-
                       unique key for the environment. A change in this field will force the destruction of the existing resource and the creation of a new one.

@@ -36,7 +36,7 @@ type CustomRoleInitParameters struct {
 
 	// (Block List) An array of the policy statements that define the permissions for the custom role. This field accepts role attributes. To use role attributes, use the syntax $${roleAttribute/<YOUR_ROLE_ATTRIBUTE>} in lieu of your usual resource keys. (see below for nested schema)
 	// An array of the policy statements that define the permissions for the custom role. This field accepts [role attributes](https://docs.launchdarkly.com/home/getting-started/vocabulary#role-attribute). To use role attributes, use the syntax `$${roleAttribute/<YOUR_ROLE_ATTRIBUTE>}` in lieu of your usual resource keys.
-	PolicyStatements []CustomRolePolicyStatementsInitParameters `json:"policyStatements,omitempty" tf:"policy_statements,omitempty"`
+	PolicyStatements []PolicyStatementsInitParameters `json:"policyStatements,omitempty" tf:"policy_statements,omitempty"`
 }
 
 type CustomRoleObservation struct {
@@ -65,7 +65,7 @@ type CustomRoleObservation struct {
 
 	// (Block List) An array of the policy statements that define the permissions for the custom role. This field accepts role attributes. To use role attributes, use the syntax $${roleAttribute/<YOUR_ROLE_ATTRIBUTE>} in lieu of your usual resource keys. (see below for nested schema)
 	// An array of the policy statements that define the permissions for the custom role. This field accepts [role attributes](https://docs.launchdarkly.com/home/getting-started/vocabulary#role-attribute). To use role attributes, use the syntax `$${roleAttribute/<YOUR_ROLE_ATTRIBUTE>}` in lieu of your usual resource keys.
-	PolicyStatements []CustomRolePolicyStatementsObservation `json:"policyStatements,omitempty" tf:"policy_statements,omitempty"`
+	PolicyStatements []PolicyStatementsObservation `json:"policyStatements,omitempty" tf:"policy_statements,omitempty"`
 }
 
 type CustomRoleParameters struct {
@@ -97,84 +97,7 @@ type CustomRoleParameters struct {
 	// (Block List) An array of the policy statements that define the permissions for the custom role. This field accepts role attributes. To use role attributes, use the syntax $${roleAttribute/<YOUR_ROLE_ATTRIBUTE>} in lieu of your usual resource keys. (see below for nested schema)
 	// An array of the policy statements that define the permissions for the custom role. This field accepts [role attributes](https://docs.launchdarkly.com/home/getting-started/vocabulary#role-attribute). To use role attributes, use the syntax `$${roleAttribute/<YOUR_ROLE_ATTRIBUTE>}` in lieu of your usual resource keys.
 	// +kubebuilder:validation:Optional
-	PolicyStatements []CustomRolePolicyStatementsParameters `json:"policyStatements,omitempty" tf:"policy_statements,omitempty"`
-}
-
-type CustomRolePolicyStatementsInitParameters struct {
-
-	// (List of String)
-	// The list of action specifiers defining the actions to which the statement applies.
-	// Either `actions` or `not_actions` must be specified. For a list of available actions read [Actions reference](https://docs.launchdarkly.com/home/account-security/custom-roles/actions#actions-reference).
-	Actions []*string `json:"actions,omitempty" tf:"actions,omitempty"`
-
-	// (String)
-	// Either `allow` or `deny`. This argument defines whether the statement allows or denies access to the named resources and actions.
-	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
-
-	// (List of String) The list of action specifiers defining the actions to which the statement does not apply.
-	// The list of action specifiers defining the actions to which the statement does not apply.
-	NotActions []*string `json:"notActions,omitempty" tf:"not_actions,omitempty"`
-
-	// (List of String) The list of resource specifiers defining the resources to which the statement does not apply.
-	// The list of resource specifiers defining the resources to which the statement does not apply.
-	NotResources []*string `json:"notResources,omitempty" tf:"not_resources,omitempty"`
-
-	// (List of String)
-	// The list of resource specifiers defining the resources to which the statement applies.
-	Resources []*string `json:"resources,omitempty" tf:"resources,omitempty"`
-}
-
-type CustomRolePolicyStatementsObservation struct {
-
-	// (List of String)
-	// The list of action specifiers defining the actions to which the statement applies.
-	// Either `actions` or `not_actions` must be specified. For a list of available actions read [Actions reference](https://docs.launchdarkly.com/home/account-security/custom-roles/actions#actions-reference).
-	Actions []*string `json:"actions,omitempty" tf:"actions,omitempty"`
-
-	// (String)
-	// Either `allow` or `deny`. This argument defines whether the statement allows or denies access to the named resources and actions.
-	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
-
-	// (List of String) The list of action specifiers defining the actions to which the statement does not apply.
-	// The list of action specifiers defining the actions to which the statement does not apply.
-	NotActions []*string `json:"notActions,omitempty" tf:"not_actions,omitempty"`
-
-	// (List of String) The list of resource specifiers defining the resources to which the statement does not apply.
-	// The list of resource specifiers defining the resources to which the statement does not apply.
-	NotResources []*string `json:"notResources,omitempty" tf:"not_resources,omitempty"`
-
-	// (List of String)
-	// The list of resource specifiers defining the resources to which the statement applies.
-	Resources []*string `json:"resources,omitempty" tf:"resources,omitempty"`
-}
-
-type CustomRolePolicyStatementsParameters struct {
-
-	// (List of String)
-	// The list of action specifiers defining the actions to which the statement applies.
-	// Either `actions` or `not_actions` must be specified. For a list of available actions read [Actions reference](https://docs.launchdarkly.com/home/account-security/custom-roles/actions#actions-reference).
-	// +kubebuilder:validation:Optional
-	Actions []*string `json:"actions,omitempty" tf:"actions,omitempty"`
-
-	// (String)
-	// Either `allow` or `deny`. This argument defines whether the statement allows or denies access to the named resources and actions.
-	// +kubebuilder:validation:Optional
-	Effect *string `json:"effect" tf:"effect,omitempty"`
-
-	// (List of String) The list of action specifiers defining the actions to which the statement does not apply.
-	// The list of action specifiers defining the actions to which the statement does not apply.
-	// +kubebuilder:validation:Optional
-	NotActions []*string `json:"notActions,omitempty" tf:"not_actions,omitempty"`
-
-	// (List of String) The list of resource specifiers defining the resources to which the statement does not apply.
-	// The list of resource specifiers defining the resources to which the statement does not apply.
-	// +kubebuilder:validation:Optional
-	NotResources []*string `json:"notResources,omitempty" tf:"not_resources,omitempty"`
-
-	// (List of String)
-	// The list of resource specifiers defining the resources to which the statement applies.
-	// +kubebuilder:validation:Optional
-	Resources []*string `json:"resources,omitempty" tf:"resources,omitempty"`
+	PolicyStatements []PolicyStatementsParameters `json:"policyStatements,omitempty" tf:"policy_statements,omitempty"`
 }
 
 type PolicyInitParameters struct {
@@ -214,6 +137,83 @@ type PolicyParameters struct {
 	// (List of String)
 	// +kubebuilder:validation:Optional
 	Resources []*string `json:"resources" tf:"resources,omitempty"`
+}
+
+type PolicyStatementsInitParameters struct {
+
+	// (List of String)
+	// The list of action specifiers defining the actions to which the statement applies.
+	// Either `actions` or `not_actions` must be specified. For a list of available actions read [Actions reference](https://docs.launchdarkly.com/home/account-security/custom-roles/actions#actions-reference).
+	Actions []*string `json:"actions,omitempty" tf:"actions,omitempty"`
+
+	// (String)
+	// Either `allow` or `deny`. This argument defines whether the statement allows or denies access to the named resources and actions.
+	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
+
+	// (List of String) The list of action specifiers defining the actions to which the statement does not apply.
+	// The list of action specifiers defining the actions to which the statement does not apply.
+	NotActions []*string `json:"notActions,omitempty" tf:"not_actions,omitempty"`
+
+	// (List of String) The list of resource specifiers defining the resources to which the statement does not apply.
+	// The list of resource specifiers defining the resources to which the statement does not apply.
+	NotResources []*string `json:"notResources,omitempty" tf:"not_resources,omitempty"`
+
+	// (List of String)
+	// The list of resource specifiers defining the resources to which the statement applies.
+	Resources []*string `json:"resources,omitempty" tf:"resources,omitempty"`
+}
+
+type PolicyStatementsObservation struct {
+
+	// (List of String)
+	// The list of action specifiers defining the actions to which the statement applies.
+	// Either `actions` or `not_actions` must be specified. For a list of available actions read [Actions reference](https://docs.launchdarkly.com/home/account-security/custom-roles/actions#actions-reference).
+	Actions []*string `json:"actions,omitempty" tf:"actions,omitempty"`
+
+	// (String)
+	// Either `allow` or `deny`. This argument defines whether the statement allows or denies access to the named resources and actions.
+	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
+
+	// (List of String) The list of action specifiers defining the actions to which the statement does not apply.
+	// The list of action specifiers defining the actions to which the statement does not apply.
+	NotActions []*string `json:"notActions,omitempty" tf:"not_actions,omitempty"`
+
+	// (List of String) The list of resource specifiers defining the resources to which the statement does not apply.
+	// The list of resource specifiers defining the resources to which the statement does not apply.
+	NotResources []*string `json:"notResources,omitempty" tf:"not_resources,omitempty"`
+
+	// (List of String)
+	// The list of resource specifiers defining the resources to which the statement applies.
+	Resources []*string `json:"resources,omitempty" tf:"resources,omitempty"`
+}
+
+type PolicyStatementsParameters struct {
+
+	// (List of String)
+	// The list of action specifiers defining the actions to which the statement applies.
+	// Either `actions` or `not_actions` must be specified. For a list of available actions read [Actions reference](https://docs.launchdarkly.com/home/account-security/custom-roles/actions#actions-reference).
+	// +kubebuilder:validation:Optional
+	Actions []*string `json:"actions,omitempty" tf:"actions,omitempty"`
+
+	// (String)
+	// Either `allow` or `deny`. This argument defines whether the statement allows or denies access to the named resources and actions.
+	// +kubebuilder:validation:Optional
+	Effect *string `json:"effect" tf:"effect,omitempty"`
+
+	// (List of String) The list of action specifiers defining the actions to which the statement does not apply.
+	// The list of action specifiers defining the actions to which the statement does not apply.
+	// +kubebuilder:validation:Optional
+	NotActions []*string `json:"notActions,omitempty" tf:"not_actions,omitempty"`
+
+	// (List of String) The list of resource specifiers defining the resources to which the statement does not apply.
+	// The list of resource specifiers defining the resources to which the statement does not apply.
+	// +kubebuilder:validation:Optional
+	NotResources []*string `json:"notResources,omitempty" tf:"not_resources,omitempty"`
+
+	// (List of String)
+	// The list of resource specifiers defining the resources to which the statement applies.
+	// +kubebuilder:validation:Optional
+	Resources []*string `json:"resources,omitempty" tf:"resources,omitempty"`
 }
 
 // CustomRoleSpec defines the desired state of CustomRole
