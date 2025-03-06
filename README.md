@@ -9,11 +9,13 @@ LaunchDarkly API.
 
 Install the provider by using the following command after changing the image tag
 to the [latest release](https://marketplace.upbound.io/providers/launchdarkly/provider-launchdarkly):
+
 ```
-up ctp provider install launchdarkly/provider-launchdarkly:v0.1.0
+up ctp provider install xpkg.upbound.io/launchdarkly/provider-launchdarkly:v0.0.1
 ```
 
 Alternatively, you can use declarative installation:
+
 ```
 cat <<EOF | kubectl apply -f -
 apiVersion: pkg.crossplane.io/v1
@@ -21,7 +23,7 @@ kind: Provider
 metadata:
   name: provider-launchdarkly
 spec:
-  package: launchdarkly/provider-launchdarkly:v0.1.0
+  package: xpkg.upbound.io/launchdarkly/provider-launchdarkly:v0.0.1
 EOF
 ```
 
@@ -32,6 +34,7 @@ You can see the API reference [here](https://doc.crds.dev/github.com/launchdarkl
 ## Developing
 
 Run code-generation pipeline:
+
 ```console
 go run cmd/generator/main.go "$PWD"
 ```

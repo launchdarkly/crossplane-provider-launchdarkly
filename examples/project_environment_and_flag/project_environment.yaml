@@ -12,6 +12,7 @@ spec:
     environments:
       - key: production
         name: Production
+        critical: true
         approvalSettings:
           - canApplyDeclinedChanges: false
             canReviewOwnRequest: false
