@@ -152,10 +152,6 @@ type FeatureFlagInitParameters struct {
 	// The feature flag's description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// side JavaScript SDK using the client-side Id. This value gets its default from your project configuration if not set. include_in_snippet is now deprecated. Please migrate to client_side_availability.using_environment_id to maintain future compatibility.
-	// Specifies whether this flag should be made available to the client-side JavaScript SDK using the client-side Id. This value gets its default from your project configuration if not set. `include_in_snippet` is now deprecated. Please migrate to `client_side_availability.using_environment_id` to maintain future compatibility.
-	IncludeInSnippet *bool `json:"includeInSnippet,omitempty" tf:"include_in_snippet,omitempty"`
-
 	// (String) The unique feature flag key that references the flag in your application code. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// The unique feature flag key that references the flag in your application code. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
@@ -217,10 +213,6 @@ type FeatureFlagObservation struct {
 
 	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
-
-	// side JavaScript SDK using the client-side Id. This value gets its default from your project configuration if not set. include_in_snippet is now deprecated. Please migrate to client_side_availability.using_environment_id to maintain future compatibility.
-	// Specifies whether this flag should be made available to the client-side JavaScript SDK using the client-side Id. This value gets its default from your project configuration if not set. `include_in_snippet` is now deprecated. Please migrate to `client_side_availability.using_environment_id` to maintain future compatibility.
-	IncludeInSnippet *bool `json:"includeInSnippet,omitempty" tf:"include_in_snippet,omitempty"`
 
 	// (String) The unique feature flag key that references the flag in your application code. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// The unique feature flag key that references the flag in your application code. A change in this field will force the destruction of the existing resource and the creation of a new one.
@@ -285,11 +277,6 @@ type FeatureFlagParameters struct {
 	// The feature flag's description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// side JavaScript SDK using the client-side Id. This value gets its default from your project configuration if not set. include_in_snippet is now deprecated. Please migrate to client_side_availability.using_environment_id to maintain future compatibility.
-	// Specifies whether this flag should be made available to the client-side JavaScript SDK using the client-side Id. This value gets its default from your project configuration if not set. `include_in_snippet` is now deprecated. Please migrate to `client_side_availability.using_environment_id` to maintain future compatibility.
-	// +kubebuilder:validation:Optional
-	IncludeInSnippet *bool `json:"includeInSnippet,omitempty" tf:"include_in_snippet,omitempty"`
 
 	// (String) The unique feature flag key that references the flag in your application code. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// The unique feature flag key that references the flag in your application code. A change in this field will force the destruction of the existing resource and the creation of a new one.

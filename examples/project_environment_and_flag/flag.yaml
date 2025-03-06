@@ -6,8 +6,8 @@ metadata:
 spec:
   forProvider:
     clientSideAvailability:
-      - usingEnvironmentId: true # Enable client-side SDKs (JS, React, etc) to use this flag
-        usingMobileKey: false # Don't enable mobile SDKs (iOS, Android) to use this flag
+      - usingEnvironmentId: true
+        usingMobileKey: true
     defaults:
       - offVariation: 0 # Default to the "Off" variation when the flag is off
         onVariation: 2 # Default to the "Bricks" variation when the flag is on

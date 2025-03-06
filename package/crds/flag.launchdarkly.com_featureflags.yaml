@@ -144,11 +144,6 @@ spec:
                       (String) The feature flag's description.
                       The feature flag's description.
                     type: string
-                  includeInSnippet:
-                    description: |-
-                      side JavaScript SDK using the client-side Id. This value gets its default from your project configuration if not set. include_in_snippet is now deprecated. Please migrate to client_side_availability.using_environment_id to maintain future compatibility.
-                      Specifies whether this flag should be made available to the client-side JavaScript SDK using the client-side Id. This value gets its default from your project configuration if not set. `include_in_snippet` is now deprecated. Please migrate to `client_side_availability.using_environment_id` to maintain future compatibility.
-                    type: boolean
                   key:
                     description: |-
                       (String) The unique feature flag key that references the flag in your application code. A change in this field will force the destruction of the existing resource and the creation of a new one.
@@ -298,11 +293,6 @@ spec:
                       (String) The feature flag's description.
                       The feature flag's description.
                     type: string
-                  includeInSnippet:
-                    description: |-
-                      side JavaScript SDK using the client-side Id. This value gets its default from your project configuration if not set. include_in_snippet is now deprecated. Please migrate to client_side_availability.using_environment_id to maintain future compatibility.
-                      Specifies whether this flag should be made available to the client-side JavaScript SDK using the client-side Id. This value gets its default from your project configuration if not set. `include_in_snippet` is now deprecated. Please migrate to `client_side_availability.using_environment_id` to maintain future compatibility.
-                    type: boolean
                   key:
                     description: |-
                       (String) The unique feature flag key that references the flag in your application code. A change in this field will force the destruction of the existing resource and the creation of a new one.
@@ -631,11 +621,6 @@ spec:
                   id:
                     description: (String) The ID of this resource.
                     type: string
-                  includeInSnippet:
-                    description: |-
-                      side JavaScript SDK using the client-side Id. This value gets its default from your project configuration if not set. include_in_snippet is now deprecated. Please migrate to client_side_availability.using_environment_id to maintain future compatibility.
-                      Specifies whether this flag should be made available to the client-side JavaScript SDK using the client-side Id. This value gets its default from your project configuration if not set. `include_in_snippet` is now deprecated. Please migrate to `client_side_availability.using_environment_id` to maintain future compatibility.
-                    type: boolean
                   key:
                     description: |-
                       (String) The unique feature flag key that references the flag in your application code. A change in this field will force the destruction of the existing resource and the creation of a new one.

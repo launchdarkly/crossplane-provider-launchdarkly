@@ -10,5 +10,8 @@ func Configure(p *config.Provider) {
 		r.References["project"] = config.Reference{
 			TerraformName: "launchdarkly_project",
 		}
+
+		// Remove deprecated fields
+		delete(r.TerraformResource.Schema, "include_in_snippet")
 	})
 }

@@ -1039,11 +1039,6 @@ func (in *FeatureFlagInitParameters) DeepCopyInto(out *FeatureFlagInitParameters
 		*out = new(string)
 		**out = **in
 	}
-	if in.IncludeInSnippet != nil {
-		in, out := &in.IncludeInSnippet, &out.IncludeInSnippet
-		*out = new(bool)
-		**out = **in
-	}
 	if in.Key != nil {
 		in, out := &in.Key, &out.Key
 		*out = new(string)
@@ -1180,11 +1175,6 @@ func (in *FeatureFlagObservation) DeepCopyInto(out *FeatureFlagObservation) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.IncludeInSnippet != nil {
-		in, out := &in.IncludeInSnippet, &out.IncludeInSnippet
-		*out = new(bool)
-		**out = **in
-	}
 	if in.Key != nil {
 		in, out := &in.Key, &out.Key
 		*out = new(string)
@@ -1282,11 +1272,6 @@ func (in *FeatureFlagParameters) DeepCopyInto(out *FeatureFlagParameters) {
 	if in.Description != nil {
 		in, out := &in.Description, &out.Description
 		*out = new(string)
-		**out = **in
-	}
-	if in.IncludeInSnippet != nil {
-		in, out := &in.IncludeInSnippet, &out.IncludeInSnippet
-		*out = new(bool)
 		**out = **in
 	}
 	if in.Key != nil {
