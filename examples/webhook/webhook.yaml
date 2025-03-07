@@ -1,0 +1,22 @@
+apiVersion: account.launchdarkly.com/v1alpha1
+kind: Webhook
+metadata:
+  name: webhook-example
+spec:
+  forProvider:
+    name: Crossplane Webhook
+    "on": true
+    statements:
+      - actions:
+          - "*"
+        effect: allow
+        resources:
+          - proj/*:env/production:flag/*
+      - actions:
+          - "*"
+        effect: allow
+        resources:
+          - proj/test:env/production:segment/*
+    tags:
+      - terraform
+    url: https://example.com
