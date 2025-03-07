@@ -70,7 +70,6 @@ make build
 
    ```bash
    kubectl config use-context <name-of-your-local-k8s-context>
-   kubectl apply -f ./package/crossplane.yaml
    kubectl apply -f ./package/crds
    ```
 
