@@ -1,6 +1,9 @@
 package segment
 
-import "github.com/crossplane/upjet/pkg/config"
+import (
+	"github.com/crossplane/upjet/pkg/config"
+	"github.com/launchdarkly/crossplane-provider-launchdarkly/config/extractors"
+)
 
 // Configure configures individual resources by adding custom ResourceConfigurators.
 func Configure(p *config.Provider) {
@@ -9,6 +12,7 @@ func Configure(p *config.Provider) {
 		r.Kind = "EnvironmentSegment"
 		r.References["env_key"] = config.Reference{
 			TerraformName: "launchdarkly_environment",
+			Extractor:     extractors.FieldExtractorFnReference("key"),
 		}
 	})
 }

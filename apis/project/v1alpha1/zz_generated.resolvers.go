@@ -9,6 +9,7 @@ package v1alpha1
 import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	extractors "github.com/launchdarkly/crossplane-provider-launchdarkly/config/extractors"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -22,7 +23,7 @@ func (mg *EnvironmentSegment) ResolveReferences(ctx context.Context, c client.Re
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.EnvKey),
-		Extract:      reference.ExternalName(),
+		Extract:      extractors.FieldExtractor("key"),
 		Reference:    mg.Spec.ForProvider.EnvKeyRef,
 		Selector:     mg.Spec.ForProvider.EnvKeySelector,
 		To: reference.To{
@@ -38,7 +39,7 @@ func (mg *EnvironmentSegment) ResolveReferences(ctx context.Context, c client.Re
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.EnvKey),
-		Extract:      reference.ExternalName(),
+		Extract:      extractors.FieldExtractor("key"),
 		Reference:    mg.Spec.InitProvider.EnvKeyRef,
 		Selector:     mg.Spec.InitProvider.EnvKeySelector,
 		To: reference.To{

@@ -1,0 +1,54 @@
+apiVersion: project.launchdarkly.com/v1alpha1
+kind: Environment
+metadata:
+  name: cross-reference-env
+spec:
+  forProvider:
+    key: cross-reference-env
+    name: Cross Reference Environment
+    projectKey: crossplane-project
+    color: FFFFFF
+    tags:
+      - managed-by-crossplane
+---
+apiVersion: project.launchdarkly.com/v1alpha1
+kind: EnvironmentSegment
+metadata:
+  name: example-segment-env-cr
+spec:
+  forProvider:
+    description: Cross reference segment
+    projectKey: crossplane-project
+    envKeyRef:
+      name: cross-reference-env
+    includedContexts:
+      - contextKind: account
+        values:
+          - account1
+          - account2
+    key: example-segment-key
+    name: example segment
+
+    rules:
+      - clauses:
+          - attribute: country
+            contextKind: location-data
+            negate: false
+            op: startsWith
+            values:
+              - en
+              - de
+              - un
+      - clauses:
+          - attribute: country
+            contextKind: location-data
+            negate: false
+            op: startsWith
+            values:
+              - tok
+        rolloutContextKind: location-data
+        weight: 50000
+
+    tags:
+      - segment-tag-1
+      - segment-tag-2

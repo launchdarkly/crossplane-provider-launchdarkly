@@ -2,3 +2,14 @@ apiVersion: meta.pkg.crossplane.io/v1
 kind: Provider
 metadata:
   name: provider-launchdarkly
+  annotations:
+    meta.crossplane.io/maintainer: "LaunchDarkly integrations <integrations@launchdarkly.com>"
+    meta.crossplane.io/source: "github.com/launchdarkly/crossplane-provider-launchdarkly"
+    meta.crossplane.io/license: "Apache-2.0"
+    meta.crossplane.io/description: "Crossplane provider generated from https://github.com/launchdarkly/terraform-provider-launchdarkly."
+    meta.crossplane.io/readme: |
+      # LaunchDarkly Provider
+
+      This provider is generated from https://github.com/launchdarkly/terraform-provider-launchdarkly by https://github.com/upbound/upjet.
+
+      See the [examples directory in the source repository](https://github.com/launchdarkly/crossplane-provider-launchdarkly/tree/main/examples/) for examples on how to use this provider.
