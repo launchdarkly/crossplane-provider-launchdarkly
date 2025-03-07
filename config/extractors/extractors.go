@@ -13,10 +13,12 @@ const (
 	SelfPackagePath = "github.com/launchdarkly/crossplane-provider-launchdarkly/config/extractors"
 )
 
+// FieldExtractorFnReference returns a reference to function that extracts a field from a resource.
 func FieldExtractorFnReference(field string) string {
 	return fmt.Sprintf("%s.FieldExtractor(%q)", SelfPackagePath, field)
 }
 
+// FieldExtractor returns a function that extracts a field from a resource.
 func FieldExtractor(field string) reference.ExtractValueFn {
 	return func(mg xpresource.Managed) string {
 		paved, err := fieldpath.PaveObject(mg)
