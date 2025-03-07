@@ -9,6 +9,7 @@
 package v1alpha1
 
 import (
+	"github.com/crossplane/crossplane-runtime/apis/common/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 
@@ -1109,6 +1110,16 @@ func (in *EnvironmentSegmentInitParameters) DeepCopyInto(out *EnvironmentSegment
 		*out = new(string)
 		**out = **in
 	}
+	if in.EnvKeyRef != nil {
+		in, out := &in.EnvKeyRef, &out.EnvKeyRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.EnvKeySelector != nil {
+		in, out := &in.EnvKeySelector, &out.EnvKeySelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Excluded != nil {
 		in, out := &in.Excluded, &out.Excluded
 		*out = make([]*string, len(*in))
@@ -1358,6 +1369,16 @@ func (in *EnvironmentSegmentParameters) DeepCopyInto(out *EnvironmentSegmentPara
 		in, out := &in.EnvKey, &out.EnvKey
 		*out = new(string)
 		**out = **in
+	}
+	if in.EnvKeyRef != nil {
+		in, out := &in.EnvKeyRef, &out.EnvKeyRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.EnvKeySelector != nil {
+		in, out := &in.EnvKeySelector, &out.EnvKeySelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Excluded != nil {
 		in, out := &in.Excluded, &out.Excluded

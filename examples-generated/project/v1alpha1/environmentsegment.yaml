@@ -9,7 +9,9 @@ metadata:
 spec:
   forProvider:
     description: This segment is managed by Terraform
-    envKey: staging
+    envKeySelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     excluded:
     - user3
     - user4
