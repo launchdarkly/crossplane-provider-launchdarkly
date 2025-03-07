@@ -1,0 +1,23 @@
+apiVersion: flag.launchdarkly.com/v1alpha1
+kind: FeatureFlag
+metadata:
+  name: boolean-flag
+spec:
+  forProvider:
+    clientSideAvailability:
+      - usingEnvironmentId: false
+        usingMobileKey: true
+    defaults:
+      - offVariation: 0
+        onVariation: 1
+    description: This is a boolean flag.
+    key: boolean-flag
+    name: Boolean Flag
+    projectKey: crossplane-project
+    tags:
+      - example
+      - crossplane
+    variationType: boolean
+    variations:
+      - value: "false"
+      - value: "true"

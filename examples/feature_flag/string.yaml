@@ -1,0 +1,32 @@
+apiVersion: flag.launchdarkly.com/v1alpha1
+kind: FeatureFlag
+metadata:
+  name: building-materials
+spec:
+  forProvider:
+    clientSideAvailability:
+      - usingEnvironmentId: false
+        usingMobileKey: true
+    defaults:
+      - offVariation: 0
+        onVariation: 2
+    description: this is a multivariate flag with string variations.
+    key: building-materials
+    name: Building materials
+    projectKey: crossplane-project
+    tags:
+      - example
+      - crossplane
+      - multivariate
+      - building-materials
+    variationType: string
+    variations:
+      - description: Watch out for wind.
+        name: Straw
+        value: straw
+      - description: Sturdier than straw
+        name: Sticks
+        value: sticks
+      - description: The strongest variation
+        name: Bricks
+        value: bricks

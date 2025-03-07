@@ -1,0 +1,51 @@
+---
+apiVersion: flag.launchdarkly.com/v1alpha1
+kind: FeatureFlag
+metadata:
+  name: targeting-rules-flag
+spec:
+  forProvider:
+    defaults:
+      - offVariation: 0
+        onVariation: 1
+    key: targeting-rules-flag
+    name: Targeting Rules Flag
+    projectKey: crossplane-project
+    variationType: boolean
+    variations:
+      - value: "false"
+      - value: "true"
+---
+apiVersion: flag.launchdarkly.com/v1alpha1
+kind: FeatureFlagEnvironment
+metadata:
+  name: targeting-ff-env
+spec:
+  forProvider:
+    flagId: crossplane-project/targeting-rules-flag
+    envKey: test
+    offVariation: 1
+    "on": true
+
+    contextTargets:
+      - contextKind: account
+        values:
+          - accountX
+        variation: 1
+    fallthrough:
+      - bucketBy: accountId
+        contextKind: account
+        rolloutWeights:
+          - 60000
+          - 40000
+    rules:
+      - clauses:
+          - attribute: country
+            negate: false
+            op: startsWith
+            values:
+              - aus
+              - de
+              - united
+        description: Target countries
+        variation: 0

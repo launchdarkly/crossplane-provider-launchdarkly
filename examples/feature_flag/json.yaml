@@ -1,0 +1,24 @@
+apiVersion: flag.launchdarkly.com/v1alpha1
+kind: FeatureFlag
+metadata:
+  name: json-flag
+spec:
+  forProvider:
+    defaults:
+      - offVariation: 0
+        onVariation: 1
+    description: This flag serves JSON.
+    key: json-flag
+    name: JSON Flag
+    projectKey: crossplane-project
+    tags:
+      - example
+      - crossplane
+      - json
+    variationType: json
+    variations:
+      - description: The loneliest number
+        name: Foo-bar
+        value: '{"foo": "bar"}'
+      - name: Foo-baz
+        value: '{"foo": "baz"}'

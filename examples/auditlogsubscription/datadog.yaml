@@ -1,0 +1,21 @@
+apiVersion: account.launchdarkly.com/v1alpha1
+kind: AuditLogSubscription
+metadata:
+  name: datadog-subscription
+spec:
+  forProvider:
+    config:
+      api_key: your-datadog-api-key
+      host_url: https://api.datadoghq.com
+    integrationKey: datadog
+    name: Crossplane Datadog Subscription
+    "on": true
+    statements:
+      - actions:
+          - "*"
+        effect: allow
+        resources:
+          - proj/*:env/*:flag/*
+    tags:
+      - integrations
+      - crossplane
