@@ -1,0 +1,14 @@
+apiVersion: account.launchdarkly.com/v1alpha1
+kind: AccessToken
+metadata:
+  name: crossplane-access-token
+spec:
+  forProvider:
+    name: Crossplane Access Token
+    inlineRoles:
+      - actions:
+          - "*"
+        effect: allow
+        resources:
+          - "proj/*:env/staging:flag/*"
+    serviceToken: true
