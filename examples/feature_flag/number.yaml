@@ -1,0 +1,25 @@
+apiVersion: flag.launchdarkly.com/v1alpha1
+kind: FeatureFlag
+metadata:
+  name: number-flag
+spec:
+  forProvider:
+    defaults:
+      - offVariation: 0
+        onVariation: 2
+    description: This flag serves numbers.
+    key: number-flag
+    name: Number Flag
+    projectKey: crossplane-project
+    tags:
+      - example
+      - crossplane
+      - multivariate
+    variationType: number
+    variations:
+      - description: The loneliest number
+        name: Straw
+        value: "1"
+      - name: Two
+        value: "2"
+      - value: "3"
