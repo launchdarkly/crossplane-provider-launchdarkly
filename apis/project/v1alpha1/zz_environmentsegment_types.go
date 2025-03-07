@@ -108,7 +108,16 @@ type EnvironmentSegmentInitParameters struct {
 
 	// (String) The segment's environment key. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// The segment's environment key. A change in this field will force the destruction of the existing resource and the creation of a new one.
+	// +crossplane:generate:reference:type=github.com/launchdarkly/crossplane-provider-launchdarkly/apis/project/v1alpha1.Environment
 	EnvKey *string `json:"envKey,omitempty" tf:"env_key,omitempty"`
+
+	// Reference to a Environment in project to populate envKey.
+	// +kubebuilder:validation:Optional
+	EnvKeyRef *v1.Reference `json:"envKeyRef,omitempty" tf:"-"`
+
+	// Selector for a Environment in project to populate envKey.
+	// +kubebuilder:validation:Optional
+	EnvKeySelector *v1.Selector `json:"envKeySelector,omitempty" tf:"-"`
 
 	// (List of String) List of user keys excluded from the segment. To target on other context kinds, use the excluded_contexts block attribute. This attribute is not valid when unbounded is set to true.
 	// List of user keys excluded from the segment. To target on other context kinds, use the excluded_contexts block attribute. This attribute is not valid when `unbounded` is set to `true`.
@@ -228,8 +237,17 @@ type EnvironmentSegmentParameters struct {
 
 	// (String) The segment's environment key. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// The segment's environment key. A change in this field will force the destruction of the existing resource and the creation of a new one.
+	// +crossplane:generate:reference:type=github.com/launchdarkly/crossplane-provider-launchdarkly/apis/project/v1alpha1.Environment
 	// +kubebuilder:validation:Optional
 	EnvKey *string `json:"envKey,omitempty" tf:"env_key,omitempty"`
+
+	// Reference to a Environment in project to populate envKey.
+	// +kubebuilder:validation:Optional
+	EnvKeyRef *v1.Reference `json:"envKeyRef,omitempty" tf:"-"`
+
+	// Selector for a Environment in project to populate envKey.
+	// +kubebuilder:validation:Optional
+	EnvKeySelector *v1.Selector `json:"envKeySelector,omitempty" tf:"-"`
 
 	// (List of String) List of user keys excluded from the segment. To target on other context kinds, use the excluded_contexts block attribute. This attribute is not valid when unbounded is set to true.
 	// List of user keys excluded from the segment. To target on other context kinds, use the excluded_contexts block attribute. This attribute is not valid when `unbounded` is set to `true`.
@@ -455,7 +473,6 @@ type EnvironmentSegmentStatus struct {
 type EnvironmentSegment struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.envKey) || (has(self.initProvider) && has(self.initProvider.envKey))",message="spec.forProvider.envKey is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.key) || (has(self.initProvider) && has(self.initProvider.key))",message="spec.forProvider.key is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.projectKey) || (has(self.initProvider) && has(self.initProvider.projectKey))",message="spec.forProvider.projectKey is a required parameter"
