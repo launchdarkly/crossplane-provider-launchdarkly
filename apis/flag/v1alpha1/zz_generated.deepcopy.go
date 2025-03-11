@@ -9,6 +9,7 @@
 package v1alpha1
 
 import (
+	"github.com/crossplane/crossplane-runtime/apis/common/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 
@@ -1064,6 +1065,16 @@ func (in *FeatureFlagInitParameters) DeepCopyInto(out *FeatureFlagInitParameters
 		*out = new(string)
 		**out = **in
 	}
+	if in.ProjectKeyRef != nil {
+		in, out := &in.ProjectKeyRef, &out.ProjectKeyRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ProjectKeySelector != nil {
+		in, out := &in.ProjectKeySelector, &out.ProjectKeySelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags
 		*out = make([]*string, len(*in))
@@ -1298,6 +1309,16 @@ func (in *FeatureFlagParameters) DeepCopyInto(out *FeatureFlagParameters) {
 		in, out := &in.ProjectKey, &out.ProjectKey
 		*out = new(string)
 		**out = **in
+	}
+	if in.ProjectKeyRef != nil {
+		in, out := &in.ProjectKeyRef, &out.ProjectKeyRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ProjectKeySelector != nil {
+		in, out := &in.ProjectKeySelector, &out.ProjectKeySelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags
