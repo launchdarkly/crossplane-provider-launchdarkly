@@ -19,12 +19,27 @@ spec:
       - managed-by-crossplane
     variationType: string
     variations:
+      - description: Variation 0
+        name: Variation 0
+        value: Never gonna give you up
       - description: Variation 1
         name: Variation 1
-        value: Never gonna give you up
+        value: Never gonna let you down
       - description: Variation 2
         name: Variation 2
-        value: Never gonna let you down
-      - description: Variation 3
-        name: Variation 3
         value: Never gonna run around and desert you
+---
+apiVersion: flag.launchdarkly.com/v1alpha1
+kind: FeatureFlagEnvironment
+metadata:
+  name: my-first-string-flag-environment
+spec:
+  forProvider:
+    flagIdRef:
+      name: my-first-string-flag
+    envKeyRef:
+      name: name-dev-environment
+    "on": true
+    offVariation: 0
+    fallthrough:
+      - variation: 1
