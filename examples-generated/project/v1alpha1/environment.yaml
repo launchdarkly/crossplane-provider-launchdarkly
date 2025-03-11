@@ -11,7 +11,9 @@ spec:
     color: ff00ff
     key: staging
     name: Staging
-    projectKey: example-project
+    projectKeySelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     tags:
     - terraform
     - staging

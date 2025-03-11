@@ -36,7 +36,8 @@ spec:
   forProvider:
     key: name-dev
     name: Name Dev Environment
-    projectKey: crossplane-project
+    projectKeyRef:
+      name: crossplane-project
     color: FFFFFF
     tags:
       - managed-by-crossplane

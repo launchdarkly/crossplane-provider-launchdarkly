@@ -7,7 +7,7 @@ func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("launchdarkly_environment", func(r *config.Resource) {
 		r.ShortGroup = "project"
 		r.Kind = "Environment"
-		r.References["project"] = config.Reference{
+		r.References["project_key"] = config.Reference{
 			TerraformName: "launchdarkly_project",
 		}
 	})
