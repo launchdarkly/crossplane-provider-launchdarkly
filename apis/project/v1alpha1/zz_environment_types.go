@@ -173,7 +173,16 @@ type EnvironmentInitParameters struct {
 
 	// (String) The LaunchDarkly project key. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// The LaunchDarkly project key. A change in this field will force the destruction of the existing resource and the creation of a new one.
+	// +crossplane:generate:reference:type=github.com/launchdarkly/crossplane-provider-launchdarkly/apis/project/v1alpha1.Project
 	ProjectKey *string `json:"projectKey,omitempty" tf:"project_key,omitempty"`
+
+	// Reference to a Project in project to populate projectKey.
+	// +kubebuilder:validation:Optional
+	ProjectKeyRef *v1.Reference `json:"projectKeyRef,omitempty" tf:"-"`
+
+	// Selector for a Project in project to populate projectKey.
+	// +kubebuilder:validation:Optional
+	ProjectKeySelector *v1.Selector `json:"projectKeySelector,omitempty" tf:"-"`
 
 	// (Boolean) Set to true if this environment requires comments for flag and segment changes. This field will default to false when not set.
 	// Set to `true` if this environment requires comments for flag and segment changes. This field will default to `false` when not set.
@@ -286,8 +295,17 @@ type EnvironmentParameters struct {
 
 	// (String) The LaunchDarkly project key. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// The LaunchDarkly project key. A change in this field will force the destruction of the existing resource and the creation of a new one.
+	// +crossplane:generate:reference:type=github.com/launchdarkly/crossplane-provider-launchdarkly/apis/project/v1alpha1.Project
 	// +kubebuilder:validation:Optional
 	ProjectKey *string `json:"projectKey,omitempty" tf:"project_key,omitempty"`
+
+	// Reference to a Project in project to populate projectKey.
+	// +kubebuilder:validation:Optional
+	ProjectKeyRef *v1.Reference `json:"projectKeyRef,omitempty" tf:"-"`
+
+	// Selector for a Project in project to populate projectKey.
+	// +kubebuilder:validation:Optional
+	ProjectKeySelector *v1.Selector `json:"projectKeySelector,omitempty" tf:"-"`
 
 	// (Boolean) Set to true if this environment requires comments for flag and segment changes. This field will default to false when not set.
 	// Set to `true` if this environment requires comments for flag and segment changes. This field will default to `false` when not set.
@@ -345,7 +363,6 @@ type Environment struct {
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.color) || (has(self.initProvider) && has(self.initProvider.color))",message="spec.forProvider.color is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.key) || (has(self.initProvider) && has(self.initProvider.key))",message="spec.forProvider.key is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.projectKey) || (has(self.initProvider) && has(self.initProvider.projectKey))",message="spec.forProvider.projectKey is a required parameter"
 	Spec   EnvironmentSpec   `json:"spec"`
 	Status EnvironmentStatus `json:"status,omitempty"`
 }

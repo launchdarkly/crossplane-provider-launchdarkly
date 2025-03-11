@@ -14,6 +14,48 @@ import (
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
+// ResolveReferences of this Environment.
+func (mg *Environment) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ProjectKey),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.ProjectKeyRef,
+		Selector:     mg.Spec.ForProvider.ProjectKeySelector,
+		To: reference.To{
+			List:    &ProjectList{},
+			Managed: &Project{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ProjectKey")
+	}
+	mg.Spec.ForProvider.ProjectKey = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ProjectKeyRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ProjectKey),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ProjectKeyRef,
+		Selector:     mg.Spec.InitProvider.ProjectKeySelector,
+		To: reference.To{
+			List:    &ProjectList{},
+			Managed: &Project{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ProjectKey")
+	}
+	mg.Spec.InitProvider.ProjectKey = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ProjectKeyRef = rsp.ResolvedReference
+
+	return nil
+}
+
 // ResolveReferences of this EnvironmentSegment.
 func (mg *EnvironmentSegment) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPIResolver(c, mg)
