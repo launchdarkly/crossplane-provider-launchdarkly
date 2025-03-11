@@ -170,7 +170,16 @@ type FeatureFlagInitParameters struct {
 
 	// (String) The feature flag's project key. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// The feature flag's project key. A change in this field will force the destruction of the existing resource and the creation of a new one.
+	// +crossplane:generate:reference:type=github.com/launchdarkly/crossplane-provider-launchdarkly/apis/project/v1alpha1.Project
 	ProjectKey *string `json:"projectKey,omitempty" tf:"project_key,omitempty"`
+
+	// Reference to a Project in project to populate projectKey.
+	// +kubebuilder:validation:Optional
+	ProjectKeyRef *v1.Reference `json:"projectKeyRef,omitempty" tf:"-"`
+
+	// Selector for a Project in project to populate projectKey.
+	// +kubebuilder:validation:Optional
+	ProjectKeySelector *v1.Selector `json:"projectKeySelector,omitempty" tf:"-"`
 
 	// (Set of String) Tags associated with your resource.
 	// Tags associated with your resource.
@@ -300,8 +309,17 @@ type FeatureFlagParameters struct {
 
 	// (String) The feature flag's project key. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// The feature flag's project key. A change in this field will force the destruction of the existing resource and the creation of a new one.
+	// +crossplane:generate:reference:type=github.com/launchdarkly/crossplane-provider-launchdarkly/apis/project/v1alpha1.Project
 	// +kubebuilder:validation:Optional
 	ProjectKey *string `json:"projectKey,omitempty" tf:"project_key,omitempty"`
+
+	// Reference to a Project in project to populate projectKey.
+	// +kubebuilder:validation:Optional
+	ProjectKeyRef *v1.Reference `json:"projectKeyRef,omitempty" tf:"-"`
+
+	// Selector for a Project in project to populate projectKey.
+	// +kubebuilder:validation:Optional
+	ProjectKeySelector *v1.Selector `json:"projectKeySelector,omitempty" tf:"-"`
 
 	// (Set of String) Tags associated with your resource.
 	// Tags associated with your resource.
@@ -411,7 +429,6 @@ type FeatureFlag struct {
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.key) || (has(self.initProvider) && has(self.initProvider.key))",message="spec.forProvider.key is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.projectKey) || (has(self.initProvider) && has(self.initProvider.projectKey))",message="spec.forProvider.projectKey is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.variationType) || (has(self.initProvider) && has(self.initProvider.variationType))",message="spec.forProvider.variationType is a required parameter"
 	Spec   FeatureFlagSpec   `json:"spec"`
 	Status FeatureFlagStatus `json:"status,omitempty"`

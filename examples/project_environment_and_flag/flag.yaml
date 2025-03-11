@@ -14,7 +14,8 @@ spec:
     description: this is a multivariate flag with string variations.
     key: my-first-string-flag
     name: My First String Flag
-    projectKey: crossplane-project
+    projectKeyRef:
+      name: crossplane-project
     tags:
       - managed-by-crossplane
     variationType: string
