@@ -17,7 +17,9 @@ spec:
     description: this is a multivariate flag with string variations.
     key: building-materials
     name: Building materials
-    projectKey: example-project
+    projectKeySelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     tags:
     - example
     - terraform
