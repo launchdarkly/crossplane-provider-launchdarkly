@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/launchdarkly/crossplane-provider-launchdarkly/compare/v0.2.0...v0.2.1) (2025-03-12)
+
+
+### Bug Fixes
+
+* revert publish-artifacts job refactor ([#28](https://github.com/launchdarkly/crossplane-provider-launchdarkly/issues/28)) ([27892b6](https://github.com/launchdarkly/crossplane-provider-launchdarkly/commit/27892b6e7c01ec7cbf2914819604a6134b11557f))
+
 ## [0.2.0](https://github.com/launchdarkly/crossplane-provider-launchdarkly/compare/v0.1.1...v0.2.0) (2025-03-12)
 
 
