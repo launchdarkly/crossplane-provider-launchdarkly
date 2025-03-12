@@ -25,7 +25,9 @@ spec:
       - account2
     key: example-segment-key
     name: example segment
-    projectKey: example-project
+    projectKeySelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     rules:
     - clauses:
       - attribute: country
