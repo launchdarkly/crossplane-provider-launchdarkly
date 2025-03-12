@@ -1,3 +1,25 @@
-# Change log
+# Changelog
+
+## [0.2.0](https://github.com/launchdarkly/crossplane-provider-launchdarkly/compare/v0.1.1...v0.2.0) (2025-03-12)
+
+
+### Features
+
+* Add cross-resource references to Team resource ([#19](https://github.com/launchdarkly/crossplane-provider-launchdarkly/issues/19)) ([1c8a31b](https://github.com/launchdarkly/crossplane-provider-launchdarkly/commit/1c8a31bb9b8b2b20bcc2cfd660de111c3a455e41))
+* Add env_key and flag_id cross-resource references on FeatureFlagEnvironment resource ([#17](https://github.com/launchdarkly/crossplane-provider-launchdarkly/issues/17)) ([6143f81](https://github.com/launchdarkly/crossplane-provider-launchdarkly/commit/6143f81748e0064cba93791b6eb2bb9996f0708d))
+* Add projectKey reference to EnviroknmentSegment resource ([1e8f431](https://github.com/launchdarkly/crossplane-provider-launchdarkly/commit/1e8f431ce749919c8ee9d6043d21c8ced2e903ac))
+* Add projectKey reference to EnvironmentSegment resource ([#18](https://github.com/launchdarkly/crossplane-provider-launchdarkly/issues/18)) ([1e8f431](https://github.com/launchdarkly/crossplane-provider-launchdarkly/commit/1e8f431ce749919c8ee9d6043d21c8ced2e903ac))
+
+
+### Bug Fixes
+
+* resolve issues in extra-files section of release-please-config.json ([#24](https://github.com/launchdarkly/crossplane-provider-launchdarkly/issues/24)) ([0547945](https://github.com/launchdarkly/crossplane-provider-launchdarkly/commit/05479457a07395e24294a8b890b70e2e0d51e63f))
+* Update env_key and flag_id cross-resource reference on FeatureFlagEnvironment resource ([6143f81](https://github.com/launchdarkly/crossplane-provider-launchdarkly/commit/6143f81748e0064cba93791b6eb2bb9996f0708d))
+* Update project_key cross-resource definition on FeatureFlag resource ([#16](https://github.com/launchdarkly/crossplane-provider-launchdarkly/issues/16)) ([0167f0b](https://github.com/launchdarkly/crossplane-provider-launchdarkly/commit/0167f0b380866fc81e69ca46966dae4d428a7e35))
+* Update project_key cross-resource reference on Environment resource ([#15](https://github.com/launchdarkly/crossplane-provider-launchdarkly/issues/15)) ([585d875](https://github.com/launchdarkly/crossplane-provider-launchdarkly/commit/585d8757ffa587123e2d9b5abd1041f4a2186a35))
+* Update project_key cross-resource reference on FeatureFlag resource ([0167f0b](https://github.com/launchdarkly/crossplane-provider-launchdarkly/commit/0167f0b380866fc81e69ca46966dae4d428a7e35))
+* Update Terraform Provider bump action to use semantic PR title ([#23](https://github.com/launchdarkly/crossplane-provider-launchdarkly/issues/23)) ([caeb3e4](https://github.com/launchdarkly/crossplane-provider-launchdarkly/commit/caeb3e470254b779ceca595e9c1fa8f74f95cef3))
+
+## Change log
 
 All notable changes to the LaunchDarkly Terraform Provider will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org).
