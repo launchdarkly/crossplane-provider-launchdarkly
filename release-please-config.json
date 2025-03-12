@@ -4,28 +4,7 @@
       "release-type": "go",
       "versioning": "default",
       "include-v-in-tag": true,
-      "extra-files": [
-        {
-          "type": "simple",
-          "path": "README.md",
-          "patterns": [
-            {
-              "pattern": "provider-launchdarkly:v[0-9]+\\.[0-9]+\\.[0-9]+",
-              "replace": "provider-launchdarkly:v${{version}}"
-            }
-          ]
-        },
-        {
-          "type": "simple",
-          "path": "examples/install.yaml",
-          "patterns": [
-            {
-              "pattern": "provider-launchdarkly:v[0-9]+\\.[0-9]+\\.[0-9]+",
-              "replace": "provider-launchdarkly:v${{version}}"
-            }
-          ]
-        }
-      ],
+      "extra-files": ["README.md", "examples/install.yaml"],
       "include-component-in-tag": false
     }
   },
