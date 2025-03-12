@@ -10,6 +10,7 @@ import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	v1alpha1 "github.com/launchdarkly/crossplane-provider-launchdarkly/apis/project/v1alpha1"
+	extractors "github.com/launchdarkly/crossplane-provider-launchdarkly/config/extractors"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -52,6 +53,80 @@ func (mg *FeatureFlag) ResolveReferences(ctx context.Context, c client.Reader) e
 	}
 	mg.Spec.InitProvider.ProjectKey = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.ProjectKeyRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this FeatureFlagEnvironment.
+func (mg *FeatureFlagEnvironment) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.EnvKey),
+		Extract:      extractors.FieldExtractor("key"),
+		Reference:    mg.Spec.ForProvider.EnvKeyRef,
+		Selector:     mg.Spec.ForProvider.EnvKeySelector,
+		To: reference.To{
+			List:    &v1alpha1.EnvironmentList{},
+			Managed: &v1alpha1.Environment{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.EnvKey")
+	}
+	mg.Spec.ForProvider.EnvKey = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.EnvKeyRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FlagID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.FlagIDRef,
+		Selector:     mg.Spec.ForProvider.FlagIDSelector,
+		To: reference.To{
+			List:    &FeatureFlagList{},
+			Managed: &FeatureFlag{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.FlagID")
+	}
+	mg.Spec.ForProvider.FlagID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.FlagIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.EnvKey),
+		Extract:      extractors.FieldExtractor("key"),
+		Reference:    mg.Spec.InitProvider.EnvKeyRef,
+		Selector:     mg.Spec.InitProvider.EnvKeySelector,
+		To: reference.To{
+			List:    &v1alpha1.EnvironmentList{},
+			Managed: &v1alpha1.Environment{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.EnvKey")
+	}
+	mg.Spec.InitProvider.EnvKey = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.EnvKeyRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.FlagID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.FlagIDRef,
+		Selector:     mg.Spec.InitProvider.FlagIDSelector,
+		To: reference.To{
+			List:    &FeatureFlagList{},
+			Managed: &FeatureFlag{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.FlagID")
+	}
+	mg.Spec.InitProvider.FlagID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.FlagIDRef = rsp.ResolvedReference
 
 	return nil
 }
