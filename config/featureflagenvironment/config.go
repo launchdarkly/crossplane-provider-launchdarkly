@@ -2,7 +2,6 @@ package featureflagenvironment
 
 import (
 	"github.com/crossplane/upjet/pkg/config"
-	"github.com/launchdarkly/crossplane-provider-launchdarkly/config/extractors"
 )
 
 // Configure configures individual resources by adding custom ResourceConfigurators.
@@ -12,7 +11,9 @@ func Configure(p *config.Provider) {
 		r.Kind = "FeatureFlagEnvironment"
 		r.References["env_key"] = config.Reference{
 			TerraformName: "launchdarkly_environment",
-			Extractor:     extractors.FieldExtractorFnReference("key"),
+
+			// See: https://github.com/crossplane/upjet/blob/main/pkg/resource/extractor.go
+			Extractor: `github.com/crossplane/upjet/pkg/resource.ExtractParamPath("key", false)`,
 		}
 
 		r.References["flag_id"] = config.Reference{

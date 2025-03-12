@@ -9,8 +9,8 @@ package v1alpha1
 import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	resource "github.com/crossplane/upjet/pkg/resource"
 	v1alpha1 "github.com/launchdarkly/crossplane-provider-launchdarkly/apis/project/v1alpha1"
-	extractors "github.com/launchdarkly/crossplane-provider-launchdarkly/config/extractors"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -66,7 +66,7 @@ func (mg *FeatureFlagEnvironment) ResolveReferences(ctx context.Context, c clien
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.EnvKey),
-		Extract:      extractors.FieldExtractor("key"),
+		Extract:      resource.ExtractParamPath("key", false),
 		Reference:    mg.Spec.ForProvider.EnvKeyRef,
 		Selector:     mg.Spec.ForProvider.EnvKeySelector,
 		To: reference.To{
@@ -98,7 +98,7 @@ func (mg *FeatureFlagEnvironment) ResolveReferences(ctx context.Context, c clien
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.EnvKey),
-		Extract:      extractors.FieldExtractor("key"),
+		Extract:      resource.ExtractParamPath("key", false),
 		Reference:    mg.Spec.InitProvider.EnvKeyRef,
 		Selector:     mg.Spec.InitProvider.EnvKeySelector,
 		To: reference.To{

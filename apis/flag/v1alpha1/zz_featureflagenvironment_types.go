@@ -218,7 +218,7 @@ type FeatureFlagEnvironmentInitParameters struct {
 	// (String) The environment key. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// The environment key. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// +crossplane:generate:reference:type=github.com/launchdarkly/crossplane-provider-launchdarkly/apis/project/v1alpha1.Environment
-	// +crossplane:generate:reference:extractor=github.com/launchdarkly/crossplane-provider-launchdarkly/config/extractors.FieldExtractor("key")
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("key", false)
 	EnvKey *string `json:"envKey,omitempty" tf:"env_key,omitempty"`
 
 	// Reference to a Environment in project to populate envKey.
@@ -327,7 +327,7 @@ type FeatureFlagEnvironmentParameters struct {
 	// (String) The environment key. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// The environment key. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// +crossplane:generate:reference:type=github.com/launchdarkly/crossplane-provider-launchdarkly/apis/project/v1alpha1.Environment
-	// +crossplane:generate:reference:extractor=github.com/launchdarkly/crossplane-provider-launchdarkly/config/extractors.FieldExtractor("key")
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("key", false)
 	// +kubebuilder:validation:Optional
 	EnvKey *string `json:"envKey,omitempty" tf:"env_key,omitempty"`
 
