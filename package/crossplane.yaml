@@ -6,9 +6,11 @@ metadata:
     meta.crossplane.io/maintainer: "LaunchDarkly integrations <integrations@launchdarkly.com>"
     meta.crossplane.io/source: "github.com/launchdarkly/crossplane-provider-launchdarkly"
     meta.crossplane.io/license: "Apache-2.0"
-    meta.crossplane.io/description: "Crossplane provider generated from https://github.com/launchdarkly/terraform-provider-launchdarkly."
+    meta.crossplane.io/description: "Crossplane provider to manage LaunchDarkly resources."
     meta.crossplane.io/readme: |
-      # LaunchDarkly Provider
+      # LaunchDarkly Crossplane Provider
+
+      [​LaunchDarkly](https://launchdarkly.com/) is the leading feature management platform that empowers development teams to innovate faster by managing feature releases at scale. It enables safe, controlled, and progressive rollouts, allowing for targeted user experiences and effective experimentation. With this provider, you can automate the creation and management of LaunchDarkly resources, such as projects, environments, and feature flags, streamlining your development and release workflows.​
 
       This provider is generated from https://github.com/launchdarkly/terraform-provider-launchdarkly by https://github.com/upbound/upjet.
 
