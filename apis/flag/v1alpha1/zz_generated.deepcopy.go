@@ -724,6 +724,16 @@ func (in *FeatureFlagEnvironmentInitParameters) DeepCopyInto(out *FeatureFlagEnv
 		*out = new(string)
 		**out = **in
 	}
+	if in.EnvKeyRef != nil {
+		in, out := &in.EnvKeyRef, &out.EnvKeyRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.EnvKeySelector != nil {
+		in, out := &in.EnvKeySelector, &out.EnvKeySelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Fallthrough != nil {
 		in, out := &in.Fallthrough, &out.Fallthrough
 		*out = make([]FallthroughInitParameters, len(*in))
@@ -735,6 +745,16 @@ func (in *FeatureFlagEnvironmentInitParameters) DeepCopyInto(out *FeatureFlagEnv
 		in, out := &in.FlagID, &out.FlagID
 		*out = new(string)
 		**out = **in
+	}
+	if in.FlagIDRef != nil {
+		in, out := &in.FlagIDRef, &out.FlagIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.FlagIDSelector != nil {
+		in, out := &in.FlagIDSelector, &out.FlagIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.OffVariation != nil {
 		in, out := &in.OffVariation, &out.OffVariation
@@ -911,6 +931,16 @@ func (in *FeatureFlagEnvironmentParameters) DeepCopyInto(out *FeatureFlagEnviron
 		*out = new(string)
 		**out = **in
 	}
+	if in.EnvKeyRef != nil {
+		in, out := &in.EnvKeyRef, &out.EnvKeyRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.EnvKeySelector != nil {
+		in, out := &in.EnvKeySelector, &out.EnvKeySelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Fallthrough != nil {
 		in, out := &in.Fallthrough, &out.Fallthrough
 		*out = make([]FallthroughParameters, len(*in))
@@ -922,6 +952,16 @@ func (in *FeatureFlagEnvironmentParameters) DeepCopyInto(out *FeatureFlagEnviron
 		in, out := &in.FlagID, &out.FlagID
 		*out = new(string)
 		**out = **in
+	}
+	if in.FlagIDRef != nil {
+		in, out := &in.FlagIDRef, &out.FlagIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.FlagIDSelector != nil {
+		in, out := &in.FlagIDSelector, &out.FlagIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.OffVariation != nil {
 		in, out := &in.OffVariation, &out.OffVariation

@@ -217,7 +217,17 @@ type FeatureFlagEnvironmentInitParameters struct {
 
 	// (String) The environment key. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// The environment key. A change in this field will force the destruction of the existing resource and the creation of a new one.
+	// +crossplane:generate:reference:type=github.com/launchdarkly/crossplane-provider-launchdarkly/apis/project/v1alpha1.Environment
+	// +crossplane:generate:reference:extractor=github.com/launchdarkly/crossplane-provider-launchdarkly/config/extractors.FieldExtractor("key")
 	EnvKey *string `json:"envKey,omitempty" tf:"env_key,omitempty"`
+
+	// Reference to a Environment in project to populate envKey.
+	// +kubebuilder:validation:Optional
+	EnvKeyRef *v1.Reference `json:"envKeyRef,omitempty" tf:"-"`
+
+	// Selector for a Environment in project to populate envKey.
+	// +kubebuilder:validation:Optional
+	EnvKeySelector *v1.Selector `json:"envKeySelector,omitempty" tf:"-"`
 
 	// (Block List, Min: 1, Max: 1) Nested block describing the default variation to serve if no prerequisites, target, or rules apply. (see below for nested schema)
 	// Nested block describing the default variation to serve if no `prerequisites`, `target`, or `rules` apply.
@@ -225,7 +235,16 @@ type FeatureFlagEnvironmentInitParameters struct {
 
 	// (String) The feature flag's unique id in the format project_key/flag_key. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// The feature flag's unique `id` in the format `project_key/flag_key`. A change in this field will force the destruction of the existing resource and the creation of a new one.
+	// +crossplane:generate:reference:type=github.com/launchdarkly/crossplane-provider-launchdarkly/apis/flag/v1alpha1.FeatureFlag
 	FlagID *string `json:"flagId,omitempty" tf:"flag_id,omitempty"`
+
+	// Reference to a FeatureFlag in flag to populate flagId.
+	// +kubebuilder:validation:Optional
+	FlagIDRef *v1.Reference `json:"flagIdRef,omitempty" tf:"-"`
+
+	// Selector for a FeatureFlag in flag to populate flagId.
+	// +kubebuilder:validation:Optional
+	FlagIDSelector *v1.Selector `json:"flagIdSelector,omitempty" tf:"-"`
 
 	// (Number) The index of the variation to serve if targeting is disabled.
 	// The index of the variation to serve if targeting is disabled.
@@ -307,8 +326,18 @@ type FeatureFlagEnvironmentParameters struct {
 
 	// (String) The environment key. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// The environment key. A change in this field will force the destruction of the existing resource and the creation of a new one.
+	// +crossplane:generate:reference:type=github.com/launchdarkly/crossplane-provider-launchdarkly/apis/project/v1alpha1.Environment
+	// +crossplane:generate:reference:extractor=github.com/launchdarkly/crossplane-provider-launchdarkly/config/extractors.FieldExtractor("key")
 	// +kubebuilder:validation:Optional
 	EnvKey *string `json:"envKey,omitempty" tf:"env_key,omitempty"`
+
+	// Reference to a Environment in project to populate envKey.
+	// +kubebuilder:validation:Optional
+	EnvKeyRef *v1.Reference `json:"envKeyRef,omitempty" tf:"-"`
+
+	// Selector for a Environment in project to populate envKey.
+	// +kubebuilder:validation:Optional
+	EnvKeySelector *v1.Selector `json:"envKeySelector,omitempty" tf:"-"`
 
 	// (Block List, Min: 1, Max: 1) Nested block describing the default variation to serve if no prerequisites, target, or rules apply. (see below for nested schema)
 	// Nested block describing the default variation to serve if no `prerequisites`, `target`, or `rules` apply.
@@ -317,8 +346,17 @@ type FeatureFlagEnvironmentParameters struct {
 
 	// (String) The feature flag's unique id in the format project_key/flag_key. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// The feature flag's unique `id` in the format `project_key/flag_key`. A change in this field will force the destruction of the existing resource and the creation of a new one.
+	// +crossplane:generate:reference:type=github.com/launchdarkly/crossplane-provider-launchdarkly/apis/flag/v1alpha1.FeatureFlag
 	// +kubebuilder:validation:Optional
 	FlagID *string `json:"flagId,omitempty" tf:"flag_id,omitempty"`
+
+	// Reference to a FeatureFlag in flag to populate flagId.
+	// +kubebuilder:validation:Optional
+	FlagIDRef *v1.Reference `json:"flagIdRef,omitempty" tf:"-"`
+
+	// Selector for a FeatureFlag in flag to populate flagId.
+	// +kubebuilder:validation:Optional
+	FlagIDSelector *v1.Selector `json:"flagIdSelector,omitempty" tf:"-"`
 
 	// (Number) The index of the variation to serve if targeting is disabled.
 	// The index of the variation to serve if targeting is disabled.
@@ -544,9 +582,7 @@ type FeatureFlagEnvironmentStatus struct {
 type FeatureFlagEnvironment struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.envKey) || (has(self.initProvider) && has(self.initProvider.envKey))",message="spec.forProvider.envKey is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.fallthrough) || (has(self.initProvider) && has(self.initProvider.fallthrough))",message="spec.forProvider.fallthrough is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.flagId) || (has(self.initProvider) && has(self.initProvider.flagId))",message="spec.forProvider.flagId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.offVariation) || (has(self.initProvider) && has(self.initProvider.offVariation))",message="spec.forProvider.offVariation is a required parameter"
 	Spec   FeatureFlagEnvironmentSpec   `json:"spec"`
 	Status FeatureFlagEnvironmentStatus `json:"status,omitempty"`
