@@ -5,12 +5,19 @@ metadata:
   name: product-manager-team
 spec:
   forProvider:
-    description: "Team for all Product Managers"
+    description: "Team for all Product Managers (managed with Crossplane)"
     name: Product Managers
     key: product-manager-team
-    customRoleKeys:
-      - global-non-prod
-      - product-manager-tag-access
+    memberIdsSelector:
+      matchLabels:
+        team: product-manager
+
+    maintainersRefs:
+      - name: example-member-1
+
+    customRoleKeysRefs:
+      - name: no-production-access
+      - name: allow-product-manager-tag
 ---
 apiVersion: account.launchdarkly.com/v1alpha1
 kind: CustomRole
@@ -23,15 +30,15 @@ spec:
     key: global-non-prod
     policyStatements:
       - actions:
-          - 'createFlag'
+          - "createFlag"
         effect: allow
         resources:
-          - 'proj/*:env/*:flag/*'
+          - "proj/*:env/*:flag/*"
       - actions:
-          - '*'
+          - "*"
         effect: allow
         notResources:
-          - 'proj/*:env/production:flag/*'
+          - "proj/*:env/production:flag/*"
 ---
 apiVersion: account.launchdarkly.com/v1alpha1
 kind: CustomRole
@@ -44,11 +51,11 @@ spec:
     key: product-manager-tag-access
     policyStatements:
       - actions:
-          - 'updateOn'
-          - 'updateRules'
-          - 'updateRulesWithMeasuredRollout'
-          - 'updateScheduledChanges'
-          - 'updateTargets'
+          - "updateOn"
+          - "updateRules"
+          - "updateRulesWithMeasuredRollout"
+          - "updateScheduledChanges"
+          - "updateTargets"
         effect: allow
         resources:
-          - 'proj/*:env/*:flag/*;product-manager'
+          - "proj/*:env/*:flag/*;product-manager"

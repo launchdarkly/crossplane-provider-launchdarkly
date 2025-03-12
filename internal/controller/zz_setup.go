@@ -13,8 +13,8 @@ import (
 	auditlogsubscription "github.com/launchdarkly/crossplane-provider-launchdarkly/internal/controller/account/auditlogsubscription"
 	customrole "github.com/launchdarkly/crossplane-provider-launchdarkly/internal/controller/account/customrole"
 	team "github.com/launchdarkly/crossplane-provider-launchdarkly/internal/controller/account/team"
+	teammember "github.com/launchdarkly/crossplane-provider-launchdarkly/internal/controller/account/teammember"
 	teamrolemapping "github.com/launchdarkly/crossplane-provider-launchdarkly/internal/controller/account/teamrolemapping"
-	user "github.com/launchdarkly/crossplane-provider-launchdarkly/internal/controller/account/user"
 	webhook "github.com/launchdarkly/crossplane-provider-launchdarkly/internal/controller/account/webhook"
 	featureflag "github.com/launchdarkly/crossplane-provider-launchdarkly/internal/controller/flag/featureflag"
 	featureflagenvironment "github.com/launchdarkly/crossplane-provider-launchdarkly/internal/controller/flag/featureflagenvironment"
@@ -33,8 +33,8 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		auditlogsubscription.Setup,
 		customrole.Setup,
 		team.Setup,
+		teammember.Setup,
 		teamrolemapping.Setup,
-		user.Setup,
 		webhook.Setup,
 		featureflag.Setup,
 		featureflagenvironment.Setup,

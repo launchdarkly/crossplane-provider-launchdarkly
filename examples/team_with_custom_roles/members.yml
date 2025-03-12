@@ -1,0 +1,25 @@
+apiVersion: account.launchdarkly.com/v1alpha1
+kind: TeamMember
+metadata:
+  name: example-member-1
+  labels:
+    team: product-manager
+spec:
+  forProvider:
+    email: jesse.smith+crossplane@example.com
+    firstName: Jesse
+    lastName: Smith
+    role: no_access # Access will be assigned via team
+---
+apiVersion: account.launchdarkly.com/v1alpha1
+kind: TeamMember
+metadata:
+  name: example-member-2
+  labels:
+    team: product-manager
+spec:
+  forProvider:
+    email: john.doe+crossplane@example.com
+    firstName: John
+    lastName: Doe
+    role: no_access # Access will be assigned via team

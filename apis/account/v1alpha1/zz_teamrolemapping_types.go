@@ -17,12 +17,30 @@ type TeamRoleMappingInitParameters struct {
 
 	// List of custom role keys the team will access. The referenced custom roles must already exist in LaunchDarkly. If they don't, the provider may behave unexpectedly.
 	// A set of custom role keys to assign to the team.
+	// +crossplane:generate:reference:type=github.com/launchdarkly/crossplane-provider-launchdarkly/apis/account/v1alpha1.CustomRole
 	// +listType=set
 	CustomRoleKeys []*string `json:"customRoleKeys,omitempty" tf:"custom_role_keys,omitempty"`
 
+	// References to CustomRole in account to populate customRoleKeys.
+	// +kubebuilder:validation:Optional
+	CustomRoleKeysRefs []v1.Reference `json:"customRoleKeysRefs,omitempty" tf:"-"`
+
+	// Selector for a list of CustomRole in account to populate customRoleKeys.
+	// +kubebuilder:validation:Optional
+	CustomRoleKeysSelector *v1.Selector `json:"customRoleKeysSelector,omitempty" tf:"-"`
+
 	// The team key.
 	// The LaunchDarkly team key.
+	// +crossplane:generate:reference:type=github.com/launchdarkly/crossplane-provider-launchdarkly/apis/account/v1alpha1.Team
 	TeamKey *string `json:"teamKey,omitempty" tf:"team_key,omitempty"`
+
+	// Reference to a Team in account to populate teamKey.
+	// +kubebuilder:validation:Optional
+	TeamKeyRef *v1.Reference `json:"teamKeyRef,omitempty" tf:"-"`
+
+	// Selector for a Team in account to populate teamKey.
+	// +kubebuilder:validation:Optional
+	TeamKeySelector *v1.Selector `json:"teamKeySelector,omitempty" tf:"-"`
 }
 
 type TeamRoleMappingObservation struct {
@@ -43,14 +61,32 @@ type TeamRoleMappingParameters struct {
 
 	// List of custom role keys the team will access. The referenced custom roles must already exist in LaunchDarkly. If they don't, the provider may behave unexpectedly.
 	// A set of custom role keys to assign to the team.
+	// +crossplane:generate:reference:type=github.com/launchdarkly/crossplane-provider-launchdarkly/apis/account/v1alpha1.CustomRole
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	CustomRoleKeys []*string `json:"customRoleKeys,omitempty" tf:"custom_role_keys,omitempty"`
 
+	// References to CustomRole in account to populate customRoleKeys.
+	// +kubebuilder:validation:Optional
+	CustomRoleKeysRefs []v1.Reference `json:"customRoleKeysRefs,omitempty" tf:"-"`
+
+	// Selector for a list of CustomRole in account to populate customRoleKeys.
+	// +kubebuilder:validation:Optional
+	CustomRoleKeysSelector *v1.Selector `json:"customRoleKeysSelector,omitempty" tf:"-"`
+
 	// The team key.
 	// The LaunchDarkly team key.
+	// +crossplane:generate:reference:type=github.com/launchdarkly/crossplane-provider-launchdarkly/apis/account/v1alpha1.Team
 	// +kubebuilder:validation:Optional
 	TeamKey *string `json:"teamKey,omitempty" tf:"team_key,omitempty"`
+
+	// Reference to a Team in account to populate teamKey.
+	// +kubebuilder:validation:Optional
+	TeamKeyRef *v1.Reference `json:"teamKeyRef,omitempty" tf:"-"`
+
+	// Selector for a Team in account to populate teamKey.
+	// +kubebuilder:validation:Optional
+	TeamKeySelector *v1.Selector `json:"teamKeySelector,omitempty" tf:"-"`
 }
 
 // TeamRoleMappingSpec defines the desired state of TeamRoleMapping
@@ -89,10 +125,8 @@ type TeamRoleMappingStatus struct {
 type TeamRoleMapping struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.customRoleKeys) || (has(self.initProvider) && has(self.initProvider.customRoleKeys))",message="spec.forProvider.customRoleKeys is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.teamKey) || (has(self.initProvider) && has(self.initProvider.teamKey))",message="spec.forProvider.teamKey is a required parameter"
-	Spec   TeamRoleMappingSpec   `json:"spec"`
-	Status TeamRoleMappingStatus `json:"status,omitempty"`
+	Spec              TeamRoleMappingSpec   `json:"spec"`
+	Status            TeamRoleMappingStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

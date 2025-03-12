@@ -7,8 +7,12 @@ func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("launchdarkly_team_role_mapping", func(r *config.Resource) {
 		r.ShortGroup = "account"
 		r.Kind = "TeamRoleMapping"
-		r.References["team"] = config.Reference{
+		r.References["team_key"] = config.Reference{
 			TerraformName: "launchdarkly_team",
+		}
+
+		r.References["custom_role_keys"] = config.Reference{
+			TerraformName: "launchdarkly_custom_role",
 		}
 	})
 }
