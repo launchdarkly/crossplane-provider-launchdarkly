@@ -10,11 +10,17 @@ LaunchDarkly API.
 Install the provider by using the following command after changing the image tag
 to the [latest release](https://marketplace.upbound.io/providers/launchdarkly/provider-launchdarkly):
 
+<!-- x-release-please-start-version -->
+
 ```
 up ctp provider install xpkg.upbound.io/launchdarkly/provider-launchdarkly:v0.1.0
 ```
 
+<!-- x-release-please-end -->
+
 Alternatively, you can use declarative installation:
+
+<!-- x-release-please-start-version -->
 
 ```
 cat <<EOF | kubectl apply -f -
@@ -26,6 +32,8 @@ spec:
   package: xpkg.upbound.io/launchdarkly/provider-launchdarkly:v0.1.0
 EOF
 ```
+
+<!-- x-release-please-end -->
 
 Notice that in this example Provider resource is referencing ControllerConfig with debug enabled.
 
