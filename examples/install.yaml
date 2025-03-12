@@ -3,4 +3,4 @@ kind: Provider
 metadata:
   name: provider-launchdarkly
 spec:
-  package: xpkg.upbound.io/launchdarkly/provider-launchdarkly:v0.1.1 # x-release-please-version
+  package: xpkg.upbound.io/launchdarkly/provider-launchdarkly:v0.2.0 # x-release-please-version
