@@ -13,7 +13,9 @@ spec:
       values:
       - accountX
       variation: 1
-    envKey: staging
+    envKeySelector:
+      matchLabels:
+        testing.upbound.io/example-name: staging
     fallthrough:
     - bucketBy: accountId
       contextKind: account
@@ -21,7 +23,9 @@ spec:
       - 60000
       - 40000
       - 0
-    flagId: ${launchdarkly_feature_flag.number.id}
+    flagIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: number
     offVariation: 2
     "on": true
     prerequisites:
