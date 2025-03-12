@@ -1,0 +1,30 @@
+apiVersion: project.launchdarkly.com/v1alpha1
+kind: EnvironmentSegment
+metadata:
+  name: segment-with-refs
+spec:
+  forProvider:
+    projectKeyRef:
+      name: crossplane-project
+    envKeyRef:
+      name: name-dev-environment
+    key: example-segment
+    name: Example Segment
+
+    description: This segment is managed by Crossplane
+
+    includedContexts:
+      - contextKind: account
+        values:
+          - account1
+          - account2
+
+    rules:
+      - clauses:
+          - attribute: country
+            contextKind: account
+            op: startsWith
+            values:
+              - en
+              - de
+              - un

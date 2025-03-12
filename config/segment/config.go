@@ -14,5 +14,9 @@ func Configure(p *config.Provider) {
 			TerraformName: "launchdarkly_environment",
 			Extractor:     extractors.FieldExtractorFnReference("key"),
 		}
+
+		r.References["project_key"] = config.Reference{
+			TerraformName: "launchdarkly_project",
+		}
 	})
 }

@@ -1191,6 +1191,16 @@ func (in *EnvironmentSegmentInitParameters) DeepCopyInto(out *EnvironmentSegment
 		*out = new(string)
 		**out = **in
 	}
+	if in.ProjectKeyRef != nil {
+		in, out := &in.ProjectKeyRef, &out.ProjectKeyRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ProjectKeySelector != nil {
+		in, out := &in.ProjectKeySelector, &out.ProjectKeySelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Rules != nil {
 		in, out := &in.Rules, &out.Rules
 		*out = make([]RulesInitParameters, len(*in))
@@ -1450,6 +1460,16 @@ func (in *EnvironmentSegmentParameters) DeepCopyInto(out *EnvironmentSegmentPara
 		in, out := &in.ProjectKey, &out.ProjectKey
 		*out = new(string)
 		**out = **in
+	}
+	if in.ProjectKeyRef != nil {
+		in, out := &in.ProjectKeyRef, &out.ProjectKeyRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ProjectKeySelector != nil {
+		in, out := &in.ProjectKeySelector, &out.ProjectKeySelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Rules != nil {
 		in, out := &in.Rules, &out.Rules
