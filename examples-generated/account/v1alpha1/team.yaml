@@ -8,14 +8,14 @@ metadata:
   name: platform-team
 spec:
   forProvider:
-    customRoleKeys:
-    - platform
-    - nomad-administrators
+    customRoleKeysRefs:
+    - name: example
+    - name: example
     description: Team to manage internal infrastructure
     key: platform_team
-    maintainers:
-    - 12ab3c45de678910abc12345
-    memberIds:
-    - 507f1f77bcf86cd799439011
-    - 569f183514f4432160000007
+    maintainersRefs:
+    - name: example
+    memberIdsRefs:
+    - name: example
+    - name: example
     name: Platform team

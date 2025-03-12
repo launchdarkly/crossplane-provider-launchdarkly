@@ -1,8 +1,8 @@
 apiVersion: account.launchdarkly.com/v1alpha1
-kind: User
+kind: TeamMember
 metadata:
   annotations:
-    meta.upbound.io/example-id: account/v1alpha1/user
+    meta.upbound.io/example-id: account/v1alpha1/teammember
   labels:
     testing.upbound.io/example-name: example
   name: example

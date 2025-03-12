@@ -4,7 +4,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.14.0
-  name: users.account.launchdarkly.com
+  name: teammembers.account.launchdarkly.com
 spec:
   group: account.launchdarkly.com
   names:
@@ -12,10 +12,10 @@ spec:
     - crossplane
     - managed
     - launchdarkly
-    kind: User
-    listKind: UserList
-    plural: users
-    singular: user
+    kind: TeamMember
+    listKind: TeamMemberList
+    plural: teammembers
+    singular: teammember
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -34,11 +34,11 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: 'User is the Schema for the Users API. Provides a LaunchDarkly
-          team member resource. This resource allows you to create and manage team
-          members within your LaunchDarkly organization. -> Note: You can only manage
-          team members with "admin" level personal access tokens. To learn more, read
-          Managing Teams https://docs.launchdarkly.com/home/teams/managing.'
+        description: 'TeamMember is the Schema for the TeamMembers API. Provides a
+          LaunchDarkly team member resource. This resource allows you to create and
+          manage team members within your LaunchDarkly organization. -> Note: You
+          can only manage team members with "admin" level personal access tokens.
+          To learn more, read Managing Teams https://docs.launchdarkly.com/home/teams/managing.'
         properties:
           apiVersion:
             description: |-
@@ -58,7 +58,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: UserSpec defines the desired state of User
+            description: TeamMemberSpec defines the desired state of TeamMember
             properties:
               deletionPolicy:
                 default: Delete
@@ -366,7 +366,7 @@ spec:
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.email)
                 || (has(self.initProvider) && has(self.initProvider.email))'
           status:
-            description: UserStatus defines the observed state of User.
+            description: TeamMemberStatus defines the observed state of TeamMember.
             properties:
               atProvider:
                 properties:

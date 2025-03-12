@@ -8,7 +8,9 @@ metadata:
   name: platform-team
 spec:
   forProvider:
-    customRoleKeys:
-    - platform
-    - nomad-administrators
-    teamKey: platform_team
+    customRoleKeysRefs:
+    - name: example
+    - name: example
+    teamKeySelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
