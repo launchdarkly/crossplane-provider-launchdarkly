@@ -44,8 +44,8 @@ func (l *TeamList) GetItems() []resource.Managed {
 	return items
 }
 
-// GetItems of this TeamRoleMappingList.
-func (l *TeamRoleMappingList) GetItems() []resource.Managed {
+// GetItems of this TeamMemberList.
+func (l *TeamMemberList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]
@@ -53,8 +53,8 @@ func (l *TeamRoleMappingList) GetItems() []resource.Managed {
 	return items
 }
 
-// GetItems of this UserList.
-func (l *UserList) GetItems() []resource.Managed {
+// GetItems of this TeamRoleMappingList.
+func (l *TeamRoleMappingList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]

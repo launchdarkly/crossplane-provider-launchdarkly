@@ -19,10 +19,10 @@ func (tr *CustomRole) Hub() {}
 func (tr *Team) Hub() {}
 
 // Hub marks this type as a conversion hub.
-func (tr *TeamRoleMapping) Hub() {}
+func (tr *TeamMember) Hub() {}
 
 // Hub marks this type as a conversion hub.
-func (tr *User) Hub() {}
+func (tr *TeamRoleMapping) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *Webhook) Hub() {}

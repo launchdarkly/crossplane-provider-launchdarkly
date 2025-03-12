@@ -6,6 +6,6 @@ import "github.com/crossplane/upjet/pkg/config"
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("launchdarkly_team_member", func(r *config.Resource) {
 		r.ShortGroup = "account"
-		r.Kind = "User"
+		r.Kind = "TeamMember"
 	})
 }

@@ -52,8 +52,17 @@ type TeamInitParameters struct {
 
 	// (Set of String) List of custom role keys the team will access. The referenced custom roles must already exist in LaunchDarkly. If they don't, the provider may behave unexpectedly.
 	// List of custom role keys the team will access. The referenced custom roles must already exist in LaunchDarkly. If they don't, the provider may behave unexpectedly.
+	// +crossplane:generate:reference:type=github.com/launchdarkly/crossplane-provider-launchdarkly/apis/account/v1alpha1.CustomRole
 	// +listType=set
 	CustomRoleKeys []*string `json:"customRoleKeys,omitempty" tf:"custom_role_keys,omitempty"`
+
+	// References to CustomRole in account to populate customRoleKeys.
+	// +kubebuilder:validation:Optional
+	CustomRoleKeysRefs []v1.Reference `json:"customRoleKeysRefs,omitempty" tf:"-"`
+
+	// Selector for a list of CustomRole in account to populate customRoleKeys.
+	// +kubebuilder:validation:Optional
+	CustomRoleKeysSelector *v1.Selector `json:"customRoleKeysSelector,omitempty" tf:"-"`
 
 	// (String) The team description.
 	// The team description.
@@ -65,13 +74,31 @@ type TeamInitParameters struct {
 
 	// (Set of String) List of member IDs for users who maintain the team.
 	// List of member IDs for users who maintain the team.
+	// +crossplane:generate:reference:type=github.com/launchdarkly/crossplane-provider-launchdarkly/apis/account/v1alpha1.TeamMember
 	// +listType=set
 	Maintainers []*string `json:"maintainers,omitempty" tf:"maintainers,omitempty"`
 
+	// References to TeamMember in account to populate maintainers.
+	// +kubebuilder:validation:Optional
+	MaintainersRefs []v1.Reference `json:"maintainersRefs,omitempty" tf:"-"`
+
+	// Selector for a list of TeamMember in account to populate maintainers.
+	// +kubebuilder:validation:Optional
+	MaintainersSelector *v1.Selector `json:"maintainersSelector,omitempty" tf:"-"`
+
 	// (Set of String) List of member IDs who belong to the team.
 	// List of member IDs who belong to the team.
+	// +crossplane:generate:reference:type=github.com/launchdarkly/crossplane-provider-launchdarkly/apis/account/v1alpha1.TeamMember
 	// +listType=set
 	MemberIds []*string `json:"memberIds,omitempty" tf:"member_ids,omitempty"`
+
+	// References to TeamMember in account to populate memberIds.
+	// +kubebuilder:validation:Optional
+	MemberIdsRefs []v1.Reference `json:"memberIdsRefs,omitempty" tf:"-"`
+
+	// Selector for a list of TeamMember in account to populate memberIds.
+	// +kubebuilder:validation:Optional
+	MemberIdsSelector *v1.Selector `json:"memberIdsSelector,omitempty" tf:"-"`
 
 	// friendly name for the team.
 	// A human-friendly name for the team.
@@ -123,9 +150,18 @@ type TeamParameters struct {
 
 	// (Set of String) List of custom role keys the team will access. The referenced custom roles must already exist in LaunchDarkly. If they don't, the provider may behave unexpectedly.
 	// List of custom role keys the team will access. The referenced custom roles must already exist in LaunchDarkly. If they don't, the provider may behave unexpectedly.
+	// +crossplane:generate:reference:type=github.com/launchdarkly/crossplane-provider-launchdarkly/apis/account/v1alpha1.CustomRole
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	CustomRoleKeys []*string `json:"customRoleKeys,omitempty" tf:"custom_role_keys,omitempty"`
+
+	// References to CustomRole in account to populate customRoleKeys.
+	// +kubebuilder:validation:Optional
+	CustomRoleKeysRefs []v1.Reference `json:"customRoleKeysRefs,omitempty" tf:"-"`
+
+	// Selector for a list of CustomRole in account to populate customRoleKeys.
+	// +kubebuilder:validation:Optional
+	CustomRoleKeysSelector *v1.Selector `json:"customRoleKeysSelector,omitempty" tf:"-"`
 
 	// (String) The team description.
 	// The team description.
@@ -139,15 +175,33 @@ type TeamParameters struct {
 
 	// (Set of String) List of member IDs for users who maintain the team.
 	// List of member IDs for users who maintain the team.
+	// +crossplane:generate:reference:type=github.com/launchdarkly/crossplane-provider-launchdarkly/apis/account/v1alpha1.TeamMember
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	Maintainers []*string `json:"maintainers,omitempty" tf:"maintainers,omitempty"`
 
+	// References to TeamMember in account to populate maintainers.
+	// +kubebuilder:validation:Optional
+	MaintainersRefs []v1.Reference `json:"maintainersRefs,omitempty" tf:"-"`
+
+	// Selector for a list of TeamMember in account to populate maintainers.
+	// +kubebuilder:validation:Optional
+	MaintainersSelector *v1.Selector `json:"maintainersSelector,omitempty" tf:"-"`
+
 	// (Set of String) List of member IDs who belong to the team.
 	// List of member IDs who belong to the team.
+	// +crossplane:generate:reference:type=github.com/launchdarkly/crossplane-provider-launchdarkly/apis/account/v1alpha1.TeamMember
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	MemberIds []*string `json:"memberIds,omitempty" tf:"member_ids,omitempty"`
+
+	// References to TeamMember in account to populate memberIds.
+	// +kubebuilder:validation:Optional
+	MemberIdsRefs []v1.Reference `json:"memberIdsRefs,omitempty" tf:"-"`
+
+	// Selector for a list of TeamMember in account to populate memberIds.
+	// +kubebuilder:validation:Optional
+	MemberIdsSelector *v1.Selector `json:"memberIdsSelector,omitempty" tf:"-"`
 
 	// friendly name for the team.
 	// A human-friendly name for the team.

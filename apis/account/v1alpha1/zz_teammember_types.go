@@ -13,7 +13,7 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type UserInitParameters struct {
+type TeamMemberInitParameters struct {
 
 	// (Set of String) The list of custom roles keys associated with the team member. Custom roles are only available to customers on an Enterprise plan. To learn more, read about our pricing. To upgrade your plan, contact LaunchDarkly Sales.
 	// The list of custom roles keys associated with the team member. Custom roles are only available to customers on an Enterprise plan. To learn more, [read about our pricing](https://launchdarkly.com/pricing/). To upgrade your plan, [contact LaunchDarkly Sales](https://launchdarkly.com/contact-sales/).
@@ -40,10 +40,10 @@ type UserInitParameters struct {
 
 	// (Block Set) A role attributes block. One block must be defined per role attribute. The key is the role attribute key and the value is a string array of resource keys that apply. (see below for nested schema)
 	// A role attributes block. One block must be defined per role attribute. The key is the role attribute key and the value is a string array of resource keys that apply.
-	RoleAttributes []UserRoleAttributesInitParameters `json:"roleAttributes,omitempty" tf:"role_attributes,omitempty"`
+	RoleAttributes []TeamMemberRoleAttributesInitParameters `json:"roleAttributes,omitempty" tf:"role_attributes,omitempty"`
 }
 
-type UserObservation struct {
+type TeamMemberObservation struct {
 
 	// (Set of String) The list of custom roles keys associated with the team member. Custom roles are only available to customers on an Enterprise plan. To learn more, read about our pricing. To upgrade your plan, contact LaunchDarkly Sales.
 	// The list of custom roles keys associated with the team member. Custom roles are only available to customers on an Enterprise plan. To learn more, [read about our pricing](https://launchdarkly.com/pricing/). To upgrade your plan, [contact LaunchDarkly Sales](https://launchdarkly.com/contact-sales/).
@@ -73,10 +73,10 @@ type UserObservation struct {
 
 	// (Block Set) A role attributes block. One block must be defined per role attribute. The key is the role attribute key and the value is a string array of resource keys that apply. (see below for nested schema)
 	// A role attributes block. One block must be defined per role attribute. The key is the role attribute key and the value is a string array of resource keys that apply.
-	RoleAttributes []UserRoleAttributesObservation `json:"roleAttributes,omitempty" tf:"role_attributes,omitempty"`
+	RoleAttributes []TeamMemberRoleAttributesObservation `json:"roleAttributes,omitempty" tf:"role_attributes,omitempty"`
 }
 
-type UserParameters struct {
+type TeamMemberParameters struct {
 
 	// (Set of String) The list of custom roles keys associated with the team member. Custom roles are only available to customers on an Enterprise plan. To learn more, read about our pricing. To upgrade your plan, contact LaunchDarkly Sales.
 	// The list of custom roles keys associated with the team member. Custom roles are only available to customers on an Enterprise plan. To learn more, [read about our pricing](https://launchdarkly.com/pricing/). To upgrade your plan, [contact LaunchDarkly Sales](https://launchdarkly.com/contact-sales/).
@@ -109,10 +109,10 @@ type UserParameters struct {
 	// (Block Set) A role attributes block. One block must be defined per role attribute. The key is the role attribute key and the value is a string array of resource keys that apply. (see below for nested schema)
 	// A role attributes block. One block must be defined per role attribute. The key is the role attribute key and the value is a string array of resource keys that apply.
 	// +kubebuilder:validation:Optional
-	RoleAttributes []UserRoleAttributesParameters `json:"roleAttributes,omitempty" tf:"role_attributes,omitempty"`
+	RoleAttributes []TeamMemberRoleAttributesParameters `json:"roleAttributes,omitempty" tf:"role_attributes,omitempty"`
 }
 
-type UserRoleAttributesInitParameters struct {
+type TeamMemberRoleAttributesInitParameters struct {
 
 	// (String) The key / name of your role attribute. In the example $${roleAttribute/testAttribute}, the key is testAttribute.
 	// The key / name of your role attribute. In the example `$${roleAttribute/testAttribute}`, the key is `testAttribute`.
@@ -123,7 +123,7 @@ type UserRoleAttributesInitParameters struct {
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
-type UserRoleAttributesObservation struct {
+type TeamMemberRoleAttributesObservation struct {
 
 	// (String) The key / name of your role attribute. In the example $${roleAttribute/testAttribute}, the key is testAttribute.
 	// The key / name of your role attribute. In the example `$${roleAttribute/testAttribute}`, the key is `testAttribute`.
@@ -134,7 +134,7 @@ type UserRoleAttributesObservation struct {
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
-type UserRoleAttributesParameters struct {
+type TeamMemberRoleAttributesParameters struct {
 
 	// (String) The key / name of your role attribute. In the example $${roleAttribute/testAttribute}, the key is testAttribute.
 	// The key / name of your role attribute. In the example `$${roleAttribute/testAttribute}`, the key is `testAttribute`.
@@ -147,10 +147,10 @@ type UserRoleAttributesParameters struct {
 	Values []*string `json:"values" tf:"values,omitempty"`
 }
 
-// UserSpec defines the desired state of User
-type UserSpec struct {
+// TeamMemberSpec defines the desired state of TeamMember
+type TeamMemberSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     UserParameters `json:"forProvider"`
+	ForProvider     TeamMemberParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -161,50 +161,50 @@ type UserSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider UserInitParameters `json:"initProvider,omitempty"`
+	InitProvider TeamMemberInitParameters `json:"initProvider,omitempty"`
 }
 
-// UserStatus defines the observed state of User.
-type UserStatus struct {
+// TeamMemberStatus defines the observed state of TeamMember.
+type TeamMemberStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        UserObservation `json:"atProvider,omitempty"`
+	AtProvider        TeamMemberObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// User is the Schema for the Users API. Provides a LaunchDarkly team member resource. This resource allows you to create and manage team members within your LaunchDarkly organization. -> Note: You can only manage team members with "admin" level personal access tokens. To learn more, read Managing Teams https://docs.launchdarkly.com/home/teams/managing.
+// TeamMember is the Schema for the TeamMembers API. Provides a LaunchDarkly team member resource. This resource allows you to create and manage team members within your LaunchDarkly organization. -> Note: You can only manage team members with "admin" level personal access tokens. To learn more, read Managing Teams https://docs.launchdarkly.com/home/teams/managing.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,launchdarkly}
-type User struct {
+type TeamMember struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.email) || (has(self.initProvider) && has(self.initProvider.email))",message="spec.forProvider.email is a required parameter"
-	Spec   UserSpec   `json:"spec"`
-	Status UserStatus `json:"status,omitempty"`
+	Spec   TeamMemberSpec   `json:"spec"`
+	Status TeamMemberStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// UserList contains a list of Users
-type UserList struct {
+// TeamMemberList contains a list of TeamMembers
+type TeamMemberList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []User `json:"items"`
+	Items           []TeamMember `json:"items"`
 }
 
 // Repository type metadata.
 var (
-	User_Kind             = "User"
-	User_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: User_Kind}.String()
-	User_KindAPIVersion   = User_Kind + "." + CRDGroupVersion.String()
-	User_GroupVersionKind = CRDGroupVersion.WithKind(User_Kind)
+	TeamMember_Kind             = "TeamMember"
+	TeamMember_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: TeamMember_Kind}.String()
+	TeamMember_KindAPIVersion   = TeamMember_Kind + "." + CRDGroupVersion.String()
+	TeamMember_GroupVersionKind = CRDGroupVersion.WithKind(TeamMember_Kind)
 )
 
 func init() {
-	SchemeBuilder.Register(&User{}, &UserList{})
+	SchemeBuilder.Register(&TeamMember{}, &TeamMemberList{})
 }
