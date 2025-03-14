@@ -54,6 +54,18 @@ func (in *AccessTokenInitParameters) DeepCopyInto(out *AccessTokenInitParameters
 			}
 		}
 	}
+	if in.CustomRolesRefs != nil {
+		in, out := &in.CustomRolesRefs, &out.CustomRolesRefs
+		*out = make([]v1.Reference, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.CustomRolesSelector != nil {
+		in, out := &in.CustomRolesSelector, &out.CustomRolesSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.DefaultAPIVersion != nil {
 		in, out := &in.DefaultAPIVersion, &out.DefaultAPIVersion
 		*out = new(float64)
@@ -196,6 +208,18 @@ func (in *AccessTokenParameters) DeepCopyInto(out *AccessTokenParameters) {
 				**out = **in
 			}
 		}
+	}
+	if in.CustomRolesRefs != nil {
+		in, out := &in.CustomRolesRefs, &out.CustomRolesRefs
+		*out = make([]v1.Reference, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.CustomRolesSelector != nil {
+		in, out := &in.CustomRolesSelector, &out.CustomRolesSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.DefaultAPIVersion != nil {
 		in, out := &in.DefaultAPIVersion, &out.DefaultAPIVersion
