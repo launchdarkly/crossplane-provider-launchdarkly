@@ -56,6 +56,80 @@ func (mg *Environment) ResolveReferences(ctx context.Context, c client.Reader) e
 	return nil
 }
 
+// ResolveReferences of this EnvironmentDestination.
+func (mg *EnvironmentDestination) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.EnvKey),
+		Extract:      resource.ExtractParamPath("key", false),
+		Reference:    mg.Spec.ForProvider.EnvKeyRef,
+		Selector:     mg.Spec.ForProvider.EnvKeySelector,
+		To: reference.To{
+			List:    &EnvironmentList{},
+			Managed: &Environment{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.EnvKey")
+	}
+	mg.Spec.ForProvider.EnvKey = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.EnvKeyRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ProjectKey),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.ProjectKeyRef,
+		Selector:     mg.Spec.ForProvider.ProjectKeySelector,
+		To: reference.To{
+			List:    &ProjectList{},
+			Managed: &Project{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ProjectKey")
+	}
+	mg.Spec.ForProvider.ProjectKey = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ProjectKeyRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.EnvKey),
+		Extract:      resource.ExtractParamPath("key", false),
+		Reference:    mg.Spec.InitProvider.EnvKeyRef,
+		Selector:     mg.Spec.InitProvider.EnvKeySelector,
+		To: reference.To{
+			List:    &EnvironmentList{},
+			Managed: &Environment{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.EnvKey")
+	}
+	mg.Spec.InitProvider.EnvKey = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.EnvKeyRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ProjectKey),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ProjectKeyRef,
+		Selector:     mg.Spec.InitProvider.ProjectKeySelector,
+		To: reference.To{
+			List:    &ProjectList{},
+			Managed: &Project{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ProjectKey")
+	}
+	mg.Spec.InitProvider.ProjectKey = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ProjectKeyRef = rsp.ResolvedReference
+
+	return nil
+}
+
 // ResolveReferences of this EnvironmentSegment.
 func (mg *EnvironmentSegment) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPIResolver(c, mg)

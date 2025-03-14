@@ -12,10 +12,14 @@ spec:
       region: us-east-1
       role_arn: arn:aws:iam::123456789012:role/marketingadmin
       stream_name: cat-stream
-    envKey: example-env
+    envKeySelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     kind: kinesis
     name: example-kinesis-dest
     "on": true
-    projectKey: example-project
+    projectKeySelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     tags:
     - terraform

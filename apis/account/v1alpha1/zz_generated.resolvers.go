@@ -13,6 +13,48 @@ import (
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
+// ResolveReferences of this AccessToken.
+func (mg *AccessToken) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var mrsp reference.MultiResolutionResponse
+	var err error
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.CustomRoles),
+		Extract:       reference.ExternalName(),
+		References:    mg.Spec.ForProvider.CustomRolesRefs,
+		Selector:      mg.Spec.ForProvider.CustomRolesSelector,
+		To: reference.To{
+			List:    &CustomRoleList{},
+			Managed: &CustomRole{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.CustomRoles")
+	}
+	mg.Spec.ForProvider.CustomRoles = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.CustomRolesRefs = mrsp.ResolvedReferences
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.CustomRoles),
+		Extract:       reference.ExternalName(),
+		References:    mg.Spec.InitProvider.CustomRolesRefs,
+		Selector:      mg.Spec.InitProvider.CustomRolesSelector,
+		To: reference.To{
+			List:    &CustomRoleList{},
+			Managed: &CustomRole{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.CustomRoles")
+	}
+	mg.Spec.InitProvider.CustomRoles = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.InitProvider.CustomRolesRefs = mrsp.ResolvedReferences
+
+	return nil
+}
+
 // ResolveReferences of this Team.
 func (mg *Team) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPIResolver(c, mg)
