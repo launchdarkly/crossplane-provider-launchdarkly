@@ -24,9 +24,10 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"launchdarkly_segment":                  config.IdentifierFromProvider,
 
 	// Miscellaneous
-	"launchdarkly_audit_log_subscription": config.IdentifierFromProvider,
-	"launchdarkly_destination":            config.IdentifierFromProvider,
-	"launchdarkly_webhook":                config.IdentifierFromProvider,
+	"launchdarkly_audit_log_subscription":    config.IdentifierFromProvider,
+	"launchdarkly_destination":               config.IdentifierFromProvider,
+	"launchdarkly_webhook":                   config.IdentifierFromProvider,
+	"launchdarkly_relay_proxy_configuration": config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the
