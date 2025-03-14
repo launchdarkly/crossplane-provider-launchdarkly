@@ -17,8 +17,17 @@ type AccessTokenInitParameters struct {
 
 	// (Set of String) A list of custom role IDs to use as access limits for the access token.
 	// A list of custom role IDs to use as access limits for the access token.
+	// +crossplane:generate:reference:type=github.com/launchdarkly/crossplane-provider-launchdarkly/apis/account/v1alpha1.CustomRole
 	// +listType=set
 	CustomRoles []*string `json:"customRoles,omitempty" tf:"custom_roles,omitempty"`
+
+	// References to CustomRole in account to populate customRoles.
+	// +kubebuilder:validation:Optional
+	CustomRolesRefs []v1.Reference `json:"customRolesRefs,omitempty" tf:"-"`
+
+	// Selector for a list of CustomRole in account to populate customRoles.
+	// +kubebuilder:validation:Optional
+	CustomRolesSelector *v1.Selector `json:"customRolesSelector,omitempty" tf:"-"`
 
 	// (Number) The default API version for this token. Defaults to the latest API version. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// The default API version for this token. Defaults to the latest API version. A change in this field will force the destruction of the existing resource and the creation of a new one.
@@ -76,9 +85,18 @@ type AccessTokenParameters struct {
 
 	// (Set of String) A list of custom role IDs to use as access limits for the access token.
 	// A list of custom role IDs to use as access limits for the access token.
+	// +crossplane:generate:reference:type=github.com/launchdarkly/crossplane-provider-launchdarkly/apis/account/v1alpha1.CustomRole
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	CustomRoles []*string `json:"customRoles,omitempty" tf:"custom_roles,omitempty"`
+
+	// References to CustomRole in account to populate customRoles.
+	// +kubebuilder:validation:Optional
+	CustomRolesRefs []v1.Reference `json:"customRolesRefs,omitempty" tf:"-"`
+
+	// Selector for a list of CustomRole in account to populate customRoles.
+	// +kubebuilder:validation:Optional
+	CustomRolesSelector *v1.Selector `json:"customRolesSelector,omitempty" tf:"-"`
 
 	// (Number) The default API version for this token. Defaults to the latest API version. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// The default API version for this token. Defaults to the latest API version. A change in this field will force the destruction of the existing resource and the creation of a new one.
