@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.3.0](https://github.com/launchdarkly/crossplane-provider-launchdarkly/compare/v0.2.1...v0.3.0) (2025-03-14)
+
+
+### Features
+
+* Add cross-resource definitions for AccessToken and EnvironmentDestination resource ([60a3172](https://github.com/launchdarkly/crossplane-provider-launchdarkly/commit/60a31724a6ba629d1e3c70ad112163c14c241ca3))
+* Add cross-resource definitions for AccessToken and EnvironmentDestination resources ([#32](https://github.com/launchdarkly/crossplane-provider-launchdarkly/issues/32)) ([60a3172](https://github.com/launchdarkly/crossplane-provider-launchdarkly/commit/60a31724a6ba629d1e3c70ad112163c14c241ca3))
+* Add RelayProxyConfiguration resource ([#33](https://github.com/launchdarkly/crossplane-provider-launchdarkly/issues/33)) ([87ab99f](https://github.com/launchdarkly/crossplane-provider-launchdarkly/commit/87ab99f39664e8b86ed430a9d84853bc72c8d3d1))
+
 ## [0.2.1](https://github.com/launchdarkly/crossplane-provider-launchdarkly/compare/v0.2.0...v0.2.1) (2025-03-12)
 
 
