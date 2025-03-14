@@ -1,0 +1,15 @@
+apiVersion: account.launchdarkly.com/v1alpha1
+kind: RelayProxyConfiguration
+metadata:
+  name: crossplane-example
+spec:
+  forProvider:
+    name: Crossplane Example Configuration
+
+    # This policy allows the Relay Proxy to access all environments in the 'the-big-project' project.
+    policy:
+      - actions:
+          - "*"
+        effect: allow
+        resources:
+          - proj/the-big-project:env/*

@@ -16,6 +16,9 @@ func (tr *AuditLogSubscription) Hub() {}
 func (tr *CustomRole) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *RelayProxyConfiguration) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *Team) Hub() {}
 
 // Hub marks this type as a conversion hub.

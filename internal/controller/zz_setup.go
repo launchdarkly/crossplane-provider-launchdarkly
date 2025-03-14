@@ -12,6 +12,7 @@ import (
 	accesstoken "github.com/launchdarkly/crossplane-provider-launchdarkly/internal/controller/account/accesstoken"
 	auditlogsubscription "github.com/launchdarkly/crossplane-provider-launchdarkly/internal/controller/account/auditlogsubscription"
 	customrole "github.com/launchdarkly/crossplane-provider-launchdarkly/internal/controller/account/customrole"
+	relayproxyconfiguration "github.com/launchdarkly/crossplane-provider-launchdarkly/internal/controller/account/relayproxyconfiguration"
 	team "github.com/launchdarkly/crossplane-provider-launchdarkly/internal/controller/account/team"
 	teammember "github.com/launchdarkly/crossplane-provider-launchdarkly/internal/controller/account/teammember"
 	teamrolemapping "github.com/launchdarkly/crossplane-provider-launchdarkly/internal/controller/account/teamrolemapping"
@@ -32,6 +33,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		accesstoken.Setup,
 		auditlogsubscription.Setup,
 		customrole.Setup,
+		relayproxyconfiguration.Setup,
 		team.Setup,
 		teammember.Setup,
 		teamrolemapping.Setup,

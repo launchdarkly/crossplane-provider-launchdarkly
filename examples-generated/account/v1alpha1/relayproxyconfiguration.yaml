@@ -1,0 +1,17 @@
+apiVersion: account.launchdarkly.com/v1alpha1
+kind: RelayProxyConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: account/v1alpha1/relayproxyconfiguration
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    name: example-config
+    policy:
+    - actions:
+      - '*'
+      effect: allow
+      resources:
+      - proj/*:env/*
