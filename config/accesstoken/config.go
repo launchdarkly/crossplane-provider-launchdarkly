@@ -8,6 +8,10 @@ func Configure(p *config.Provider) {
 		r.Kind = "AccessToken"
 		r.ShortGroup = "account"
 
+		r.References["custom_roles"] = config.Reference{
+			TerraformName: "launchdarkly_custom_role",
+		}
+
 		// Remove deprecated fields
 		delete(r.TerraformResource.Schema, "expire")
 		delete(r.TerraformResource.Schema, "policy_statements")

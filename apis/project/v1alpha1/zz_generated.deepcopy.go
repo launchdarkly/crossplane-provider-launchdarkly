@@ -535,6 +535,16 @@ func (in *EnvironmentDestinationInitParameters) DeepCopyInto(out *EnvironmentDes
 		*out = new(string)
 		**out = **in
 	}
+	if in.EnvKeyRef != nil {
+		in, out := &in.EnvKeyRef, &out.EnvKeyRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.EnvKeySelector != nil {
+		in, out := &in.EnvKeySelector, &out.EnvKeySelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Kind != nil {
 		in, out := &in.Kind, &out.Kind
 		*out = new(string)
@@ -554,6 +564,16 @@ func (in *EnvironmentDestinationInitParameters) DeepCopyInto(out *EnvironmentDes
 		in, out := &in.ProjectKey, &out.ProjectKey
 		*out = new(string)
 		**out = **in
+	}
+	if in.ProjectKeyRef != nil {
+		in, out := &in.ProjectKeyRef, &out.ProjectKeyRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ProjectKeySelector != nil {
+		in, out := &in.ProjectKeySelector, &out.ProjectKeySelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags
@@ -706,6 +726,16 @@ func (in *EnvironmentDestinationParameters) DeepCopyInto(out *EnvironmentDestina
 		*out = new(string)
 		**out = **in
 	}
+	if in.EnvKeyRef != nil {
+		in, out := &in.EnvKeyRef, &out.EnvKeyRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.EnvKeySelector != nil {
+		in, out := &in.EnvKeySelector, &out.EnvKeySelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Kind != nil {
 		in, out := &in.Kind, &out.Kind
 		*out = new(string)
@@ -725,6 +755,16 @@ func (in *EnvironmentDestinationParameters) DeepCopyInto(out *EnvironmentDestina
 		in, out := &in.ProjectKey, &out.ProjectKey
 		*out = new(string)
 		**out = **in
+	}
+	if in.ProjectKeyRef != nil {
+		in, out := &in.ProjectKeyRef, &out.ProjectKeyRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ProjectKeySelector != nil {
+		in, out := &in.ProjectKeySelector, &out.ProjectKeySelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags
