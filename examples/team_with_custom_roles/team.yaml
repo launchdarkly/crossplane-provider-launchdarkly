@@ -18,6 +18,13 @@ spec:
     customRoleKeysRefs:
       - name: no-production-access
       - name: allow-product-manager-tag
+
+    # Role attributes are used to assign projects to the team.
+    roleAttributes:
+      - key: productManagerProjAttr
+        values:
+          - default
+          - the-big-project
 ---
 apiVersion: account.launchdarkly.com/v1alpha1
 kind: CustomRole
@@ -46,7 +53,9 @@ metadata:
   name: allow-product-manager-tag
 spec:
   forProvider:
-    description: "Allow Product Managers to toggle flags and change targeting for flags wtih the product-manager tag"
+    description: |
+      Allow Product Managers to toggle flags and change targeting for flags with the product-manager tag.
+      This role uses the `productManagerProjAttr` role attribute so that projects can be assigned at the team level.
     name: Product Manager tag access
     key: product-manager-tag-access
     policyStatements:
@@ -58,4 +67,5 @@ spec:
           - "updateTargets"
         effect: allow
         resources:
-          - "proj/*:env/*:flag/*;product-manager"
+          # To use role attributes, use the syntax $${roleAttribute/<YOUR_ROLE_ATTRIBUTE>} in lieu of your usual resource keys.
+          - "proj/$${roleAttribute/productManagerProjAttr}:env/*:flag/*;product-manager"
