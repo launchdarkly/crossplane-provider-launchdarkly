@@ -55,7 +55,7 @@ spec:
   forProvider:
     description: |
       Allow Product Managers to toggle flags and change targeting for flags with the product-manager tag.
-      This role uses the `productManagerProjAttr` role attribute so that projects can be assigned at the team level.
+      This role leverages role scope with the `productManagerProjAttr` role attribute so that projects can be assigned at the team level.
     name: Product Manager tag access
     key: product-manager-tag-access
     policyStatements:
