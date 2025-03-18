@@ -2,6 +2,8 @@ name: Terraform Provider Version Bump
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "0 15 * * *" # Run at 15:00 UTC every day
 
 env:
   GO_VERSION: "1.21"
