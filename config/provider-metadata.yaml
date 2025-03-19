@@ -533,6 +533,7 @@ resources:
                 env_key: launchdarkly_environment.staging.key
                 flag_id: launchdarkly_feature_flag.number.id
                 prerequisites.flag_key: launchdarkly_feature_flag.basic.key
+                rules.clauses.values: launchdarkly_segment.example.key
             - name: basic_flag_environment
               manifest: |-
                 {
@@ -862,6 +863,8 @@ resources:
                   ],
                   "name": "testProject"
                 }
+              references:
+                lifecycle.ignore_changes: environments
         argumentDocs:
             api_key: (String, Sensitive) The environment's SDK key.
             approval_settings: (Block List) (see below for nested schema)
