@@ -12,6 +12,11 @@ linters-settings:
     # Check for unchecked errors in type assertions
     check-blank: false
 
+  revive:
+    rules:
+      - name: package-comments
+        disabled: true
+
   govet:
     enable:
       # report about shadowed variables
