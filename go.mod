@@ -4,11 +4,11 @@ go 1.23.7
 
 require (
 	dario.cat/mergo v1.0.1
-	github.com/alecthomas/kingpin/v2 v2.4.0
 	github.com/crossplane/crossplane-runtime v1.17.0
 	github.com/crossplane/crossplane-tools v0.0.0-20240522174801-1ad3d4c87f21
 	github.com/crossplane/upjet v1.5.0
 	github.com/pkg/errors v0.9.1
+	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 	k8s.io/apimachinery v0.30.0
 	k8s.io/client-go v0.30.0
 	sigs.k8s.io/controller-runtime v0.18.2
@@ -17,6 +17,8 @@ require (
 
 require (
 	github.com/agext/levenshtein v1.2.3 // indirect
+	github.com/alecthomas/kingpin/v2 v2.4.0 // indirect
+	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751 // indirect
 	github.com/alecthomas/units v0.0.0-20211218093645-b94a6e3cc137 // indirect
 	github.com/antchfx/htmlquery v1.2.4 // indirect
 	github.com/antchfx/xpath v1.2.0 // indirect
