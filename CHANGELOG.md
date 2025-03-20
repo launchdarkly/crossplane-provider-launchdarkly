@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.4.0](https://github.com/launchdarkly/crossplane-provider-launchdarkly/compare/v0.3.0...v0.4.0) (2025-03-20)
+
+
+### Features
+
+* Bump terraform provider to version 2.25.0 to add support for PagerDuty integration ([#41](https://github.com/launchdarkly/crossplane-provider-launchdarkly/issues/41)) ([bdf7fe1](https://github.com/launchdarkly/crossplane-provider-launchdarkly/commit/bdf7fe146a38c582083c97e2d37eb03fa167ae56))
+
+
+### Bug Fixes
+
+* Update golang.org/x/net and github.com/crossplane/upjet dependencies ([#38](https://github.com/launchdarkly/crossplane-provider-launchdarkly/issues/38)) ([14df50f](https://github.com/launchdarkly/crossplane-provider-launchdarkly/commit/14df50f6370388371b914c93afa7e121c4434edf))
+
 ## [0.3.0](https://github.com/launchdarkly/crossplane-provider-launchdarkly/compare/v0.2.1...v0.3.0) (2025-03-14)
 
 
