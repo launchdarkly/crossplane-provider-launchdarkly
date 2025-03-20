@@ -84,8 +84,8 @@ spec:
                     x-kubernetes-map-type: granular
                   integrationKey:
                     description: |-
-                      relic-apm, signalfx, slack, and splunk. A change in this field will force the destruction of the existing resource and the creation of a new one.
-                      The integration key. Supported integration keys are `chronosphere`, `cloudtrail`, `datadog`, `dynatrace`, `elastic`, `grafana`, `honeycomb`, `kosli`, `last9`, `logdna`, `msteams`, `new-relic-apm`, `signalfx`, `slack`, and `splunk`. A change in this field will force the destruction of the existing resource and the creation of a new one.
+                      relic-apm, pagerduty, signalfx, slack, and splunk. A change in this field will force the destruction of the existing resource and the creation of a new one.
+                      The integration key. Supported integration keys are `chronosphere`, `cloudtrail`, `datadog`, `dynatrace`, `elastic`, `grafana`, `honeycomb`, `kosli`, `last9`, `logdna`, `msteams`, `new-relic-apm`, `pagerduty`, `signalfx`, `slack`, and `splunk`. A change in this field will force the destruction of the existing resource and the creation of a new one.
                     type: string
                   name:
                     description: |-
@@ -172,8 +172,8 @@ spec:
                     x-kubernetes-map-type: granular
                   integrationKey:
                     description: |-
-                      relic-apm, signalfx, slack, and splunk. A change in this field will force the destruction of the existing resource and the creation of a new one.
-                      The integration key. Supported integration keys are `chronosphere`, `cloudtrail`, `datadog`, `dynatrace`, `elastic`, `grafana`, `honeycomb`, `kosli`, `last9`, `logdna`, `msteams`, `new-relic-apm`, `signalfx`, `slack`, and `splunk`. A change in this field will force the destruction of the existing resource and the creation of a new one.
+                      relic-apm, pagerduty, signalfx, slack, and splunk. A change in this field will force the destruction of the existing resource and the creation of a new one.
+                      The integration key. Supported integration keys are `chronosphere`, `cloudtrail`, `datadog`, `dynatrace`, `elastic`, `grafana`, `honeycomb`, `kosli`, `last9`, `logdna`, `msteams`, `new-relic-apm`, `pagerduty`, `signalfx`, `slack`, and `splunk`. A change in this field will force the destruction of the existing resource and the creation of a new one.
                     type: string
                   name:
                     description: |-
@@ -444,8 +444,8 @@ spec:
                     type: string
                   integrationKey:
                     description: |-
-                      relic-apm, signalfx, slack, and splunk. A change in this field will force the destruction of the existing resource and the creation of a new one.
-                      The integration key. Supported integration keys are `chronosphere`, `cloudtrail`, `datadog`, `dynatrace`, `elastic`, `grafana`, `honeycomb`, `kosli`, `last9`, `logdna`, `msteams`, `new-relic-apm`, `signalfx`, `slack`, and `splunk`. A change in this field will force the destruction of the existing resource and the creation of a new one.
+                      relic-apm, pagerduty, signalfx, slack, and splunk. A change in this field will force the destruction of the existing resource and the creation of a new one.
+                      The integration key. Supported integration keys are `chronosphere`, `cloudtrail`, `datadog`, `dynatrace`, `elastic`, `grafana`, `honeycomb`, `kosli`, `last9`, `logdna`, `msteams`, `new-relic-apm`, `pagerduty`, `signalfx`, `slack`, and `splunk`. A change in this field will force the destruction of the existing resource and the creation of a new one.
                     type: string
                   name:
                     description: |-
