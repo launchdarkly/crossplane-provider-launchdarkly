@@ -12,7 +12,7 @@ TERRAFORM_VERSION_VALID := $(shell [ "$(TERRAFORM_VERSION)" = "`printf "$(TERRAF
 
 export TERRAFORM_PROVIDER_SOURCE ?= launchdarkly/launchdarkly
 export TERRAFORM_PROVIDER_REPO ?= https://github.com/launchdarkly/terraform-provider-launchdarkly
-export TERRAFORM_PROVIDER_VERSION ?= 2.24.0
+export TERRAFORM_PROVIDER_VERSION ?= 2.25.0
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME ?= terraform-provider-launchdarkly
 export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX ?= https://github.com/launchdarkly/$(TERRAFORM_PROVIDER_DOWNLOAD_NAME)/releases/download/v$(TERRAFORM_PROVIDER_VERSION)/
 export TERRAFORM_NATIVE_PROVIDER_BINARY ?= terraform-provider-launchdarkly_$(TERRAFORM_PROVIDER_VERSION)
