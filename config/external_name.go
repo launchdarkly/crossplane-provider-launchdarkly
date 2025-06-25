@@ -22,6 +22,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"launchdarkly_feature_flag":             config.IdentifierFromProvider,
 	"launchdarkly_feature_flag_environment": config.IdentifierFromProvider,
 	"launchdarkly_segment":                  config.IdentifierFromProvider,
+	"launchdarkly_metric":                   config.IdentifierFromProvider,
 
 	// Miscellaneous
 	"launchdarkly_audit_log_subscription":    config.IdentifierFromProvider,
