@@ -22,6 +22,7 @@ import (
 	environment "github.com/launchdarkly/crossplane-provider-launchdarkly/internal/controller/project/environment"
 	environmentdestination "github.com/launchdarkly/crossplane-provider-launchdarkly/internal/controller/project/environmentdestination"
 	environmentsegment "github.com/launchdarkly/crossplane-provider-launchdarkly/internal/controller/project/environmentsegment"
+	metric "github.com/launchdarkly/crossplane-provider-launchdarkly/internal/controller/project/metric"
 	project "github.com/launchdarkly/crossplane-provider-launchdarkly/internal/controller/project/project"
 	providerconfig "github.com/launchdarkly/crossplane-provider-launchdarkly/internal/controller/providerconfig"
 )
@@ -43,6 +44,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		environment.Setup,
 		environmentdestination.Setup,
 		environmentsegment.Setup,
+		metric.Setup,
 		project.Setup,
 		providerconfig.Setup,
 	} {

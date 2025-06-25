@@ -15,6 +15,7 @@ import (
 	"github.com/launchdarkly/crossplane-provider-launchdarkly/config/environment"
 	"github.com/launchdarkly/crossplane-provider-launchdarkly/config/featureflag"
 	"github.com/launchdarkly/crossplane-provider-launchdarkly/config/featureflagenvironment"
+	"github.com/launchdarkly/crossplane-provider-launchdarkly/config/metric"
 	"github.com/launchdarkly/crossplane-provider-launchdarkly/config/project"
 	"github.com/launchdarkly/crossplane-provider-launchdarkly/config/relayproxyconfig"
 	"github.com/launchdarkly/crossplane-provider-launchdarkly/config/segment"
@@ -56,6 +57,7 @@ func GetProvider() *ujconfig.Provider {
 		environment.Configure,
 		featureflag.Configure,
 		featureflagenvironment.Configure,
+		metric.Configure,
 		project.Configure,
 		relayproxyconfig.Configure,
 		segment.Configure,

@@ -1,0 +1,22 @@
+apiVersion: project.launchdarkly.com/v1alpha1
+kind: Metric
+metadata:
+  annotations:
+    meta.upbound.io/example-id: project/v1alpha1/metric
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: Metric description.
+    key: example-metric
+    kind: pageview
+    name: Example Metric
+    projectKeySelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    tags:
+    - example
+    urls:
+    - kind: substring
+      substring: foo
