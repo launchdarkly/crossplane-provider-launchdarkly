@@ -20,7 +20,7 @@ type AuditLogSubscriptionInitParameters struct {
 	// +mapType=granular
 	Config map[string]*string `json:"config,omitempty" tf:"config,omitempty"`
 
-	// relic-apm, signalfx, slack, and splunk. A change in this field will force the destruction of the existing resource and the creation of a new one.
+	// relic-apm, pagerduty, signalfx, slack, and splunk. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// The integration key. Supported integration keys are `chronosphere`, `cloudtrail`, `datadog`, `dynatrace`, `elastic`, `grafana`, `honeycomb`, `kosli`, `last9`, `logdna`, `msteams`, `new-relic-apm`, `pagerduty`, `signalfx`, `slack`, and `splunk`. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	IntegrationKey *string `json:"integrationKey,omitempty" tf:"integration_key,omitempty"`
 
@@ -52,7 +52,7 @@ type AuditLogSubscriptionObservation struct {
 	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// relic-apm, signalfx, slack, and splunk. A change in this field will force the destruction of the existing resource and the creation of a new one.
+	// relic-apm, pagerduty, signalfx, slack, and splunk. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// The integration key. Supported integration keys are `chronosphere`, `cloudtrail`, `datadog`, `dynatrace`, `elastic`, `grafana`, `honeycomb`, `kosli`, `last9`, `logdna`, `msteams`, `new-relic-apm`, `pagerduty`, `signalfx`, `slack`, and `splunk`. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	IntegrationKey *string `json:"integrationKey,omitempty" tf:"integration_key,omitempty"`
 
@@ -82,7 +82,7 @@ type AuditLogSubscriptionParameters struct {
 	// +mapType=granular
 	Config map[string]*string `json:"config,omitempty" tf:"config,omitempty"`
 
-	// relic-apm, signalfx, slack, and splunk. A change in this field will force the destruction of the existing resource and the creation of a new one.
+	// relic-apm, pagerduty, signalfx, slack, and splunk. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// The integration key. Supported integration keys are `chronosphere`, `cloudtrail`, `datadog`, `dynatrace`, `elastic`, `grafana`, `honeycomb`, `kosli`, `last9`, `logdna`, `msteams`, `new-relic-apm`, `pagerduty`, `signalfx`, `slack`, and `splunk`. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// +kubebuilder:validation:Optional
 	IntegrationKey *string `json:"integrationKey,omitempty" tf:"integration_key,omitempty"`
