@@ -16,4 +16,7 @@ func (tr *EnvironmentDestination) Hub() {}
 func (tr *EnvironmentSegment) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *Metric) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *Project) Hub() {}

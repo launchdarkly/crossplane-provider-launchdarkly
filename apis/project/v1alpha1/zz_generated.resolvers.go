@@ -10,6 +10,7 @@ import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	resource "github.com/crossplane/upjet/pkg/resource"
+	v1alpha1 "github.com/launchdarkly/crossplane-provider-launchdarkly/apis/account/v1alpha1"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -184,6 +185,80 @@ func (mg *EnvironmentSegment) ResolveReferences(ctx context.Context, c client.Re
 	}
 	mg.Spec.InitProvider.EnvKey = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.EnvKeyRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ProjectKey),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ProjectKeyRef,
+		Selector:     mg.Spec.InitProvider.ProjectKeySelector,
+		To: reference.To{
+			List:    &ProjectList{},
+			Managed: &Project{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ProjectKey")
+	}
+	mg.Spec.InitProvider.ProjectKey = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ProjectKeyRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this Metric.
+func (mg *Metric) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.MaintainerID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.MaintainerIDRef,
+		Selector:     mg.Spec.ForProvider.MaintainerIDSelector,
+		To: reference.To{
+			List:    &v1alpha1.TeamMemberList{},
+			Managed: &v1alpha1.TeamMember{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.MaintainerID")
+	}
+	mg.Spec.ForProvider.MaintainerID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.MaintainerIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ProjectKey),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.ProjectKeyRef,
+		Selector:     mg.Spec.ForProvider.ProjectKeySelector,
+		To: reference.To{
+			List:    &ProjectList{},
+			Managed: &Project{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ProjectKey")
+	}
+	mg.Spec.ForProvider.ProjectKey = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ProjectKeyRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.MaintainerID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.MaintainerIDRef,
+		Selector:     mg.Spec.InitProvider.MaintainerIDSelector,
+		To: reference.To{
+			List:    &v1alpha1.TeamMemberList{},
+			Managed: &v1alpha1.TeamMember{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.MaintainerID")
+	}
+	mg.Spec.InitProvider.MaintainerID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.MaintainerIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ProjectKey),
