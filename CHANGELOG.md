@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.0](https://github.com/launchdarkly/crossplane-provider-launchdarkly/compare/v0.4.0...v0.5.0) (2025-06-25)
+
+
+### Features
+
+* [REL-8393] add metric resource ([#44](https://github.com/launchdarkly/crossplane-provider-launchdarkly/issues/44)) ([eb6ffb8](https://github.com/launchdarkly/crossplane-provider-launchdarkly/commit/eb6ffb8d93e2756837dc57a353783834eecb96d1))
+* Bump terraform provider to version 2.25.1 ([#42](https://github.com/launchdarkly/crossplane-provider-launchdarkly/issues/42)) ([fb6a646](https://github.com/launchdarkly/crossplane-provider-launchdarkly/commit/fb6a6469f4498c10ce84d47d4a042ae5d5a0c745))
+
 ## [0.4.0](https://github.com/launchdarkly/crossplane-provider-launchdarkly/compare/v0.3.0...v0.4.0) (2025-03-20)
 
 
