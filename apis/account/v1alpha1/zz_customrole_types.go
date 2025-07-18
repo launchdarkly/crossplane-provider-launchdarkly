@@ -15,8 +15,8 @@ import (
 
 type CustomRoleInitParameters struct {
 
-	// either reader or no_access. Defaults to reader.
-	// The base permission level - either reader or no_access. Defaults to reader.
+	// either reader or no_access. While newer API versions default to no_access, this field defaults to reader in keeping with previous API versions.
+	// The base permission level - either `reader` or `no_access`. While newer API versions default to `no_access`, this field defaults to `reader` in keeping with previous API versions.
 	BasePermissions *string `json:"basePermissions,omitempty" tf:"base_permissions,omitempty"`
 
 	// (String) Description of the custom role.
@@ -38,8 +38,8 @@ type CustomRoleInitParameters struct {
 
 type CustomRoleObservation struct {
 
-	// either reader or no_access. Defaults to reader.
-	// The base permission level - either reader or no_access. Defaults to reader.
+	// either reader or no_access. While newer API versions default to no_access, this field defaults to reader in keeping with previous API versions.
+	// The base permission level - either `reader` or `no_access`. While newer API versions default to `no_access`, this field defaults to `reader` in keeping with previous API versions.
 	BasePermissions *string `json:"basePermissions,omitempty" tf:"base_permissions,omitempty"`
 
 	// (String) Description of the custom role.
@@ -64,8 +64,8 @@ type CustomRoleObservation struct {
 
 type CustomRoleParameters struct {
 
-	// either reader or no_access. Defaults to reader.
-	// The base permission level - either reader or no_access. Defaults to reader.
+	// either reader or no_access. While newer API versions default to no_access, this field defaults to reader in keeping with previous API versions.
+	// The base permission level - either `reader` or `no_access`. While newer API versions default to `no_access`, this field defaults to `reader` in keeping with previous API versions.
 	// +kubebuilder:validation:Optional
 	BasePermissions *string `json:"basePermissions,omitempty" tf:"base_permissions,omitempty"`
 

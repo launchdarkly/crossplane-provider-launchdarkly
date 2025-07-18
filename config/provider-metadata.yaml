@@ -140,7 +140,7 @@ resources:
                 }
         argumentDocs:
             actions: (List of String)
-            base_permissions: (String) The base permission level - either reader or no_access. Defaults to reader.
+            base_permissions: (String) The base permission level - either reader or no_access. While newer API versions default to no_access, this field defaults to reader in keeping with previous API versions.
             description: (String) Description of the custom role.
             effect: (String)
             id: (String) The ID of this resource.
