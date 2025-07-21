@@ -138,6 +138,42 @@ resources:
                     }
                   ]
                 }
+            - name: view_membership_example
+              manifest: |-
+                {
+                  "description": "This is an example role with view membership",
+                  "key": "example-role-key-2",
+                  "name": "example role with view membership",
+                  "policy_statements": [
+                    {
+                      "actions": [
+                        "*"
+                      ],
+                      "effect": "allow",
+                      "resources": [
+                        "proj/*:env/production:flag/*;view:example-view"
+                      ]
+                    },
+                    {
+                      "actions": [
+                        "*"
+                      ],
+                      "effect": "allow",
+                      "resources": [
+                        "proj/*:env/production:flag/*;view:${roleAttribute/view}"
+                      ]
+                    },
+                    {
+                      "actions": [
+                        "*"
+                      ],
+                      "effect": "allow",
+                      "resources": [
+                        "proj/*:env/production"
+                      ]
+                    }
+                  ]
+                }
         argumentDocs:
             actions: (List of String)
             base_permissions: (String) The base permission level - either reader or no_access. While newer API versions default to no_access, this field defaults to reader in keeping with previous API versions.
@@ -1249,6 +1285,121 @@ resources:
         argumentDocs:
             custom_role_keys: '- (Required) List of custom role keys the team will access. The referenced custom roles must already exist in LaunchDarkly. If they don''t, the provider may behave unexpectedly.'
             team_key: '- (Required) The team key.'
+        importStatements: []
+    launchdarkly_view:
+        subCategory: ""
+        description: Provides a LaunchDarkly view resource. This resource allows you to create and manage views within your LaunchDarkly project.
+        name: launchdarkly_view
+        title: launchdarkly_view Resource - launchdarkly
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "description": "An example view for demonstration purposes",
+                  "generate_sdk_keys": true,
+                  "key": "example-view",
+                  "maintainer_id": "507f1f77bcf86cd799439011",
+                  "name": "Example View",
+                  "project_key": "example-project",
+                  "tags": [
+                    "terraform",
+                    "example"
+                  ]
+                }
+            - name: team_maintained
+              manifest: |-
+                {
+                  "description": "A view maintained by a team",
+                  "key": "team-view",
+                  "maintainer_team_key": "platform-team",
+                  "name": "Team Maintained View",
+                  "project_key": "example-project",
+                  "tags": [
+                    "team-managed"
+                  ]
+                }
+        argumentDocs:
+            archived: (Boolean) Whether the view is archived.
+            description: (String) The view's description.
+            generate_sdk_keys: (Boolean) Whether to generate SDK keys for this view.
+            id: (String) The ID of this resource.
+            key: (String) The view's unique key. A change in this field will force the destruction of the existing resource and the creation of a new one.
+            maintainer_id: (String) The member ID of the maintainer for this view. Exactly one of maintainer_id and maintainer_team_key must be set.
+            maintainer_team_key: (String) The team key of the maintainer team for this view. Exactly one of maintainer_id and maintainer_team_key must be set.
+            name: (String) The view's name.
+            project_key: (String) The project key. A change in this field will force the destruction of the existing resource and the creation of a new one.
+            tags: (Set of String) Tags associated with your resource.
+        importStatements: []
+    launchdarkly_view_links:
+        subCategory: ""
+        description: 'Provides a LaunchDarkly view links resource for managing bulk resource linkage to views. This resource allows you to efficiently link multiple flags to a specific view. This is particularly useful for administrators organizing resources by team or deployment unit. -> Note: This resource manages ALL links for the specified resource types within a view. Adding or removing items from the configuration will link or unlink those resources accordingly.'
+        name: launchdarkly_view_links
+        title: launchdarkly_view_links Resource - launchdarkly
+        examples:
+            - name: frontend_team
+              manifest: |-
+                {
+                  "comment": "Frontend team flag assignments managed by Terraform",
+                  "flags": [
+                    "feature-login",
+                    "feature-dashboard",
+                    "feature-payments",
+                    "feature-checkout",
+                    "feature-profile",
+                    "feature-notifications",
+                    "feature-search",
+                    "feature-filters",
+                    "feature-analytics",
+                    "feature-dark-mode"
+                  ],
+                  "project_key": "my-project",
+                  "view_key": "frontend-team"
+                }
+            - name: mobile_team
+              manifest: |-
+                {
+                  "comment": "Mobile team specific features",
+                  "flags": [
+                    "feature-mobile-login",
+                    "feature-push-notifications",
+                    "feature-offline-mode",
+                    "feature-biometric-auth",
+                    "feature-mobile-payments",
+                    "feature-app-rating"
+                  ],
+                  "project_key": "my-project",
+                  "view_key": "mobile-team"
+                }
+            - name: shared_features
+              manifest: |-
+                {
+                  "comment": "Cross-team shared feature flags",
+                  "flags": [
+                    "feature-maintenance-mode",
+                    "feature-emergency-banner",
+                    "feature-api-throttling",
+                    "feature-logging-level"
+                  ],
+                  "project_key": "my-project",
+                  "view_key": "shared-features"
+                }
+            - name: backend_team
+              manifest: |-
+                {
+                  "comment": "Backend infrastructure and API flags",
+                  "flags": [
+                    "feature-database-migration",
+                    "feature-cache-optimization",
+                    "feature-api-versioning"
+                  ],
+                  "project_key": "my-project",
+                  "view_key": "backend-team"
+                }
+        argumentDocs:
+            flags: (Set of String) A set of feature flag keys to link to the view.
+            id: (String) The ID of this resource.
+            project_key: (String) The project key. A change in this field will force the destruction of the existing resource and the creation of a new one.
+            view_key: (String) The view key to link resources to. A change in this field will force the destruction of the existing resource and the creation of a new one.
         importStatements: []
     launchdarkly_webhook:
         subCategory: ""
