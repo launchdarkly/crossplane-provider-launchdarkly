@@ -32,6 +32,7 @@ ADD tofurc.hcl ${TF_CLI_CONFIG_FILE}
 
 RUN unzip /tmp/tofu_${OPENTOFU_VERSION}_${TARGETOS}_${TARGETARCH}.zip -d /usr/local/bin \
   && chmod +x /usr/local/bin/tofu \
+  && ln -s /usr/local/bin/tofu /usr/local/bin/terraform \
   && rm /tmp/tofu_${OPENTOFU_VERSION}_${TARGETOS}_${TARGETARCH}.zip \
   && unzip /tmp/${TERRAFORM_PROVIDER_DOWNLOAD_NAME}_${TERRAFORM_PROVIDER_VERSION}_${TARGETOS}_${TARGETARCH}.zip -d ${PLUGIN_DIR} \
   && chmod +x ${PLUGIN_DIR}/* \
