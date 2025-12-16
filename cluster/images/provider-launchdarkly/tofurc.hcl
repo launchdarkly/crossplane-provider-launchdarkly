@@ -1,9 +1,10 @@
 provider_installation {
   filesystem_mirror {
-    path    = "/terraform/provider-mirror"
+    path    = "/opentofu/provider-mirror"
     include = ["*/*"]
   }
   direct {
     exclude = ["*/*"]
   }
 }
+
