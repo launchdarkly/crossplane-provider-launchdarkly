@@ -2,13 +2,14 @@
 Copyright 2021 Upbound Inc.
 */
 
+// Package providerconfig contains the controller for the ProviderConfig resource.
 package providerconfig
 
 import (
-	"github.com/crossplane/crossplane-runtime/pkg/event"
-	"github.com/crossplane/crossplane-runtime/pkg/reconciler/providerconfig"
-	"github.com/crossplane/crossplane-runtime/pkg/resource"
-	"github.com/crossplane/upjet/pkg/controller"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/event"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/providerconfig"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/resource"
+	"github.com/crossplane/upjet/v2/pkg/controller"
 	ctrl "sigs.k8s.io/controller-runtime"
 
 	"github.com/launchdarkly/crossplane-provider-launchdarkly/apis/v1beta1"
@@ -21,6 +22,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 
 	of := resource.ProviderConfigKinds{
 		Config:    v1beta1.ProviderConfigGroupVersionKind,
+		Usage:     v1beta1.ProviderConfigUsageGroupVersionKind,
 		UsageList: v1beta1.ProviderConfigUsageListGroupVersionKind,
 	}
 
@@ -32,4 +34,10 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		Complete(providerconfig.NewReconciler(mgr, of,
 			providerconfig.WithLogger(o.Logger.WithValues("controller", name)),
 			providerconfig.WithRecorder(event.NewAPIRecorder(mgr.GetEventRecorderFor(name)))))
+}
+
+// SetupGated adds a controller that reconciles ProviderConfigs by accounting for
+// their current usage (gated version).
+func SetupGated(mgr ctrl.Manager, o controller.Options) error {
+	return Setup(mgr, o)
 }

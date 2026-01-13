@@ -7,7 +7,7 @@ package controller
 import (
 	ctrl "sigs.k8s.io/controller-runtime"
 
-	"github.com/crossplane/upjet/pkg/controller"
+	"github.com/crossplane/upjet/v2/pkg/controller"
 
 	accesstoken "github.com/launchdarkly/crossplane-provider-launchdarkly/internal/controller/account/accesstoken"
 	auditlogsubscription "github.com/launchdarkly/crossplane-provider-launchdarkly/internal/controller/account/auditlogsubscription"
@@ -47,6 +47,34 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		metric.Setup,
 		project.Setup,
 		providerconfig.Setup,
+	} {
+		if err := setup(mgr, o); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// SetupGated creates all controllers with the supplied logger and adds them to
+// the supplied manager gated.
+func SetupGated(mgr ctrl.Manager, o controller.Options) error {
+	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		accesstoken.SetupGated,
+		auditlogsubscription.SetupGated,
+		customrole.SetupGated,
+		relayproxyconfiguration.SetupGated,
+		team.SetupGated,
+		teammember.SetupGated,
+		teamrolemapping.SetupGated,
+		webhook.SetupGated,
+		featureflag.SetupGated,
+		featureflagenvironment.SetupGated,
+		environment.SetupGated,
+		environmentdestination.SetupGated,
+		environmentsegment.SetupGated,
+		metric.SetupGated,
+		project.SetupGated,
+		providerconfig.SetupGated,
 	} {
 		if err := setup(mgr, o); err != nil {
 			return err

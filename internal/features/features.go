@@ -2,10 +2,11 @@
  Copyright 2022 Upbound Inc
 */
 
+// Package features contains the feature flags for the launchdarkly upjet provider.
 package features
 
 import (
-	xpfeature "github.com/crossplane/crossplane-runtime/pkg/feature"
+	xpfeature "github.com/crossplane/crossplane-runtime/v2/pkg/feature"
 )
 
 // Feature flags.

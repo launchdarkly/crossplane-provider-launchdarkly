@@ -8,8 +8,8 @@ package v1alpha1
 
 import (
 	"context"
-	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
-	resource "github.com/crossplane/upjet/pkg/resource"
+	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
+	resource "github.com/crossplane/upjet/v2/pkg/resource"
 	v1alpha1 "github.com/launchdarkly/crossplane-provider-launchdarkly/apis/project/v1alpha1"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
@@ -25,6 +25,7 @@ func (mg *FeatureFlag) ResolveReferences(ctx context.Context, c client.Reader) e
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ProjectKey),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.ProjectKeyRef,
 		Selector:     mg.Spec.ForProvider.ProjectKeySelector,
 		To: reference.To{
@@ -41,6 +42,7 @@ func (mg *FeatureFlag) ResolveReferences(ctx context.Context, c client.Reader) e
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ProjectKey),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.ProjectKeyRef,
 		Selector:     mg.Spec.InitProvider.ProjectKeySelector,
 		To: reference.To{
@@ -67,6 +69,7 @@ func (mg *FeatureFlagEnvironment) ResolveReferences(ctx context.Context, c clien
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.EnvKey),
 		Extract:      resource.ExtractParamPath("key", false),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.EnvKeyRef,
 		Selector:     mg.Spec.ForProvider.EnvKeySelector,
 		To: reference.To{
@@ -83,6 +86,7 @@ func (mg *FeatureFlagEnvironment) ResolveReferences(ctx context.Context, c clien
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FlagID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.FlagIDRef,
 		Selector:     mg.Spec.ForProvider.FlagIDSelector,
 		To: reference.To{
@@ -99,6 +103,7 @@ func (mg *FeatureFlagEnvironment) ResolveReferences(ctx context.Context, c clien
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.EnvKey),
 		Extract:      resource.ExtractParamPath("key", false),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.EnvKeyRef,
 		Selector:     mg.Spec.InitProvider.EnvKeySelector,
 		To: reference.To{
@@ -115,6 +120,7 @@ func (mg *FeatureFlagEnvironment) ResolveReferences(ctx context.Context, c clien
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.FlagID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.FlagIDRef,
 		Selector:     mg.Spec.InitProvider.FlagIDSelector,
 		To: reference.To{

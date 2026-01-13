@@ -7,7 +7,7 @@ package v1beta1
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 )
 
 // A ProviderConfigSpec defines the desired state of a ProviderConfig.
@@ -30,9 +30,9 @@ type ProviderConfigStatus struct {
 	xpv1.ProviderConfigStatus `json:",inline"`
 }
 
+// ProviderConfig configures a LaunchDarkly provider.
 // +kubebuilder:object:root=true
-
-// A ProviderConfig configures a LaunchDarkly provider.
+// +kubebuilder:storageversion
 // +kubebuilder:subresource:status
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:printcolumn:name="SECRET-NAME",type="string",JSONPath=".spec.credentials.secretRef.name",priority=1
@@ -55,9 +55,9 @@ type ProviderConfigList struct {
 	Items           []ProviderConfig `json:"items"`
 }
 
+// ProviderConfigUsage indicates that a resource is using a ProviderConfig.
 // +kubebuilder:object:root=true
-
-// A ProviderConfigUsage indicates that a resource is using a ProviderConfig.
+// +kubebuilder:storageversion
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:printcolumn:name="CONFIG-NAME",type="string",JSONPath=".providerConfigRef.name"
 // +kubebuilder:printcolumn:name="RESOURCE-KIND",type="string",JSONPath=".resourceRef.kind"

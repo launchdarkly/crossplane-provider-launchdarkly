@@ -1,9 +1,6 @@
 /*
-Copyright 2021 Upbound Inc.
+Copyright 2022 Upbound Inc.
 */
 
-// Package v1alpha1 contains the core resources of the launchdarkly jet provider.
-// +kubebuilder:object:generate=true
-// +groupName=launchdarkly.launchdarkly.com
-// +versionName=v1alpha1
+// Package v1alpha1 contains the core resources of the launchdarkly upjet provider.
 package v1alpha1
