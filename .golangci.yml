@@ -1,82 +1,21 @@
-version: 2
+version: "2"
 
 run:
   timeout: 10m
 
 output:
-  # Format can be: colored-line-number|line-number|json|tab|checkstyle|code-climate|junit-xml|github-actions
-  sort-results: true
-
-linters-settings:
-  errcheck:
-    # Check for unchecked errors in type assertions
-    check-type-assertions: false
-    # Check for unchecked errors in type assertions
-    check-blank: false
-
-  revive:
-    rules:
-      - name: package-comments
-        disabled: true
-
-  govet:
-    enable:
-      # report about shadowed variables
-      - shadow
-
-  gofmt:
-    # simplify code: gofmt with `-s` option, true by default
-    simplify: true
-
-  goimports:
-    # put imports beginning with prefix after 3rd-party packages;
-    # it's a comma-separated list of prefixes
-    local-prefixes: github.com/upbound/upjet-provider-template
-
-  gocyclo:
-    # minimal code complexity to report, 30 by default (but we recommend 10-20)
-    min-complexity: 10
-
-  dupl:
-    # tokens count to trigger issue, 150 by default
-    threshold: 100
-
-  goconst:
-    # minimal length of string constant, 3 by default
-    min-len: 3
-    # minimal occurrences count to trigger, 3 by default
-    min-occurrences: 5
-
-  lll:
-    # tab width in spaces. Default to 1.
-    tab-width: 1
-
-  unparam:
-    # Inspect exported functions, default is false. Set to true if no external program/library imports your code.
-    check-exported: false
-
-  nakedret:
-    # make an issue if func has more lines of code than this setting and it has naked returns; default is 30
-    max-func-lines: 30
-
-  prealloc:
-    # Report preallocation suggestions only on simple loops that have no returns/breaks/continues/gotos in them.
-    simple: true
-    range-loops: true # Report preallocation suggestions on range loops, true by default
-    for-loops: false # Report preallocation suggestions on for loops, false by default
-
-  gocritic:
-    # Enable multiple checks by tags, run `GL_DEBUG=gocritic golangci-lint` run to see all tags and checks.
-    enabled-tags:
-      - performance
-
-    settings: # settings passed to gocritic
-      captLocal: # must be valid enabled check name
-        paramsOnly: true
-      rangeValCopy:
-        sizeThreshold: 32
+  formats:
+    text:
+      path: stdout
+      print-linter-name: true
+      print-issued-lines: true
+      colors: true
+  sort-order:
+    - linter
+    - file
 
 linters:
+  # Enabled linters (original from linters.enable)
   enable:
     - govet
     - gocyclo
@@ -88,82 +27,142 @@ linters:
     - nakedret
     - staticcheck
     - revive # Modern replacement for golint
+    - errcheck      # was in 'bugs' v1
+    - ineffassign   # was in 'unused' v1
+    - unused        # was in 'unused' preset
 
-  presets:
-    - bugs
-    - unused
-  fast: false
+  exclusions:
+    # v2 replacement for linters.presets: [bugs, unused]
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
 
-formatters:
-  enable:
-    - goimports
-    - gofmt
+    # v2 replacement for issues.exclude-files
+    paths:
+      - "zz_\\..+\\.go$"
 
-formatters-settings:
-  goimports:
-    local-prefixes: github.com/launchdarkly/crossplane-provider-launchdarkly
-  gofmt:
-    simplify: true
+    # v2 replacement for issues.exclude-rules
+    rules:
+      # Exclude some linters from running on tests files.
+      - path: _test(ing)?\.go
+        linters:
+          - gocyclo
+          - errcheck
+          - dupl
+          - gosec
+          - scopelint
+          - unparam
+
+      # Ease some gocritic warnings on test files.
+      - path: _test\.go
+        text: "(unnamedResult|exitAfterDefer)"
+        linters:
+          - gocritic
+
+      # These are performance optimisations rather than style issues per se.
+      # They warn when function arguments or range values copy a lot of memory
+      # rather than using a pointer.
+      - text: "(hugeParam|rangeValCopy):"
+        linters:
+          - gocritic
+
+      # This "TestMain should call os.Exit to set exit code" warning is not clever
+      # enough to notice that we call a helper method that calls os.Exit.
+      - text: "SA3000:"
+        linters:
+          - staticcheck
+
+      - text: "k8s.io/api/core/v1"
+        linters:
+          - goimports
+
+      # This is a "potential hardcoded credentials" warning. It's triggered by
+      # any variable with 'secret' in the same, and thus hits a lot of false
+      # positives in Kubernetes land where a Secret is an object type.
+      - text: "G101:"
+        linters:
+          - gosec
+
+      # This is an 'errors unhandled' warning that duplicates errcheck.
+      - text: "G104:"
+        linters:
+          - gosec
+
+  # v2: linters-settings moved here as linters.settings
+  settings:
+    errcheck:
+      # Check for unchecked errors in type assertions
+      check-type-assertions: false
+      # Check for unchecked errors in type assertions
+      check-blank: false
+
+    revive:
+      rules:
+        - name: package-comments
+          disabled: true
+
+    govet:
+      enable:
+        # report about shadowed variables
+        - shadow
+
+    gofmt:
+      # simplify code: gofmt with `-s` option, true by default
+      simplify: true
+
+    goimports:
+      # put imports beginning with prefix after 3rd-party packages;
+      # it's a comma-separated list of prefixes
+      local-prefixes:
+        - github.com/launchdarkly/crossplane-provider-launchdarkly
+
+    gocyclo:
+      # minimal code complexity to report, 30 by default (but we recommend 10-20)
+      min-complexity: 10
+
+    dupl:
+      # tokens count to trigger issue, 150 by default
+      threshold: 100
+
+    goconst:
+      # minimal length of string constant, 3 by default
+      min-len: 3
+      # minimal occurrences count to trigger, 3 by default
+      min-occurrences: 5
+
+    lll:
+      # tab width in spaces. Default to 1.
+      tab-width: 1
+
+    unparam:
+      # Inspect exported functions, default is false. Set to true if no external program/library imports your code.
+      check-exported: false
+
+    nakedret:
+      # make an issue if func has more lines of code than this setting and it has naked returns; default is 30
+      max-func-lines: 30
+
+    prealloc:
+      # Report preallocation suggestions only on simple loops that have no returns/breaks/continues/gotos in them.
+      simple: true
+      range-loops: true # Report preallocation suggestions on range loops, true by default
+      for-loops: false # Report preallocation suggestions on for loops, false by default
+
+    gocritic:
+      # Enable multiple checks by tags, run `GL_DEBUG=gocritic golangci-lint` run to see all tags and checks.
+      enabled-tags:
+        - performance
+
+      settings: # settings passed to gocritic
+        captLocal: # must be valid enabled check name
+          paramsOnly: true
+        rangeValCopy:
+          sizeThreshold: 32
 
 issues:
-  # Excluding configuration per-path and per-linter
-  exclude-rules:
-    # Exclude some linters from running on tests files.
-    - path: _test(ing)?\.go
-      linters:
-        - gocyclo
-        - errcheck
-        - dupl
-        - gosec
-        - scopelint
-        - unparam
-
-    # Ease some gocritic warnings on test files.
-    - path: _test\.go
-      text: "(unnamedResult|exitAfterDefer)"
-      linters:
-        - gocritic
-
-    # These are performance optimisations rather than style issues per se.
-    # They warn when function arguments or range values copy a lot of memory
-    # rather than using a pointer.
-    - text: "(hugeParam|rangeValCopy):"
-      linters:
-        - gocritic
-
-    # This "TestMain should call os.Exit to set exit code" warning is not clever
-    # enough to notice that we call a helper method that calls os.Exit.
-    - text: "SA3000:"
-      linters:
-        - staticcheck
-
-    - text: "k8s.io/api/core/v1"
-      linters:
-        - goimports
-
-    # This is a "potential hardcoded credentials" warning. It's triggered by
-    # any variable with 'secret' in the same, and thus hits a lot of false
-    # positives in Kubernetes land where a Secret is an object type.
-    - text: "G101:"
-      linters:
-        - gosec
-        - gas
-
-    # This is an 'errors unhandled' warning that duplicates errcheck.
-    - text: "G104:"
-      linters:
-        - gosec
-        - gas
-
-  # Independently from option `exclude` we use default exclude patterns,
-  # it can be disabled by this option. To list all
-  # excluded by default patterns execute `golangci-lint run --help`.
-  # Default value for this option is true.
-  exclude-use-default: false
-
-  exclude-files:
-    - "zz_\\..+\\.go$"
-
   # Show only new issues: if there are unstaged changes or untracked files,
   # only those changes are analyzed, else only changes in HEAD~ are analyzed.
   new: false
@@ -173,3 +172,14 @@ issues:
 
   # Maximum count of issues with the same text. Set to 0 to disable. Default is 3.
   max-same-issues: 0
+
+formatters:
+  enable:
+    - goimports
+    - gofmt
+  settings:
+    goimports:
+      local-prefixes:
+        - github.com/launchdarkly/crossplane-provider-launchdarkly
+    gofmt:
+      simplify: true
