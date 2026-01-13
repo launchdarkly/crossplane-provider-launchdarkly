@@ -95,6 +95,10 @@ fallthrough: submodules
 # we ensure image is present in daemon.
 xpkg.build.provider-launchdarkly: do.build.images
 
+# NOTE: Workaround for crossplane/build bug - ensure CROSSPLANE_CLI is downloaded
+# before xpkg build (xpkg.mk doesn't declare it as a prerequisite)
+xpkg.build.provider-launchdarkly: $(CROSSPLANE_CLI)
+
 # NOTE(hasheddan): we ensure up is installed prior to running platform-specific
 # build steps in parallel to avoid encountering an installation race condition.
 build.init: $(UP) check-terraform-version
