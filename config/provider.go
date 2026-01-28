@@ -24,7 +24,7 @@ import (
 	"github.com/launchdarkly/crossplane-provider-launchdarkly/config/teamrolemapping"
 	"github.com/launchdarkly/crossplane-provider-launchdarkly/config/webhook"
 
-	ujconfig "github.com/crossplane/upjet/pkg/config"
+	ujconfig "github.com/crossplane/upjet/v2/pkg/config"
 )
 
 const (

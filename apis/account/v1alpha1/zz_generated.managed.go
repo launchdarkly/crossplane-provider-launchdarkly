@@ -6,7 +6,7 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 
 // GetCondition of this AccessToken.
 func (mg *AccessToken) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
@@ -26,11 +26,6 @@ func (mg *AccessToken) GetManagementPolicies() xpv1.ManagementPolicies {
 // GetProviderConfigReference of this AccessToken.
 func (mg *AccessToken) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-// GetPublishConnectionDetailsTo of this AccessToken.
-func (mg *AccessToken) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
 }
 
 // GetWriteConnectionSecretToReference of this AccessToken.
@@ -58,11 +53,6 @@ func (mg *AccessToken) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
-// SetPublishConnectionDetailsTo of this AccessToken.
-func (mg *AccessToken) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
-}
-
 // SetWriteConnectionSecretToReference of this AccessToken.
 func (mg *AccessToken) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
@@ -86,11 +76,6 @@ func (mg *AuditLogSubscription) GetManagementPolicies() xpv1.ManagementPolicies 
 // GetProviderConfigReference of this AuditLogSubscription.
 func (mg *AuditLogSubscription) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-// GetPublishConnectionDetailsTo of this AuditLogSubscription.
-func (mg *AuditLogSubscription) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
 }
 
 // GetWriteConnectionSecretToReference of this AuditLogSubscription.
@@ -118,11 +103,6 @@ func (mg *AuditLogSubscription) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
-// SetPublishConnectionDetailsTo of this AuditLogSubscription.
-func (mg *AuditLogSubscription) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
-}
-
 // SetWriteConnectionSecretToReference of this AuditLogSubscription.
 func (mg *AuditLogSubscription) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
@@ -146,11 +126,6 @@ func (mg *CustomRole) GetManagementPolicies() xpv1.ManagementPolicies {
 // GetProviderConfigReference of this CustomRole.
 func (mg *CustomRole) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-// GetPublishConnectionDetailsTo of this CustomRole.
-func (mg *CustomRole) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
 }
 
 // GetWriteConnectionSecretToReference of this CustomRole.
@@ -178,11 +153,6 @@ func (mg *CustomRole) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
-// SetPublishConnectionDetailsTo of this CustomRole.
-func (mg *CustomRole) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
-}
-
 // SetWriteConnectionSecretToReference of this CustomRole.
 func (mg *CustomRole) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
@@ -206,11 +176,6 @@ func (mg *RelayProxyConfiguration) GetManagementPolicies() xpv1.ManagementPolici
 // GetProviderConfigReference of this RelayProxyConfiguration.
 func (mg *RelayProxyConfiguration) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-// GetPublishConnectionDetailsTo of this RelayProxyConfiguration.
-func (mg *RelayProxyConfiguration) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
 }
 
 // GetWriteConnectionSecretToReference of this RelayProxyConfiguration.
@@ -238,11 +203,6 @@ func (mg *RelayProxyConfiguration) SetProviderConfigReference(r *xpv1.Reference)
 	mg.Spec.ProviderConfigReference = r
 }
 
-// SetPublishConnectionDetailsTo of this RelayProxyConfiguration.
-func (mg *RelayProxyConfiguration) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
-}
-
 // SetWriteConnectionSecretToReference of this RelayProxyConfiguration.
 func (mg *RelayProxyConfiguration) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
@@ -266,11 +226,6 @@ func (mg *Team) GetManagementPolicies() xpv1.ManagementPolicies {
 // GetProviderConfigReference of this Team.
 func (mg *Team) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-// GetPublishConnectionDetailsTo of this Team.
-func (mg *Team) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
 }
 
 // GetWriteConnectionSecretToReference of this Team.
@@ -298,11 +253,6 @@ func (mg *Team) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
-// SetPublishConnectionDetailsTo of this Team.
-func (mg *Team) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
-}
-
 // SetWriteConnectionSecretToReference of this Team.
 func (mg *Team) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
@@ -326,11 +276,6 @@ func (mg *TeamMember) GetManagementPolicies() xpv1.ManagementPolicies {
 // GetProviderConfigReference of this TeamMember.
 func (mg *TeamMember) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-// GetPublishConnectionDetailsTo of this TeamMember.
-func (mg *TeamMember) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
 }
 
 // GetWriteConnectionSecretToReference of this TeamMember.
@@ -358,11 +303,6 @@ func (mg *TeamMember) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
-// SetPublishConnectionDetailsTo of this TeamMember.
-func (mg *TeamMember) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
-}
-
 // SetWriteConnectionSecretToReference of this TeamMember.
 func (mg *TeamMember) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
@@ -386,11 +326,6 @@ func (mg *TeamRoleMapping) GetManagementPolicies() xpv1.ManagementPolicies {
 // GetProviderConfigReference of this TeamRoleMapping.
 func (mg *TeamRoleMapping) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-// GetPublishConnectionDetailsTo of this TeamRoleMapping.
-func (mg *TeamRoleMapping) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
 }
 
 // GetWriteConnectionSecretToReference of this TeamRoleMapping.
@@ -418,11 +353,6 @@ func (mg *TeamRoleMapping) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
-// SetPublishConnectionDetailsTo of this TeamRoleMapping.
-func (mg *TeamRoleMapping) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
-}
-
 // SetWriteConnectionSecretToReference of this TeamRoleMapping.
 func (mg *TeamRoleMapping) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
@@ -448,11 +378,6 @@ func (mg *Webhook) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
-// GetPublishConnectionDetailsTo of this Webhook.
-func (mg *Webhook) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
-}
-
 // GetWriteConnectionSecretToReference of this Webhook.
 func (mg *Webhook) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
@@ -476,11 +401,6 @@ func (mg *Webhook) SetManagementPolicies(r xpv1.ManagementPolicies) {
 // SetProviderConfigReference of this Webhook.
 func (mg *Webhook) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-// SetPublishConnectionDetailsTo of this Webhook.
-func (mg *Webhook) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
 }
 
 // SetWriteConnectionSecretToReference of this Webhook.

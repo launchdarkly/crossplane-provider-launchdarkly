@@ -8,7 +8,7 @@ package v1alpha1
 
 import (
 	"context"
-	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -23,6 +23,7 @@ func (mg *AccessToken) ResolveReferences(ctx context.Context, c client.Reader) e
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.CustomRoles),
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.CustomRolesRefs,
 		Selector:      mg.Spec.ForProvider.CustomRolesSelector,
 		To: reference.To{
@@ -39,6 +40,7 @@ func (mg *AccessToken) ResolveReferences(ctx context.Context, c client.Reader) e
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.CustomRoles),
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.InitProvider.CustomRolesRefs,
 		Selector:      mg.Spec.InitProvider.CustomRolesSelector,
 		To: reference.To{
@@ -65,6 +67,7 @@ func (mg *Team) ResolveReferences(ctx context.Context, c client.Reader) error {
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.CustomRoleKeys),
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.CustomRoleKeysRefs,
 		Selector:      mg.Spec.ForProvider.CustomRoleKeysSelector,
 		To: reference.To{
@@ -81,6 +84,7 @@ func (mg *Team) ResolveReferences(ctx context.Context, c client.Reader) error {
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.Maintainers),
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.MaintainersRefs,
 		Selector:      mg.Spec.ForProvider.MaintainersSelector,
 		To: reference.To{
@@ -97,6 +101,7 @@ func (mg *Team) ResolveReferences(ctx context.Context, c client.Reader) error {
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.MemberIds),
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.MemberIdsRefs,
 		Selector:      mg.Spec.ForProvider.MemberIdsSelector,
 		To: reference.To{
@@ -113,6 +118,7 @@ func (mg *Team) ResolveReferences(ctx context.Context, c client.Reader) error {
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.CustomRoleKeys),
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.InitProvider.CustomRoleKeysRefs,
 		Selector:      mg.Spec.InitProvider.CustomRoleKeysSelector,
 		To: reference.To{
@@ -129,6 +135,7 @@ func (mg *Team) ResolveReferences(ctx context.Context, c client.Reader) error {
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.Maintainers),
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.InitProvider.MaintainersRefs,
 		Selector:      mg.Spec.InitProvider.MaintainersSelector,
 		To: reference.To{
@@ -145,6 +152,7 @@ func (mg *Team) ResolveReferences(ctx context.Context, c client.Reader) error {
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.MemberIds),
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.InitProvider.MemberIdsRefs,
 		Selector:      mg.Spec.InitProvider.MemberIdsSelector,
 		To: reference.To{
@@ -172,6 +180,7 @@ func (mg *TeamRoleMapping) ResolveReferences(ctx context.Context, c client.Reade
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.CustomRoleKeys),
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.CustomRoleKeysRefs,
 		Selector:      mg.Spec.ForProvider.CustomRoleKeysSelector,
 		To: reference.To{
@@ -188,6 +197,7 @@ func (mg *TeamRoleMapping) ResolveReferences(ctx context.Context, c client.Reade
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.TeamKey),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.TeamKeyRef,
 		Selector:     mg.Spec.ForProvider.TeamKeySelector,
 		To: reference.To{
@@ -204,6 +214,7 @@ func (mg *TeamRoleMapping) ResolveReferences(ctx context.Context, c client.Reade
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.CustomRoleKeys),
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.InitProvider.CustomRoleKeysRefs,
 		Selector:      mg.Spec.InitProvider.CustomRoleKeysSelector,
 		To: reference.To{
@@ -220,6 +231,7 @@ func (mg *TeamRoleMapping) ResolveReferences(ctx context.Context, c client.Reade
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.TeamKey),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.TeamKeyRef,
 		Selector:     mg.Spec.InitProvider.TeamKeySelector,
 		To: reference.To{

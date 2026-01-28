@@ -6,7 +6,7 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 
 // GetCondition of this FeatureFlag.
 func (mg *FeatureFlag) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
@@ -26,11 +26,6 @@ func (mg *FeatureFlag) GetManagementPolicies() xpv1.ManagementPolicies {
 // GetProviderConfigReference of this FeatureFlag.
 func (mg *FeatureFlag) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-// GetPublishConnectionDetailsTo of this FeatureFlag.
-func (mg *FeatureFlag) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
 }
 
 // GetWriteConnectionSecretToReference of this FeatureFlag.
@@ -58,11 +53,6 @@ func (mg *FeatureFlag) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
-// SetPublishConnectionDetailsTo of this FeatureFlag.
-func (mg *FeatureFlag) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
-}
-
 // SetWriteConnectionSecretToReference of this FeatureFlag.
 func (mg *FeatureFlag) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
@@ -88,11 +78,6 @@ func (mg *FeatureFlagEnvironment) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
-// GetPublishConnectionDetailsTo of this FeatureFlagEnvironment.
-func (mg *FeatureFlagEnvironment) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
-}
-
 // GetWriteConnectionSecretToReference of this FeatureFlagEnvironment.
 func (mg *FeatureFlagEnvironment) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
@@ -116,11 +101,6 @@ func (mg *FeatureFlagEnvironment) SetManagementPolicies(r xpv1.ManagementPolicie
 // SetProviderConfigReference of this FeatureFlagEnvironment.
 func (mg *FeatureFlagEnvironment) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-// SetPublishConnectionDetailsTo of this FeatureFlagEnvironment.
-func (mg *FeatureFlagEnvironment) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
 }
 
 // SetWriteConnectionSecretToReference of this FeatureFlagEnvironment.

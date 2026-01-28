@@ -6,7 +6,7 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 
 // GetCondition of this Environment.
 func (mg *Environment) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
@@ -26,11 +26,6 @@ func (mg *Environment) GetManagementPolicies() xpv1.ManagementPolicies {
 // GetProviderConfigReference of this Environment.
 func (mg *Environment) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-// GetPublishConnectionDetailsTo of this Environment.
-func (mg *Environment) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
 }
 
 // GetWriteConnectionSecretToReference of this Environment.
@@ -58,11 +53,6 @@ func (mg *Environment) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
-// SetPublishConnectionDetailsTo of this Environment.
-func (mg *Environment) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
-}
-
 // SetWriteConnectionSecretToReference of this Environment.
 func (mg *Environment) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
@@ -86,11 +76,6 @@ func (mg *EnvironmentDestination) GetManagementPolicies() xpv1.ManagementPolicie
 // GetProviderConfigReference of this EnvironmentDestination.
 func (mg *EnvironmentDestination) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-// GetPublishConnectionDetailsTo of this EnvironmentDestination.
-func (mg *EnvironmentDestination) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
 }
 
 // GetWriteConnectionSecretToReference of this EnvironmentDestination.
@@ -118,11 +103,6 @@ func (mg *EnvironmentDestination) SetProviderConfigReference(r *xpv1.Reference) 
 	mg.Spec.ProviderConfigReference = r
 }
 
-// SetPublishConnectionDetailsTo of this EnvironmentDestination.
-func (mg *EnvironmentDestination) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
-}
-
 // SetWriteConnectionSecretToReference of this EnvironmentDestination.
 func (mg *EnvironmentDestination) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
@@ -146,11 +126,6 @@ func (mg *EnvironmentSegment) GetManagementPolicies() xpv1.ManagementPolicies {
 // GetProviderConfigReference of this EnvironmentSegment.
 func (mg *EnvironmentSegment) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-// GetPublishConnectionDetailsTo of this EnvironmentSegment.
-func (mg *EnvironmentSegment) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
 }
 
 // GetWriteConnectionSecretToReference of this EnvironmentSegment.
@@ -178,11 +153,6 @@ func (mg *EnvironmentSegment) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
-// SetPublishConnectionDetailsTo of this EnvironmentSegment.
-func (mg *EnvironmentSegment) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
-}
-
 // SetWriteConnectionSecretToReference of this EnvironmentSegment.
 func (mg *EnvironmentSegment) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
@@ -206,11 +176,6 @@ func (mg *Metric) GetManagementPolicies() xpv1.ManagementPolicies {
 // GetProviderConfigReference of this Metric.
 func (mg *Metric) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-// GetPublishConnectionDetailsTo of this Metric.
-func (mg *Metric) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
 }
 
 // GetWriteConnectionSecretToReference of this Metric.
@@ -238,11 +203,6 @@ func (mg *Metric) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
-// SetPublishConnectionDetailsTo of this Metric.
-func (mg *Metric) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
-}
-
 // SetWriteConnectionSecretToReference of this Metric.
 func (mg *Metric) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
@@ -268,11 +228,6 @@ func (mg *Project) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
-// GetPublishConnectionDetailsTo of this Project.
-func (mg *Project) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
-}
-
 // GetWriteConnectionSecretToReference of this Project.
 func (mg *Project) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
@@ -296,11 +251,6 @@ func (mg *Project) SetManagementPolicies(r xpv1.ManagementPolicies) {
 // SetProviderConfigReference of this Project.
 func (mg *Project) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-// SetPublishConnectionDetailsTo of this Project.
-func (mg *Project) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
 }
 
 // SetWriteConnectionSecretToReference of this Project.

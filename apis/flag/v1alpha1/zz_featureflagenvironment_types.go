@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 )
 
 type ClausesInitParameters struct {
@@ -218,7 +218,7 @@ type FeatureFlagEnvironmentInitParameters struct {
 	// (String) The environment key. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// The environment key. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// +crossplane:generate:reference:type=github.com/launchdarkly/crossplane-provider-launchdarkly/apis/project/v1alpha1.Environment
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("key", false)
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("key", false)
 	EnvKey *string `json:"envKey,omitempty" tf:"env_key,omitempty"`
 
 	// Reference to a Environment in project to populate envKey.
@@ -327,7 +327,7 @@ type FeatureFlagEnvironmentParameters struct {
 	// (String) The environment key. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// The environment key. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// +crossplane:generate:reference:type=github.com/launchdarkly/crossplane-provider-launchdarkly/apis/project/v1alpha1.Environment
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("key", false)
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("key", false)
 	// +kubebuilder:validation:Optional
 	EnvKey *string `json:"envKey,omitempty" tf:"env_key,omitempty"`
 
