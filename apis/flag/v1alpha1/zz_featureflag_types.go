@@ -197,6 +197,11 @@ type FeatureFlagInitParameters struct {
 	// (Block List) An array of possible variations for the flag (see below for nested schema)
 	// An array of possible variations for the flag
 	Variations []VariationsInitParameters `json:"variations,omitempty" tf:"variations,omitempty"`
+
+	// (Set of String) A set of view keys to link this flag to. This is an alternative to using the launchdarkly_view_links resource for managing view associations. When set, this flag will be linked to the specified views. To explicitly remove all view associations, set view_keys = []. Simply removing the field from your configuration will leave existing associations unchanged. Important: Avoid using both view_keys and launchdarkly_view_links to manage the same flag. Choose one approach per resource.
+	// A set of view keys to link this flag to. This is an alternative to using the `launchdarkly_view_links` resource for managing view associations. When set, this flag will be linked to the specified views. To explicitly remove all view associations, set `view_keys = []`. Simply removing the field from your configuration will leave existing associations unchanged. **Important**: Avoid using both `view_keys` and `launchdarkly_view_links` to manage the same flag. Choose one approach per resource.
+	// +listType=set
+	ViewKeys []*string `json:"viewKeys,omitempty" tf:"view_keys,omitempty"`
 }
 
 type FeatureFlagObservation struct {
@@ -259,6 +264,11 @@ type FeatureFlagObservation struct {
 	// (Block List) An array of possible variations for the flag (see below for nested schema)
 	// An array of possible variations for the flag
 	Variations []VariationsObservation `json:"variations,omitempty" tf:"variations,omitempty"`
+
+	// (Set of String) A set of view keys to link this flag to. This is an alternative to using the launchdarkly_view_links resource for managing view associations. When set, this flag will be linked to the specified views. To explicitly remove all view associations, set view_keys = []. Simply removing the field from your configuration will leave existing associations unchanged. Important: Avoid using both view_keys and launchdarkly_view_links to manage the same flag. Choose one approach per resource.
+	// A set of view keys to link this flag to. This is an alternative to using the `launchdarkly_view_links` resource for managing view associations. When set, this flag will be linked to the specified views. To explicitly remove all view associations, set `view_keys = []`. Simply removing the field from your configuration will leave existing associations unchanged. **Important**: Avoid using both `view_keys` and `launchdarkly_view_links` to manage the same flag. Choose one approach per resource.
+	// +listType=set
+	ViewKeys []*string `json:"viewKeys,omitempty" tf:"view_keys,omitempty"`
 }
 
 type FeatureFlagParameters struct {
@@ -341,6 +351,12 @@ type FeatureFlagParameters struct {
 	// An array of possible variations for the flag
 	// +kubebuilder:validation:Optional
 	Variations []VariationsParameters `json:"variations,omitempty" tf:"variations,omitempty"`
+
+	// (Set of String) A set of view keys to link this flag to. This is an alternative to using the launchdarkly_view_links resource for managing view associations. When set, this flag will be linked to the specified views. To explicitly remove all view associations, set view_keys = []. Simply removing the field from your configuration will leave existing associations unchanged. Important: Avoid using both view_keys and launchdarkly_view_links to manage the same flag. Choose one approach per resource.
+	// A set of view keys to link this flag to. This is an alternative to using the `launchdarkly_view_links` resource for managing view associations. When set, this flag will be linked to the specified views. To explicitly remove all view associations, set `view_keys = []`. Simply removing the field from your configuration will leave existing associations unchanged. **Important**: Avoid using both `view_keys` and `launchdarkly_view_links` to manage the same flag. Choose one approach per resource.
+	// +kubebuilder:validation:Optional
+	// +listType=set
+	ViewKeys []*string `json:"viewKeys,omitempty" tf:"view_keys,omitempty"`
 }
 
 type VariationsInitParameters struct {

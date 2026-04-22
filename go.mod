@@ -7,9 +7,9 @@ require (
 	github.com/crossplane/crossplane-runtime/v2 v2.1.0
 	github.com/crossplane/crossplane-tools v0.0.0-20251017183449-dd4517244339
 	github.com/crossplane/upjet/v2 v2.2.0
-	// terraform-provider-launchdarkly v2.25.3
-	// Pseudo-version required: upstream module lacks /v2 suffix for v2.x releases
-	github.com/launchdarkly/terraform-provider-launchdarkly v0.0.0-20250718105317-e900a1f0e158
+	// terraform-provider-launchdarkly — fork github.com/devopsdina/terraform-provider-launchdarkly branch "issue-387".
+	// Pseudo-version encodes branch tip; bump: GOPRIVATE=github.com/devopsdina/* go get github.com/launchdarkly/terraform-provider-launchdarkly@issue-387
+	github.com/launchdarkly/terraform-provider-launchdarkly v0.0.0-20260420202713-96239b3e1f98
 	github.com/pkg/errors v0.9.1
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 	k8s.io/apimachinery v0.35.0
@@ -83,7 +83,7 @@ require (
 	github.com/iancoleman/strcase v0.3.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
-	github.com/launchdarkly/api-client-go/v17 v17.1.0 // indirect
+	github.com/launchdarkly/api-client-go/v22 v22.0.0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mitchellh/copystructure v1.2.0 // indirect
@@ -132,12 +132,12 @@ require (
 	golang.org/x/tools v0.40.0 // indirect
 	gomodules.xyz/jsonpatch/v2 v2.5.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20251202230838-ff82c1b0f217 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20251222181119-0a764e51fe1b // indirect
 	google.golang.org/grpc v1.79.3 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
 	gopkg.in/evanphx/json-patch.v4 v4.13.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
+	gopkg.in/validator.v2 v2.0.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	k8s.io/api v0.35.0 // indirect
@@ -153,3 +153,6 @@ require (
 	sigs.k8s.io/structured-merge-diff/v6 v6.3.1 // indirect
 	sigs.k8s.io/yaml v1.6.0 // indirect
 )
+
+// Fork + branch issue-387 (pseudo-version pins commit on that branch).
+replace github.com/launchdarkly/terraform-provider-launchdarkly => github.com/devopsdina/terraform-provider-launchdarkly v0.0.0-20260420202713-96239b3e1f98

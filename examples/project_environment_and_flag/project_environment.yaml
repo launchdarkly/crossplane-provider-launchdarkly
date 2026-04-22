@@ -1,4 +1,7 @@
 ---
+# Project requires spec.forProvider.environments (CRD / Terraform Min: 1). Nested blocks create
+# production, staging, test. Do not duplicate those keys with standalone Environment CRs (provider
+# warns against mixing nested envs with launchdarkly_environment for the same project).
 apiVersion: project.launchdarkly.com/v1alpha1
 kind: Project
 metadata:
@@ -36,11 +39,11 @@ spec:
 apiVersion: project.launchdarkly.com/v1alpha1
 kind: Environment
 metadata:
-  name: name-dev-environment
+  name: development
 spec:
   forProvider:
-    key: name-dev
-    name: Name Dev Environment
+    key: development
+    name: development
     projectKeyRef:
       name: crossplane-project
     color: FFFFFF

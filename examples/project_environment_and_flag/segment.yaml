@@ -7,7 +7,7 @@ spec:
     projectKeyRef:
       name: crossplane-project
     envKeyRef:
-      name: name-dev-environment
+      name: development
     key: example-segment
     name: Example Segment
 

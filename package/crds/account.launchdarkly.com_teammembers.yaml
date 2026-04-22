@@ -114,13 +114,13 @@ spec:
                       properties:
                         key:
                           description: |-
-                            (String) The key / name of your role attribute. In the example $${roleAttribute/testAttribute}, the key is testAttribute.
-                            The key / name of your role attribute. In the example `$${roleAttribute/testAttribute}`, the key is `testAttribute`.
+                            (String) The key / name of your role attribute. In the example ${roleAttribute/testAttribute}, the key is testAttribute.
+                            The key / name of your role attribute. In the example `${roleAttribute/testAttribute}`, the key is `testAttribute`.
                           type: string
                         values:
                           description: |-
-                            (List of String) A list of values for your role attribute. For example, if your policy statement defines the resource "proj/$${roleAttribute/testAttribute}", the values would be the keys of the projects you wanted to assign access to.
-                            A list of values for your role attribute. For example, if your policy statement defines the resource `"proj/$${roleAttribute/testAttribute}"`, the values would be the keys of the projects you wanted to assign access to.
+                            (List of String) A list of values for your role attribute. For example, if your policy statement defines the resource "proj/${roleAttribute/testAttribute}", the values would be the keys of the projects you wanted to assign access to.
+                            A list of values for your role attribute. For example, if your policy statement defines the resource `"proj/${roleAttribute/testAttribute}"`, the values would be the keys of the projects you wanted to assign access to.
                           items:
                             type: string
                           type: array
@@ -178,13 +178,13 @@ spec:
                       properties:
                         key:
                           description: |-
-                            (String) The key / name of your role attribute. In the example $${roleAttribute/testAttribute}, the key is testAttribute.
-                            The key / name of your role attribute. In the example `$${roleAttribute/testAttribute}`, the key is `testAttribute`.
+                            (String) The key / name of your role attribute. In the example ${roleAttribute/testAttribute}, the key is testAttribute.
+                            The key / name of your role attribute. In the example `${roleAttribute/testAttribute}`, the key is `testAttribute`.
                           type: string
                         values:
                           description: |-
-                            (List of String) A list of values for your role attribute. For example, if your policy statement defines the resource "proj/$${roleAttribute/testAttribute}", the values would be the keys of the projects you wanted to assign access to.
-                            A list of values for your role attribute. For example, if your policy statement defines the resource `"proj/$${roleAttribute/testAttribute}"`, the values would be the keys of the projects you wanted to assign access to.
+                            (List of String) A list of values for your role attribute. For example, if your policy statement defines the resource "proj/${roleAttribute/testAttribute}", the values would be the keys of the projects you wanted to assign access to.
+                            A list of values for your role attribute. For example, if your policy statement defines the resource `"proj/${roleAttribute/testAttribute}"`, the values would be the keys of the projects you wanted to assign access to.
                           items:
                             type: string
                           type: array
@@ -329,13 +329,13 @@ spec:
                       properties:
                         key:
                           description: |-
-                            (String) The key / name of your role attribute. In the example $${roleAttribute/testAttribute}, the key is testAttribute.
-                            The key / name of your role attribute. In the example `$${roleAttribute/testAttribute}`, the key is `testAttribute`.
+                            (String) The key / name of your role attribute. In the example ${roleAttribute/testAttribute}, the key is testAttribute.
+                            The key / name of your role attribute. In the example `${roleAttribute/testAttribute}`, the key is `testAttribute`.
                           type: string
                         values:
                           description: |-
-                            (List of String) A list of values for your role attribute. For example, if your policy statement defines the resource "proj/$${roleAttribute/testAttribute}", the values would be the keys of the projects you wanted to assign access to.
-                            A list of values for your role attribute. For example, if your policy statement defines the resource `"proj/$${roleAttribute/testAttribute}"`, the values would be the keys of the projects you wanted to assign access to.
+                            (List of String) A list of values for your role attribute. For example, if your policy statement defines the resource "proj/${roleAttribute/testAttribute}", the values would be the keys of the projects you wanted to assign access to.
+                            A list of values for your role attribute. For example, if your policy statement defines the resource `"proj/${roleAttribute/testAttribute}"`, the values would be the keys of the projects you wanted to assign access to.
                           items:
                             type: string
                           type: array

@@ -96,7 +96,7 @@ resources:
             config: '(Map of String) The set of configuration fields corresponding to the value defined for integration_key. Refer to the formVariables field in the corresponding integrations/<integration_key>/manifest.json file in this repo for a full list of fields for the integration you wish to configure. IMPORTANT: Please note that Terraform will only accept these in snake case, regardless of the case shown in the manifest.'
             effect: (String) Either allow or deny. This argument defines whether the statement allows or denies access to the named resources and actions.
             id: (String) The ID of this resource.
-            integration_key: (String) The integration key. Supported integration keys are chronosphere, cloudtrail, datadog, dynatrace, elastic, grafana, honeycomb, kosli, last9, logdna, msteams, new-relic-apm, pagerduty, signalfx, slack, and splunk. A change in this field will force the destruction of the existing resource and the creation of a new one.
+            integration_key: (String) The integration key. Supported integration keys are chronosphere, cloudtrail, datadog, dynatrace, dynatrace-v2, elastic, grafana, honeycomb, jira, kosli, last9, logdna, msteams, new-relic-apm, pagerduty, signalfx, slack, and splunk. A change in this field will force the destruction of the existing resource and the creation of a new one.
             name: (String) A human-friendly name for your audit log subscription viewable from within the LaunchDarkly Integrations page.
             not_actions: (List of String) The list of action specifiers defining the actions to which the statement does not apply.
             not_resources: (List of String) The list of resource specifiers defining the resources to which the statement does not apply.
@@ -149,7 +149,7 @@ resources:
             not_actions: (List of String) The list of action specifiers defining the actions to which the statement does not apply.
             not_resources: (List of String) The list of resource specifiers defining the resources to which the statement does not apply.
             policy: (Block Set, Deprecated) (see below for nested schema)
-            policy_statements: (Block List) An array of the policy statements that define the permissions for the custom role. This field accepts role attributes. To use role attributes, use the syntax $${roleAttribute/<YOUR_ROLE_ATTRIBUTE>} in lieu of your usual resource keys. (see below for nested schema)
+            policy_statements: (Block List) An array of the policy statements that define the permissions for the custom role. This field accepts role attributes. To use role attributes, use the syntax ${roleAttribute/<YOUR_ROLE_ATTRIBUTE>} in lieu of your usual resource keys. (see below for nested schema)
             resources: (List of String)
         importStatements:
             - terraform import launchdarkly_custom_role.example example-role-key-1
@@ -420,6 +420,39 @@ resources:
                     }
                   ]
                 }
+            - name: checkout_flow
+              manifest: |-
+                {
+                  "description": "New checkout experience with improved UX",
+                  "key": "checkout-flow-redesign",
+                  "name": "Checkout Flow Redesign",
+                  "project_key": "example-project",
+                  "tags": [
+                    "checkout",
+                    "payments",
+                    "frontend"
+                  ],
+                  "variation_type": "boolean",
+                  "view_keys": [
+                    "payments-team",
+                    "frontend-team"
+                  ]
+                }
+            - name: mobile_app_feature
+              manifest: |-
+                {
+                  "key": "mobile-push-notifications",
+                  "name": "Mobile Push Notifications",
+                  "project_key": "example-project",
+                  "tags": [
+                    "mobile",
+                    "notifications"
+                  ],
+                  "variation_type": "boolean",
+                  "view_keys": [
+                    "mobile-team"
+                  ]
+                }
         argumentDocs:
             archived: (Boolean) Specifies whether the flag is archived or not. Note that you cannot create a new flag that is archived, but can update a flag to be archived.
             client_side_availability: (Block List) (see below for nested schema)
@@ -444,6 +477,7 @@ resources:
             variations: (Block List) An array of possible variations for the flag (see below for nested schema)
             variations.description: (String) The variation's description.
             variations.name: (String) The name of the variation.
+            view_keys: '(Set of String) A set of view keys to link this flag to. This is an alternative to using the launchdarkly_view_links resource for managing view associations. When set, this flag will be linked to the specified views. The field is also computed, meaning Terraform will read back the current view associations from LaunchDarkly to detect drift. To explicitly remove all view associations, set view_keys = []. Simply removing the field from your configuration will leave existing associations unchanged. Important: Avoid using both view_keys and launchdarkly_view_links to manage the same flag. Mixed ownership can cause conflicts; when detected, Terraform logs a warning and reconciles to the configured view_keys. Choose one approach per resource.'
         importStatements:
             - |-
               # Import a feature flag using the feature flag's ID in the format `project_key/flag_key`.
@@ -717,6 +751,44 @@ resources:
             - |-
               # LaunchDarkly feature flag environments can be imported using the resource's ID in the form `project_key/env_key/flag_key`
               terraform import launchdarkly_feature_flag_environment.example example-project/example-env/example-flag-key
+    launchdarkly_flag_templates:
+        subCategory: ""
+        description: 'Provides a LaunchDarkly flag templates resource. This resource allows you to manage the "Custom" flag template settings applied to new feature flags created within a LaunchDarkly project. LaunchDarkly projects include several built-in flag templates (Release, Kill switch, Experiment, Custom, Migration). This resource manages the Custom template only. -> Note: Flag templates are a singleton per project. Destroying this resource only removes it from Terraform state. The flag templates will continue to exist in LaunchDarkly.'
+        name: launchdarkly_flag_templates
+        title: launchdarkly_flag_templates Resource - launchdarkly
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "boolean_defaults": [
+                    {
+                      "false_description": "",
+                      "false_display_name": "False",
+                      "off_variation": 1,
+                      "on_variation": 0,
+                      "true_description": "",
+                      "true_display_name": "True"
+                    }
+                  ],
+                  "project_key": "my-project",
+                  "tags": [
+                    "terraform"
+                  ],
+                  "temporary": false
+                }
+        argumentDocs:
+            boolean_defaults: '(Block List, Min: 1, Max: 1) A block describing the default boolean flag variation settings. (see below for nested schema)'
+            false_description: (String) The description for the false variation.
+            false_display_name: (String) The display name for the false variation.
+            id: (String) The ID of this resource.
+            off_variation: (Number) The variation index of the boolean flag variation to serve when the flag's targeting is off.
+            on_variation: (Number) The variation index of the boolean flag variation to serve when the flag's targeting is on.
+            project_key: (String) The project key. A change in this field will force the destruction of the existing resource and the creation of a new one.
+            tags: (Set of String) Tags associated with your resource.
+            temporary: (Boolean) Whether new flags should be temporary by default.
+            true_description: (String) The description for the true variation.
+            true_display_name: (String) The display name for the true variation.
+        importStatements: []
     launchdarkly_flag_trigger:
         subCategory: ""
         description: 'Provides a LaunchDarkly flag trigger resource. -> Note: Flag triggers are available to customers on an Enterprise LaunchDarkly plan. To learn more, read about our pricing https://launchdarkly.com/pricing/. To upgrade your plan, contact LaunchDarkly Sales https://launchdarkly.com/contact-sales/. This resource allows you to create and manage flag triggers within your LaunchDarkly organization. -> Note: This resource will store sensitive unique trigger URL value in plaintext in your Terraform state. Be sure your state is configured securely before using this resource. See https://www.terraform.io/docs/state/sensitive-data.html for more details.'
@@ -846,6 +918,8 @@ resources:
                   ],
                   "key": "example-project",
                   "name": "Example project",
+                  "require_view_association_for_new_flags": false,
+                  "require_view_association_for_new_segments": false,
                   "tags": [
                     "terraform"
                   ]
@@ -889,6 +963,8 @@ resources:
             mobile_key: (String, Sensitive) The environment's mobile key.
             name: (String) The name of the environment.
             require_comments: (Boolean) Set to true if this environment requires comments for flag and segment changes. This field will default to false when not set.
+            require_view_association_for_new_flags: (Boolean) Whether new flags created in this project must be associated with at least one view.
+            require_view_association_for_new_segments: (Boolean) Whether new segments created in this project must be associated with at least one view.
             required: (Boolean) Set to true for changes to flags in this environment to require approval. You may only set required to true if required_approval_tags is not set and vice versa. Defaults to false.
             required_approval_tags: (List of String) An array of tags used to specify which flags with those tags require approval. You may only set required_approval_tags if required is set to false and vice versa.
             secure_mode: (Boolean) Set to true to ensure a user of the client-side SDK cannot impersonate another user. This field will default to false when not set.
@@ -1135,6 +1211,56 @@ resources:
                     }
                   ]
                 }
+            - name: premium_users
+              manifest: |-
+                {
+                  "description": "Users with premium subscriptions",
+                  "env_key": "production",
+                  "key": "premium-users",
+                  "name": "Premium Users",
+                  "project_key": "example-project",
+                  "rules": [
+                    {
+                      "clauses": [
+                        {
+                          "attribute": "plan",
+                          "op": "in",
+                          "values": [
+                            "premium",
+                            "enterprise"
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "tags": [
+                    "premium",
+                    "subscription"
+                  ],
+                  "view_keys": [
+                    "sales-team",
+                    "customer-success"
+                  ]
+                }
+            - name: beta_testers
+              manifest: |-
+                {
+                  "env_key": "staging",
+                  "included": [
+                    "user123",
+                    "user456"
+                  ],
+                  "key": "beta-testers",
+                  "name": "Beta Testers",
+                  "project_key": "example-project",
+                  "tags": [
+                    "beta",
+                    "testing"
+                  ],
+                  "view_keys": [
+                    "product-team"
+                  ]
+                }
         argumentDocs:
             attribute: (String) The user attribute to operate on
             bucket_by: (String) The attribute by which to group contexts together.
@@ -1160,6 +1286,7 @@ resources:
             unbounded_context_kind: (String) For Big Segments, the targeted context kind. If this attribute is not specified it will default to user. A change in this field will force the destruction of the existing resource and the creation of a new one.
             value_type: (String) The type for each of the clause's values. Available types are boolean, string, and number. If omitted, value_type defaults to string.
             values: (List of String) List of target object keys included in or excluded from the segment.
+            view_keys: '(Set of String) A set of view keys to link this segment to. This is an alternative to using the launchdarkly_view_links resource for managing view associations. When set, this segment will be linked to the specified views. The field is also computed, meaning Terraform will read back the current view associations from LaunchDarkly to detect drift. To explicitly remove all view associations, set view_keys = []. Simply removing the field from your configuration will leave existing associations unchanged. Important: Avoid using both view_keys and launchdarkly_view_links to manage the same segment. Mixed ownership can cause conflicts; when detected, Terraform logs a warning and reconciles to the configured view_keys. Choose one approach per resource.'
             weight: (Number) The integer weight of the rule (between 1 and 100000).
         importStatements:
             - |-
@@ -1198,7 +1325,7 @@ resources:
             member_ids: (Set of String) List of member IDs who belong to the team.
             name: (String) A human-friendly name for the team.
             role_attributes: (Block Set) A role attributes block. One block must be defined per role attribute. The key is the role attribute key and the value is a string array of resource keys that apply. (see below for nested schema)
-            values: (List of String) A list of values for your role attribute. For example, if your policy statement defines the resource "proj/$${roleAttribute/testAttribute}", the values would be the keys of the projects you wanted to assign access to.
+            values: (List of String) A list of values for your role attribute. For example, if your policy statement defines the resource "proj/${roleAttribute/testAttribute}", the values would be the keys of the projects you wanted to assign access to.
         importStatements:
             - |-
               # A LaunchDarkly team can be imported using the team key
@@ -1222,11 +1349,11 @@ resources:
             email: (String) The unique email address associated with the team member. A change in this field will force the destruction of the existing resource and the creation of a new one.
             first_name: (String) The team member's given name. Once created, this cannot be updated except by the team member.
             id: (String) The 24 character alphanumeric ID of the team member.
-            key: (String) The key / name of your role attribute. In the example $${roleAttribute/testAttribute}, the key is testAttribute.
+            key: (String) The key / name of your role attribute. In the example ${roleAttribute/testAttribute}, the key is testAttribute.
             last_name: (String) TThe team member's family name. Once created, this cannot be updated except by the team member.
             role: (String) The role associated with team member. Supported roles are reader, writer, no_access, or admin. If you don't specify a role, reader is assigned by default.
             role_attributes: (Block Set) A role attributes block. One block must be defined per role attribute. The key is the role attribute key and the value is a string array of resource keys that apply. (see below for nested schema)
-            values: (List of String) A list of values for your role attribute. For example, if your policy statement defines the resource "proj/$${roleAttribute/testAttribute}", the values would be the keys of the projects you wanted to assign access to.
+            values: (List of String) A list of values for your role attribute. For example, if your policy statement defines the resource "proj/${roleAttribute/testAttribute}", the values would be the keys of the projects you wanted to assign access to.
         importStatements:
             - |-
               # LaunchDarkly team members can be imported using the team member's 24 character ID.
@@ -1249,6 +1376,207 @@ resources:
         argumentDocs:
             custom_role_keys: '- (Required) List of custom role keys the team will access. The referenced custom roles must already exist in LaunchDarkly. If they don''t, the provider may behave unexpectedly.'
             team_key: '- (Required) The team key.'
+        importStatements: []
+    launchdarkly_view:
+        subCategory: ""
+        description: Provides a LaunchDarkly view resource. This resource allows you to create and manage views within your LaunchDarkly project.
+        name: launchdarkly_view
+        title: launchdarkly_view Resource - launchdarkly
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "description": "An example view for demonstration purposes",
+                  "generate_sdk_keys": true,
+                  "key": "example-view",
+                  "maintainer_id": "507f1f77bcf86cd799439011",
+                  "name": "Example View",
+                  "project_key": "example-project",
+                  "tags": [
+                    "terraform",
+                    "example"
+                  ]
+                }
+            - name: team_maintained
+              manifest: |-
+                {
+                  "description": "A view maintained by a team",
+                  "key": "team-view",
+                  "maintainer_team_key": "platform-team",
+                  "name": "Team Maintained View",
+                  "project_key": "example-project",
+                  "tags": [
+                    "team-managed"
+                  ]
+                }
+        argumentDocs:
+            archived: (Boolean) Whether the view is archived.
+            description: (String) The view's description.
+            generate_sdk_keys: (Boolean) Whether to generate SDK keys for this view.
+            id: (String) The ID of this resource.
+            key: (String) The view's unique key. A change in this field will force the destruction of the existing resource and the creation of a new one.
+            maintainer_id: (String) The member ID of the maintainer for this view. Exactly one of maintainer_id and maintainer_team_key must be set.
+            maintainer_team_key: (String) The team key of the maintainer team for this view. Exactly one of maintainer_id and maintainer_team_key must be set.
+            name: (String) The view's name.
+            project_key: (String) The project key. A change in this field will force the destruction of the existing resource and the creation of a new one.
+            tags: (Set of String) Tags associated with your resource.
+        importStatements: []
+    launchdarkly_view_filter_links:
+        subCategory: ""
+        description: 'Provides a LaunchDarkly view filter links resource for linking resources to views using filter expressions. This resource allows you to link all flags and/or segments matching a filter expression to a specific view. The filter is resolved at apply time — the backend finds all resources matching the filter and links them to the view. -> Note: Filter-based links are point-in-time. By default, filters are resolved only when this resource is created or updated (for example, when flag_filter changes). Set reconcile_on_apply = true to force re-resolution on every terraform apply. When to use which resource view_links: You know the exact flag/segment keys to link. Terraform tracks the explicit list and detects drift if links are removed externally.view_filter_links (this resource): You want to link all resources matching a dynamic query (e.g. all flags tagged "frontend"). No drift detection on resolved keys. By default, only resource argument changes trigger updates; set reconcile_on_apply to refresh links every apply.view_keys on individual resources: Each flag/segment declares its own view membership. Best for modular Terraform structures. -> Warning: Do not use view_filter_links and view_links targeting the same view and resource type, as conflicts may cause unexpected behavior.'
+        name: launchdarkly_view_filter_links
+        title: launchdarkly_view_filter_links Resource - launchdarkly
+        examples:
+            - name: frontend_flags
+              manifest: |-
+                {
+                  "flag_filter": "tags:frontend",
+                  "project_key": "my-project",
+                  "view_key": "frontend-team"
+                }
+            - name: platform_resources
+              manifest: |-
+                {
+                  "flag_filter": "tags:platform",
+                  "project_key": "my-project",
+                  "segment_filter": "tags anyOf [\"platform\"]",
+                  "segment_filter_environment_id": "${launchdarkly_project.my_project.environments[0].client_side_id}",
+                  "view_key": "platform-team"
+                }
+              references:
+                segment_filter_environment_id: launchdarkly_project.my_project.environments[0].client_side_id
+            - name: beta_segments
+              manifest: |-
+                {
+                  "project_key": "my-project",
+                  "segment_filter": "tags anyOf [\"beta\"]",
+                  "segment_filter_environment_id": "${launchdarkly_project.my_project.environments[0].client_side_id}",
+                  "view_key": "beta-program"
+                }
+              references:
+                segment_filter_environment_id: launchdarkly_project.my_project.environments[0].client_side_id
+        argumentDocs:
+            flag_filter: (String) A filter expression to match feature flags for linking to the view. Uses the same filter syntax as the flag list API endpoint (e.g. tags:frontend, status:active).
+            id: (String) The ID of this resource.
+            project_key: (String) The project key. A change in this field will force the destruction of the existing resource and the creation of a new one.
+            reconcile_on_apply: to refresh links every apply.
+            resolved_at: (String) Timestamp of the last successful filter resolution. This value updates when the resource is created or updated, and on every apply when reconcile_on_apply is true.
+            segment_filter: (String) A filter expression to match segments for linking to the view. Uses the segment query filter syntax (e.g. tags anyOf ["backend"], query = "my-segment", unbounded = true). Requires segment_filter_environment_id to be set.
+            segment_filter_environment_id: (String) The environment ID to use when resolving segment filters. Required when segment_filter is set. This is the environment's opaque ID (e.g. from launchdarkly_project.environments[*].client_side_id).
+            view_filter_links: (this resource)
+            view_key: (String) The view key to link resources to. A change in this field will force the destruction of the existing resource and the creation of a new one.
+            view_keys: on individual resources
+        importStatements: []
+    launchdarkly_view_links:
+        subCategory: ""
+        description: 'Provides a LaunchDarkly view links resource for managing bulk resource linkage to views. This resource allows you to efficiently link multiple flags and/or segments to a specific view. This is particularly useful for administrators organizing resources by team or deployment unit. -> Note: This resource manages ALL links for the specified resource types within a view. Adding or removing items from the configuration will link or unlink those resources accordingly. Alternative Approach: view_keys on Individual Resources For modular Terraform configurations where flags and segments are defined in separate files or modules, you can use the view_keys field directly on the resource instead of using this centralized view_links resource: Feature Flags: Use the view_keys attribute on launchdarkly_feature_flag resourcesSegments: Use the view_keys attribute on launchdarkly_segment resources When to use view_links (this resource): Managing many flags/segments for a single view (bulk operations)Centralized view management across your infrastructureAdministrative view organization When to use view_keys on individual resources: Modular Terraform structures with separate files per flag/segmentEach team/module manages their own resourcesWant view membership defined alongside the resource -> Warning: Do not use both view_links and view_keys to manage the same flag or segment''s view associations. Mixed ownership can cause conflicts; when detected, Terraform logs a warning and reconciles to the managing resource''s configured associations. Choose one approach per resource. See the feature flag resource documentation and segment resource documentation for details on the view_keys attribute.'
+        name: launchdarkly_view_links
+        title: launchdarkly_view_links Resource - launchdarkly
+        examples:
+            - name: frontend_team
+              manifest: |-
+                {
+                  "flags": [
+                    "feature-login",
+                    "feature-dashboard",
+                    "feature-payments",
+                    "feature-checkout",
+                    "feature-profile",
+                    "feature-notifications",
+                    "feature-search",
+                    "feature-filters",
+                    "feature-analytics",
+                    "feature-dark-mode"
+                  ],
+                  "project_key": "my-project",
+                  "segments": [
+                    {
+                      "environment_id": "507f1f77bcf86cd799439011",
+                      "segment_key": "frontend-beta-users"
+                    },
+                    {
+                      "environment_id": "507f1f77bcf86cd799439011",
+                      "segment_key": "premium-customers"
+                    }
+                  ],
+                  "view_key": "frontend-team"
+                }
+            - name: mobile_team
+              manifest: |-
+                {
+                  "flags": [
+                    "feature-mobile-login",
+                    "feature-push-notifications",
+                    "feature-offline-mode",
+                    "feature-biometric-auth",
+                    "feature-mobile-payments",
+                    "feature-app-rating"
+                  ],
+                  "project_key": "my-project",
+                  "view_key": "mobile-team"
+                }
+            - name: shared_features
+              manifest: |-
+                {
+                  "flags": [
+                    "feature-maintenance-mode",
+                    "feature-emergency-banner",
+                    "feature-api-throttling",
+                    "feature-logging-level"
+                  ],
+                  "project_key": "my-project",
+                  "view_key": "shared-features"
+                }
+            - name: backend_team
+              manifest: |-
+                {
+                  "flags": [
+                    "feature-database-migration",
+                    "feature-cache-optimization",
+                    "feature-api-versioning"
+                  ],
+                  "project_key": "my-project",
+                  "segments": [
+                    {
+                      "environment_id": "507f1f77bcf86cd799439011",
+                      "segment_key": "high-volume-api-users"
+                    },
+                    {
+                      "environment_id": "507f1f77bcf86cd799439022",
+                      "segment_key": "database-migration-pilot"
+                    }
+                  ],
+                  "view_key": "backend-team"
+                }
+            - name: segments_only
+              manifest: |-
+                {
+                  "project_key": "my-project",
+                  "segments": [
+                    {
+                      "environment_id": "507f1f77bcf86cd799439011",
+                      "segment_key": "vip-customers"
+                    },
+                    {
+                      "environment_id": "507f1f77bcf86cd799439011",
+                      "segment_key": "enterprise-customers"
+                    },
+                    {
+                      "environment_id": "507f1f77bcf86cd799439011",
+                      "segment_key": "trial-users"
+                    }
+                  ],
+                  "view_key": "user-segments-view"
+                }
+        argumentDocs:
+            environment_id: (String) The environment ID of the segment.
+            flags: (Set of String) A set of feature flag keys to link to the view.
+            id: (String) The ID of this resource.
+            project_key: (String) The project key. A change in this field will force the destruction of the existing resource and the creation of a new one.
+            segment_key: (String) The key of the segment.
+            segments: (Block Set) A set of segments to link to the view. Each segment is identified by its environment ID and segment key. (see below for nested schema)
+            view_key: (String) The view key to link resources to. A change in this field will force the destruction of the existing resource and the creation of a new one.
+            view_keys: attribute on launchdarkly_feature_flag resources
         importStatements: []
     launchdarkly_webhook:
         subCategory: ""

@@ -1,12 +1,12 @@
 apiVersion: account.launchdarkly.com/v1alpha1
 kind: CustomRole
 metadata:
-  name: no-production-access
+  name: crossplane-created-no-production-access
 spec:
   forProvider:
     description: "Managed with Crossplane LaunchDarkly Provider (generated with Upjet)"
-    name: no production access
-    key: global-non-prod
+    name: crossplane-created-no-production-access
+    key: crossplane-created-no-production-access
     policyStatements:
       - actions:
           - 'createFlag'
@@ -18,3 +18,26 @@ spec:
         effect: allow
         notResources:
           - 'proj/*:env/production:flag/*'
+---
+apiVersion: account.launchdarkly.com/v1alpha1
+kind: CustomRole
+metadata:
+  name: crossplane-created-allow-product-manager-tag
+spec:
+  forProvider:
+    description: |
+      Allow Product Managers to toggle flags and change targeting for flags with the product-manager tag.
+      This role leverages role scope with the `productManagerProjAttr` role attribute so that projects can be assigned at the team level.
+    name: crossplane-created-allow-product-manager-tag
+    key: crossplane-created-allow-product-manager-tag
+    policyStatements:
+      - actions:
+          - "updateOn"
+          - "updateRules"
+          - "updateRulesWithMeasuredRollout"
+          - "updateScheduledChanges"
+          - "updateTargets"
+        effect: allow
+        resources:
+          # To use role attributes, use the syntax ${roleAttribute/<YOUR_ROLE_ATTRIBUTE>} in lieu of your usual resource keys.
+          - "proj/${roleAttribute/productManagerProjAttr}:env/*:flag/*;product-manager"

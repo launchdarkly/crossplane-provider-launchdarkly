@@ -10,7 +10,10 @@ spec:
         onVariation: 1
     key: targeting-rules-flag
     name: Targeting Rules Flag
-    projectKey: crossplane-project
+    projectKeyRef:
+      name: crossplane-project
+    tags:
+      - managed-by-crossplane
     variationType: boolean
     variations:
       - value: "false"
@@ -22,8 +25,10 @@ metadata:
   name: targeting-ff-env
 spec:
   forProvider:
-    flagId: crossplane-project/targeting-rules-flag
-    envKey: test
+    flagIdRef:
+      name: targeting-rules-flag
+    envKeyRef:
+      name: development
     offVariation: 1
     "on": true
 
@@ -33,11 +38,7 @@ spec:
           - accountX
         variation: 1
     fallthrough:
-      - bucketBy: accountId
-        contextKind: account
-        rolloutWeights:
-          - 60000
-          - 40000
+      - variation: 0
     rules:
       - clauses:
           - attribute: country
