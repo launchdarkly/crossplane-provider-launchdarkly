@@ -7,9 +7,8 @@ require (
 	github.com/crossplane/crossplane-runtime/v2 v2.1.0
 	github.com/crossplane/crossplane-tools v0.0.0-20251017183449-dd4517244339
 	github.com/crossplane/upjet/v2 v2.2.0
-	// terraform-provider-launchdarkly — fork github.com/devopsdina/terraform-provider-launchdarkly branch "issue-387".
-	// Pseudo-version encodes branch tip; bump: GOPRIVATE=github.com/devopsdina/* go get github.com/launchdarkly/terraform-provider-launchdarkly@issue-387
-	github.com/launchdarkly/terraform-provider-launchdarkly v0.0.0-20260420202713-96239b3e1f98
+	// terraform-provider-launchdarkly v2.29.0 release tag, canonical Go pseudo-version 1.7.2
+	github.com/launchdarkly/terraform-provider-launchdarkly v1.7.2-0.20260508121827-e990d608e567
 	github.com/pkg/errors v0.9.1
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 	k8s.io/apimachinery v0.35.0
@@ -111,6 +110,9 @@ require (
 	github.com/vmihailenco/msgpack/v5 v5.4.1 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
 	github.com/x448/float16 v0.8.4 // indirect
+	github.com/xeipuuv/gojsonpointer v0.0.0-20180127040702-4e3ac2762d5f // indirect
+	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 // indirect
+	github.com/xeipuuv/gojsonschema v1.2.0 // indirect
 	github.com/xhit/go-str2duration/v2 v2.1.0 // indirect
 	github.com/yuin/goldmark v1.7.16 // indirect
 	github.com/zclconf/go-cty v1.17.0 // indirect
@@ -153,6 +155,3 @@ require (
 	sigs.k8s.io/structured-merge-diff/v6 v6.3.1 // indirect
 	sigs.k8s.io/yaml v1.6.0 // indirect
 )
-
-// Fork + branch issue-387 (pseudo-version pins commit on that branch).
-replace github.com/launchdarkly/terraform-provider-launchdarkly => github.com/devopsdina/terraform-provider-launchdarkly v0.0.0-20260420202713-96239b3e1f98

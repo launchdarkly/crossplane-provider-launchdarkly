@@ -12,6 +12,6 @@ metadata:
 
       [​LaunchDarkly](https://launchdarkly.com/) is the leading feature management platform that empowers development teams to innovate faster by managing feature releases at scale. It enables safe, controlled, and progressive rollouts, allowing for targeted user experiences and effective experimentation. With this provider, you can automate the creation and management of LaunchDarkly resources, such as projects, environments, and feature flags, streamlining your development and release workflows.​
 
-      This provider is generated from https://github.com/devopsdina/terraform-provider-launchdarkly (fork, branch issue-387) by https://github.com/upbound/upjet.
+      This provider is generated from https://github.com/launchdarkly/terraform-provider-launchdarkly by https://github.com/upbound/upjet.
 
       See the [examples directory in the source repository](https://github.com/launchdarkly/crossplane-provider-launchdarkly/tree/main/examples/) for examples on how to use this provider.

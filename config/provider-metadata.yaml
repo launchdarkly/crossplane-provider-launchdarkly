@@ -149,7 +149,7 @@ resources:
             not_actions: (List of String) The list of action specifiers defining the actions to which the statement does not apply.
             not_resources: (List of String) The list of resource specifiers defining the resources to which the statement does not apply.
             policy: (Block Set, Deprecated) (see below for nested schema)
-            policy_statements: (Block List) An array of the policy statements that define the permissions for the custom role. This field accepts role attributes. To use role attributes, use the syntax ${roleAttribute/<YOUR_ROLE_ATTRIBUTE>} in lieu of your usual resource keys. (see below for nested schema)
+            policy_statements: (Block List) An array of the policy statements that define the permissions for the custom role. This field accepts role attributes. To use role attributes, use the syntax $${roleAttribute/<YOUR_ROLE_ATTRIBUTE>} in lieu of your usual resource keys. (see below for nested schema)
             resources: (List of String)
         importStatements:
             - terraform import launchdarkly_custom_role.example example-role-key-1
@@ -1325,7 +1325,7 @@ resources:
             member_ids: (Set of String) List of member IDs who belong to the team.
             name: (String) A human-friendly name for the team.
             role_attributes: (Block Set) A role attributes block. One block must be defined per role attribute. The key is the role attribute key and the value is a string array of resource keys that apply. (see below for nested schema)
-            values: (List of String) A list of values for your role attribute. For example, if your policy statement defines the resource "proj/${roleAttribute/testAttribute}", the values would be the keys of the projects you wanted to assign access to.
+            values: (List of String) A list of values for your role attribute. For example, if your policy statement defines the resource "proj/$${roleAttribute/testAttribute}", the values would be the keys of the projects you wanted to assign access to.
         importStatements:
             - |-
               # A LaunchDarkly team can be imported using the team key
@@ -1349,11 +1349,11 @@ resources:
             email: (String) The unique email address associated with the team member. A change in this field will force the destruction of the existing resource and the creation of a new one.
             first_name: (String) The team member's given name. Once created, this cannot be updated except by the team member.
             id: (String) The 24 character alphanumeric ID of the team member.
-            key: (String) The key / name of your role attribute. In the example ${roleAttribute/testAttribute}, the key is testAttribute.
+            key: (String) The key / name of your role attribute. In the example $${roleAttribute/testAttribute}, the key is testAttribute.
             last_name: (String) TThe team member's family name. Once created, this cannot be updated except by the team member.
             role: (String) The role associated with team member. Supported roles are reader, writer, no_access, or admin. If you don't specify a role, reader is assigned by default.
             role_attributes: (Block Set) A role attributes block. One block must be defined per role attribute. The key is the role attribute key and the value is a string array of resource keys that apply. (see below for nested schema)
-            values: (List of String) A list of values for your role attribute. For example, if your policy statement defines the resource "proj/${roleAttribute/testAttribute}", the values would be the keys of the projects you wanted to assign access to.
+            values: (List of String) A list of values for your role attribute. For example, if your policy statement defines the resource "proj/$${roleAttribute/testAttribute}", the values would be the keys of the projects you wanted to assign access to.
         importStatements:
             - |-
               # LaunchDarkly team members can be imported using the team member's 24 character ID.

@@ -1075,6 +1075,11 @@ func (in *FeatureFlagInitParameters) DeepCopyInto(out *FeatureFlagInitParameters
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.Deprecated != nil {
+		in, out := &in.Deprecated, &out.Deprecated
+		*out = new(bool)
+		**out = **in
+	}
 	if in.Description != nil {
 		in, out := &in.Description, &out.Description
 		*out = new(string)
@@ -1227,6 +1232,11 @@ func (in *FeatureFlagObservation) DeepCopyInto(out *FeatureFlagObservation) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.Deprecated != nil {
+		in, out := &in.Deprecated, &out.Deprecated
+		*out = new(bool)
+		**out = **in
+	}
 	if in.Description != nil {
 		in, out := &in.Description, &out.Description
 		*out = new(string)
@@ -1341,6 +1351,11 @@ func (in *FeatureFlagParameters) DeepCopyInto(out *FeatureFlagParameters) {
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.Deprecated != nil {
+		in, out := &in.Deprecated, &out.Deprecated
+		*out = new(bool)
+		**out = **in
 	}
 	if in.Description != nil {
 		in, out := &in.Description, &out.Description

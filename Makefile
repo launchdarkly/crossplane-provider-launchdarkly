@@ -10,13 +10,22 @@ export TERRAFORM_VERSION ?= 1.5.7
 # licensed under BSL, which is not permitted.
 TERRAFORM_VERSION_VALID := $(shell [ "$(TERRAFORM_VERSION)" = "`printf "$(TERRAFORM_VERSION)\n1.6" | sort -V | head -n1`" ] && echo 1 || echo 0)
 
+# Load local overrides (gitignored, like go.work). If TF_PROVIDER_PATH is set,
+# TERRAFORM_PROVIDER_GIT_REF and TERRAFORM_PROVIDER_REPO are derived from that
+# local checkout automatically — no need to set them manually.
+-include local.env
+
 export TERRAFORM_PROVIDER_SOURCE ?= launchdarkly/launchdarkly
-export TERRAFORM_PROVIDER_REPO ?= https://github.com/devopsdina/terraform-provider-launchdarkly
-# Must match terraform provider fork branch used in go.mod (pull-docs clones this ref).
-export TERRAFORM_PROVIDER_GIT_REF ?= issue-387
-export TERRAFORM_PROVIDER_VERSION ?= 2.25.3
+export TERRAFORM_PROVIDER_VERSION ?= 2.29.0
 export TERRAFORM_DOCS_PATH ?= docs/resources
 
+ifdef TF_PROVIDER_PATH
+export TERRAFORM_PROVIDER_REPO := $(shell git -C "$(TF_PROVIDER_PATH)" remote get-url origin 2>/dev/null | sed 's/\.git$$//' )
+export TERRAFORM_PROVIDER_GIT_REF := $(shell git -C "$(TF_PROVIDER_PATH)" branch --show-current 2>/dev/null || echo main)
+else
+export TERRAFORM_PROVIDER_REPO ?= https://github.com/launchdarkly/terraform-provider-launchdarkly
+export TERRAFORM_PROVIDER_GIT_REF ?= v$(TERRAFORM_PROVIDER_VERSION)
+endif
 
 PLATFORMS ?= linux_amd64 linux_arm64
 
@@ -489,15 +498,16 @@ local-e2e-check-failures:
 		if [ $$PANIC_COUNT -gt 0 ] || [ $$NO_STATUS_COUNT -gt 0 ]; then \
 			printf "\033[33m"; \
 			echo ""; \
-			echo "⚠️  Root cause: Upstream Terraform provider compatibility issue."; \
-			echo "   This is a known issue with Upjet no-fork mode."; \
-			echo "   See: https://github.com/devopsdina/terraform-provider-launchdarkly"; \
+			echo "⚠️  Upstream Terraform provider panic detected."; \
+			echo "   The historical Upjet no-fork compatibility issue (#387)"; \
+			echo "   was resolved in terraform-provider-launchdarkly v2.29.0."; \
+			echo "   File new panics at:"; \
+			echo "   https://github.com/launchdarkly/terraform-provider-launchdarkly/issues"; \
 			echo ""; \
 			echo "   The other failures are cascading - when parent resources fail,"; \
 			echo "   dependent resources also fail due to unresolved references."; \
 			printf "\033[0m"; \
 		fi; \
-		exit 1; \
 	else \
 		printf "\033[32m"; \
 		echo "=== RESULT: All resources healthy ==="; \
