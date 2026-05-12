@@ -385,6 +385,14 @@ spec:
                       (String) For Big Segments, the targeted context kind. If this attribute is not specified it will default to user. A change in this field will force the destruction of the existing resource and the creation of a new one.
                       For Big Segments, the targeted context kind. If this attribute is not specified it will default to `user`. A change in this field will force the destruction of the existing resource and the creation of a new one.
                     type: string
+                  viewKeys:
+                    description: |-
+                      (Set of String) A set of view keys to link this segment to. This is an alternative to using the launchdarkly_view_links resource for managing view associations. When set, this segment will be linked to the specified views. To explicitly remove all view associations, set view_keys = []. Simply removing the field from your configuration will leave existing associations unchanged. Important: Avoid using both view_keys and launchdarkly_view_links to manage the same segment. Choose one approach per resource.
+                      A set of view keys to link this segment to. This is an alternative to using the `launchdarkly_view_links` resource for managing view associations. When set, this segment will be linked to the specified views. To explicitly remove all view associations, set `view_keys = []`. Simply removing the field from your configuration will leave existing associations unchanged. **Important**: Avoid using both `view_keys` and `launchdarkly_view_links` to manage the same segment. Choose one approach per resource.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
                 type: object
               initProvider:
                 description: |-
@@ -710,6 +718,14 @@ spec:
                       (String) For Big Segments, the targeted context kind. If this attribute is not specified it will default to user. A change in this field will force the destruction of the existing resource and the creation of a new one.
                       For Big Segments, the targeted context kind. If this attribute is not specified it will default to `user`. A change in this field will force the destruction of the existing resource and the creation of a new one.
                     type: string
+                  viewKeys:
+                    description: |-
+                      (Set of String) A set of view keys to link this segment to. This is an alternative to using the launchdarkly_view_links resource for managing view associations. When set, this segment will be linked to the specified views. To explicitly remove all view associations, set view_keys = []. Simply removing the field from your configuration will leave existing associations unchanged. Important: Avoid using both view_keys and launchdarkly_view_links to manage the same segment. Choose one approach per resource.
+                      A set of view keys to link this segment to. This is an alternative to using the `launchdarkly_view_links` resource for managing view associations. When set, this segment will be linked to the specified views. To explicitly remove all view associations, set `view_keys = []`. Simply removing the field from your configuration will leave existing associations unchanged. **Important**: Avoid using both `view_keys` and `launchdarkly_view_links` to manage the same segment. Choose one approach per resource.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
                 type: object
               managementPolicies:
                 default:
@@ -981,6 +997,14 @@ spec:
                       (String) For Big Segments, the targeted context kind. If this attribute is not specified it will default to user. A change in this field will force the destruction of the existing resource and the creation of a new one.
                       For Big Segments, the targeted context kind. If this attribute is not specified it will default to `user`. A change in this field will force the destruction of the existing resource and the creation of a new one.
                     type: string
+                  viewKeys:
+                    description: |-
+                      (Set of String) A set of view keys to link this segment to. This is an alternative to using the launchdarkly_view_links resource for managing view associations. When set, this segment will be linked to the specified views. To explicitly remove all view associations, set view_keys = []. Simply removing the field from your configuration will leave existing associations unchanged. Important: Avoid using both view_keys and launchdarkly_view_links to manage the same segment. Choose one approach per resource.
+                      A set of view keys to link this segment to. This is an alternative to using the `launchdarkly_view_links` resource for managing view associations. When set, this segment will be linked to the specified views. To explicitly remove all view associations, set `view_keys = []`. Simply removing the field from your configuration will leave existing associations unchanged. **Important**: Avoid using both `view_keys` and `launchdarkly_view_links` to manage the same segment. Choose one approach per resource.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
                 type: object
               conditions:
                 description: Conditions of the resource.

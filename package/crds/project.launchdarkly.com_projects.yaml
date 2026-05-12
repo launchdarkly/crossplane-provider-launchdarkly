@@ -216,6 +216,16 @@ spec:
                       (String) The name of the environment.
                       The project's name.
                     type: string
+                  requireViewAssociationForNewFlags:
+                    description: |-
+                      (Boolean) Whether new flags created in this project must be associated with at least one view.
+                      Whether new flags created in this project must be associated with at least one view.
+                    type: boolean
+                  requireViewAssociationForNewSegments:
+                    description: |-
+                      (Boolean) Whether new segments created in this project must be associated with at least one view.
+                      Whether new segments created in this project must be associated with at least one view.
+                    type: boolean
                   tags:
                     description: |-
                       (Set of String) Tags associated with your resource.
@@ -380,6 +390,16 @@ spec:
                       (String) The name of the environment.
                       The project's name.
                     type: string
+                  requireViewAssociationForNewFlags:
+                    description: |-
+                      (Boolean) Whether new flags created in this project must be associated with at least one view.
+                      Whether new flags created in this project must be associated with at least one view.
+                    type: boolean
+                  requireViewAssociationForNewSegments:
+                    description: |-
+                      (Boolean) Whether new segments created in this project must be associated with at least one view.
+                      Whether new segments created in this project must be associated with at least one view.
+                    type: boolean
                   tags:
                     description: |-
                       (Set of String) Tags associated with your resource.
@@ -638,6 +658,16 @@ spec:
                       (String) The name of the environment.
                       The project's name.
                     type: string
+                  requireViewAssociationForNewFlags:
+                    description: |-
+                      (Boolean) Whether new flags created in this project must be associated with at least one view.
+                      Whether new flags created in this project must be associated with at least one view.
+                    type: boolean
+                  requireViewAssociationForNewSegments:
+                    description: |-
+                      (Boolean) Whether new segments created in this project must be associated with at least one view.
+                      Whether new segments created in this project must be associated with at least one view.
+                    type: boolean
                   tags:
                     description: |-
                       (Set of String) Tags associated with your resource.

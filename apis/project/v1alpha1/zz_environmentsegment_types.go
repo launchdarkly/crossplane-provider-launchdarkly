@@ -173,6 +173,11 @@ type EnvironmentSegmentInitParameters struct {
 	// (String) For Big Segments, the targeted context kind. If this attribute is not specified it will default to user. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// For Big Segments, the targeted context kind. If this attribute is not specified it will default to `user`. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	UnboundedContextKind *string `json:"unboundedContextKind,omitempty" tf:"unbounded_context_kind,omitempty"`
+
+	// (Set of String) A set of view keys to link this segment to. This is an alternative to using the launchdarkly_view_links resource for managing view associations. When set, this segment will be linked to the specified views. To explicitly remove all view associations, set view_keys = []. Simply removing the field from your configuration will leave existing associations unchanged. Important: Avoid using both view_keys and launchdarkly_view_links to manage the same segment. Choose one approach per resource.
+	// A set of view keys to link this segment to. This is an alternative to using the `launchdarkly_view_links` resource for managing view associations. When set, this segment will be linked to the specified views. To explicitly remove all view associations, set `view_keys = []`. Simply removing the field from your configuration will leave existing associations unchanged. **Important**: Avoid using both `view_keys` and `launchdarkly_view_links` to manage the same segment. Choose one approach per resource.
+	// +listType=set
+	ViewKeys []*string `json:"viewKeys,omitempty" tf:"view_keys,omitempty"`
 }
 
 type EnvironmentSegmentObservation struct {
@@ -236,6 +241,11 @@ type EnvironmentSegmentObservation struct {
 	// (String) For Big Segments, the targeted context kind. If this attribute is not specified it will default to user. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// For Big Segments, the targeted context kind. If this attribute is not specified it will default to `user`. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	UnboundedContextKind *string `json:"unboundedContextKind,omitempty" tf:"unbounded_context_kind,omitempty"`
+
+	// (Set of String) A set of view keys to link this segment to. This is an alternative to using the launchdarkly_view_links resource for managing view associations. When set, this segment will be linked to the specified views. To explicitly remove all view associations, set view_keys = []. Simply removing the field from your configuration will leave existing associations unchanged. Important: Avoid using both view_keys and launchdarkly_view_links to manage the same segment. Choose one approach per resource.
+	// A set of view keys to link this segment to. This is an alternative to using the `launchdarkly_view_links` resource for managing view associations. When set, this segment will be linked to the specified views. To explicitly remove all view associations, set `view_keys = []`. Simply removing the field from your configuration will leave existing associations unchanged. **Important**: Avoid using both `view_keys` and `launchdarkly_view_links` to manage the same segment. Choose one approach per resource.
+	// +listType=set
+	ViewKeys []*string `json:"viewKeys,omitempty" tf:"view_keys,omitempty"`
 }
 
 type EnvironmentSegmentParameters struct {
@@ -324,6 +334,12 @@ type EnvironmentSegmentParameters struct {
 	// For Big Segments, the targeted context kind. If this attribute is not specified it will default to `user`. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// +kubebuilder:validation:Optional
 	UnboundedContextKind *string `json:"unboundedContextKind,omitempty" tf:"unbounded_context_kind,omitempty"`
+
+	// (Set of String) A set of view keys to link this segment to. This is an alternative to using the launchdarkly_view_links resource for managing view associations. When set, this segment will be linked to the specified views. To explicitly remove all view associations, set view_keys = []. Simply removing the field from your configuration will leave existing associations unchanged. Important: Avoid using both view_keys and launchdarkly_view_links to manage the same segment. Choose one approach per resource.
+	// A set of view keys to link this segment to. This is an alternative to using the `launchdarkly_view_links` resource for managing view associations. When set, this segment will be linked to the specified views. To explicitly remove all view associations, set `view_keys = []`. Simply removing the field from your configuration will leave existing associations unchanged. **Important**: Avoid using both `view_keys` and `launchdarkly_view_links` to manage the same segment. Choose one approach per resource.
+	// +kubebuilder:validation:Optional
+	// +listType=set
+	ViewKeys []*string `json:"viewKeys,omitempty" tf:"view_keys,omitempty"`
 }
 
 type ExcludedContextsInitParameters struct {

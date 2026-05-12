@@ -1,23 +1,23 @@
----
+# Team only. CustomRoles live in examples/custom_role/custom_role.yaml (applied in local-e2e Phase 1).
 apiVersion: account.launchdarkly.com/v1alpha1
 kind: Team
 metadata:
-  name: product-manager-team
+  name: crossplane-created-product-manager-team
 spec:
   forProvider:
     description: "Team for all Product Managers (managed with Crossplane)"
-    name: Product Managers
-    key: product-manager-team
+    name: crossplane-created-product-manager-team
+    key: crossplane-created-product-manager-team
     memberIdsSelector:
       matchLabels:
-        team: product-manager
+        team: crossplane-created-product-manager-team
 
     maintainersRefs:
       - name: example-member-1
 
     customRoleKeysRefs:
-      - name: no-production-access
-      - name: allow-product-manager-tag
+      - name: crossplane-created-no-production-access
+      - name: crossplane-created-allow-product-manager-tag
 
     # Role attributes are used to assign projects to the team.
     roleAttributes:
@@ -25,47 +25,3 @@ spec:
         values:
           - default
           - the-big-project
----
-apiVersion: account.launchdarkly.com/v1alpha1
-kind: CustomRole
-metadata:
-  name: no-production-access
-spec:
-  forProvider:
-    description: "Managed with Crossplane LaunchDarkly Provider (generated with Upjet)"
-    name: no production access
-    key: global-non-prod
-    policyStatements:
-      - actions:
-          - "createFlag"
-        effect: allow
-        resources:
-          - "proj/*:env/*:flag/*"
-      - actions:
-          - "*"
-        effect: allow
-        notResources:
-          - "proj/*:env/production:flag/*"
----
-apiVersion: account.launchdarkly.com/v1alpha1
-kind: CustomRole
-metadata:
-  name: allow-product-manager-tag
-spec:
-  forProvider:
-    description: |
-      Allow Product Managers to toggle flags and change targeting for flags with the product-manager tag.
-      This role leverages role scope with the `productManagerProjAttr` role attribute so that projects can be assigned at the team level.
-    name: Product Manager tag access
-    key: product-manager-tag-access
-    policyStatements:
-      - actions:
-          - "updateOn"
-          - "updateRules"
-          - "updateRulesWithMeasuredRollout"
-          - "updateScheduledChanges"
-          - "updateTargets"
-        effect: allow
-        resources:
-          # To use role attributes, use the syntax $${roleAttribute/<YOUR_ROLE_ATTRIBUTE>} in lieu of your usual resource keys.
-          - "proj/$${roleAttribute/productManagerProjAttr}:env/*:flag/*;product-manager"

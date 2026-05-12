@@ -336,6 +336,14 @@ type ProjectInitParameters struct {
 	// The project's name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Boolean) Whether new flags created in this project must be associated with at least one view.
+	// Whether new flags created in this project must be associated with at least one view.
+	RequireViewAssociationForNewFlags *bool `json:"requireViewAssociationForNewFlags,omitempty" tf:"require_view_association_for_new_flags,omitempty"`
+
+	// (Boolean) Whether new segments created in this project must be associated with at least one view.
+	// Whether new segments created in this project must be associated with at least one view.
+	RequireViewAssociationForNewSegments *bool `json:"requireViewAssociationForNewSegments,omitempty" tf:"require_view_association_for_new_segments,omitempty"`
+
 	// (Set of String) Tags associated with your resource.
 	// Tags associated with your resource.
 	// +listType=set
@@ -364,6 +372,14 @@ type ProjectObservation struct {
 	// (String) The name of the environment.
 	// The project's name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// (Boolean) Whether new flags created in this project must be associated with at least one view.
+	// Whether new flags created in this project must be associated with at least one view.
+	RequireViewAssociationForNewFlags *bool `json:"requireViewAssociationForNewFlags,omitempty" tf:"require_view_association_for_new_flags,omitempty"`
+
+	// (Boolean) Whether new segments created in this project must be associated with at least one view.
+	// Whether new segments created in this project must be associated with at least one view.
+	RequireViewAssociationForNewSegments *bool `json:"requireViewAssociationForNewSegments,omitempty" tf:"require_view_association_for_new_segments,omitempty"`
 
 	// (Set of String) Tags associated with your resource.
 	// Tags associated with your resource.
@@ -394,6 +410,16 @@ type ProjectParameters struct {
 	// The project's name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// (Boolean) Whether new flags created in this project must be associated with at least one view.
+	// Whether new flags created in this project must be associated with at least one view.
+	// +kubebuilder:validation:Optional
+	RequireViewAssociationForNewFlags *bool `json:"requireViewAssociationForNewFlags,omitempty" tf:"require_view_association_for_new_flags,omitempty"`
+
+	// (Boolean) Whether new segments created in this project must be associated with at least one view.
+	// Whether new segments created in this project must be associated with at least one view.
+	// +kubebuilder:validation:Optional
+	RequireViewAssociationForNewSegments *bool `json:"requireViewAssociationForNewSegments,omitempty" tf:"require_view_association_for_new_segments,omitempty"`
 
 	// (Set of String) Tags associated with your resource.
 	// Tags associated with your resource.

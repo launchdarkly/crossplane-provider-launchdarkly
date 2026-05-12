@@ -27,5 +27,7 @@ spec:
       - terraform
     key: example-project
     name: Example project
+    requireViewAssociationForNewFlags: false
+    requireViewAssociationForNewSegments: false
     tags:
     - terraform

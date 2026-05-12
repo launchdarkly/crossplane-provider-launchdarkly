@@ -23,6 +23,7 @@ import (
 	"github.com/launchdarkly/crossplane-provider-launchdarkly/config/teammember"
 	"github.com/launchdarkly/crossplane-provider-launchdarkly/config/teamrolemapping"
 	"github.com/launchdarkly/crossplane-provider-launchdarkly/config/webhook"
+	"github.com/launchdarkly/crossplane-provider-launchdarkly/internal/version"
 
 	ujconfig "github.com/crossplane/upjet/v2/pkg/config"
 	ldProvider "github.com/launchdarkly/terraform-provider-launchdarkly/launchdarkly"
@@ -51,7 +52,7 @@ func GetProvider() *ujconfig.Provider {
 
 		// Plugin Framework no-fork mode (team_role_mapping)
 		ujconfig.WithTerraformPluginFrameworkIncludeList(FrameworkResourcesConfigured()),
-		ujconfig.WithTerraformPluginFrameworkProvider(ldProvider.NewPluginProvider("2.25.3")()),
+		ujconfig.WithTerraformPluginFrameworkProvider(ldProvider.NewPluginProvider(version.TerraformProviderVersion)()),
 
 		ujconfig.WithFeaturesPackage("internal/features"),
 		ujconfig.WithDefaultResourceOptions(

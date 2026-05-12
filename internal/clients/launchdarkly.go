@@ -18,14 +18,12 @@ import (
 	tfsdk "github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	ldProvider "github.com/launchdarkly/terraform-provider-launchdarkly/launchdarkly"
 
+	"github.com/launchdarkly/crossplane-provider-launchdarkly/internal/version"
+
 	"github.com/launchdarkly/crossplane-provider-launchdarkly/apis/v1beta1"
 )
 
 const (
-	// Provider version for Plugin Framework
-	providerVersion = "2.25.3"
-
-	// error messages
 	errNotLegacyManaged     = "managed resource does not implement LegacyManaged"
 	errNoProviderConfig     = "no providerConfigRef provided"
 	errGetProviderConfig    = "cannot get referenced ProviderConfig"
@@ -104,7 +102,7 @@ func TerraformSetupBuilder() terraform.SetupFn {
 		ps.Meta = sdkProvider.Meta()
 
 		// Configure Plugin Framework provider (for team_role_mapping)
-		ps.FrameworkProvider = ldProvider.NewPluginProvider(providerVersion)()
+		ps.FrameworkProvider = ldProvider.NewPluginProvider(version.TerraformProviderVersion)()
 
 		return ps, nil
 	}

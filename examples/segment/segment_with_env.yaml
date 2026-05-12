@@ -1,12 +1,13 @@
 apiVersion: project.launchdarkly.com/v1alpha1
 kind: Environment
 metadata:
-  name: cross-reference-env
+  name: development
 spec:
   forProvider:
-    key: cross-reference-env
-    name: Cross Reference Environment
-    projectKey: crossplane-project
+    key: development
+    name: development
+    projectKeyRef:
+      name: crossplane-project
     color: FFFFFF
     tags:
       - managed-by-crossplane
@@ -20,7 +21,7 @@ spec:
     description: Cross reference segment
     projectKey: crossplane-project
     envKeyRef:
-      name: cross-reference-env
+      name: development
     includedContexts:
       - contextKind: account
         values:
