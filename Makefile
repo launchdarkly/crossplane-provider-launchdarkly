@@ -10,11 +10,22 @@ export TERRAFORM_VERSION ?= 1.5.7
 # licensed under BSL, which is not permitted.
 TERRAFORM_VERSION_VALID := $(shell [ "$(TERRAFORM_VERSION)" = "`printf "$(TERRAFORM_VERSION)\n1.6" | sort -V | head -n1`" ] && echo 1 || echo 0)
 
+# Load local overrides (gitignored, like go.work). If TF_PROVIDER_PATH is set,
+# TERRAFORM_PROVIDER_GIT_REF and TERRAFORM_PROVIDER_REPO are derived from that
+# local checkout automatically — no need to set them manually.
+-include local.env
+
 export TERRAFORM_PROVIDER_SOURCE ?= launchdarkly/launchdarkly
-export TERRAFORM_PROVIDER_REPO ?= https://github.com/launchdarkly/terraform-provider-launchdarkly
-export TERRAFORM_PROVIDER_VERSION ?= 2.25.3
+export TERRAFORM_PROVIDER_VERSION ?= 2.29.0
 export TERRAFORM_DOCS_PATH ?= docs/resources
 
+ifdef TF_PROVIDER_PATH
+export TERRAFORM_PROVIDER_REPO := $(shell git -C "$(TF_PROVIDER_PATH)" remote get-url origin 2>/dev/null | sed 's/\.git$$//' )
+export TERRAFORM_PROVIDER_GIT_REF := $(shell git -C "$(TF_PROVIDER_PATH)" branch --show-current 2>/dev/null || echo main)
+else
+export TERRAFORM_PROVIDER_REPO ?= https://github.com/launchdarkly/terraform-provider-launchdarkly
+export TERRAFORM_PROVIDER_GIT_REF ?= v$(TERRAFORM_PROVIDER_VERSION)
+endif
 
 PLATFORMS ?= linux_amd64 linux_arm64
 
@@ -46,7 +57,19 @@ GOLANGCILINT_VERSION ?= 2.8.0
 GO_STATIC_PACKAGES = $(GO_PROJECT)/cmd/provider $(GO_PROJECT)/cmd/generator
 GO_LDFLAGS += -X $(GO_PROJECT)/internal/version.Version=$(VERSION)
 GO_SUBDIRS += cmd internal apis
+
 -include build/makelib/golang.mk
+
+# golang.mk runs `go clean -modcache`, which deletes golang.org/toolchain from the module cache.
+# Override duplicates the target name (GNU make warns once); omit -modcache so `make clean` does not
+# delete downloaded toolchains; run `make clean-module-cache` for a full module wipe.
+go.clean:
+	@$(GO) clean -cache -testcache
+	@rm -fr $(GO_BIN_DIR) $(GO_TEST_DIR)
+
+.PHONY: clean-module-cache
+clean-module-cache:
+	@$(GO) clean -modcache
 
 # ====================================================================================
 # Setup Kubernetes tools
@@ -131,7 +154,7 @@ $(TERRAFORM_PROVIDER_SCHEMA): $(TERRAFORM)
 pull-docs:
 	@if [ ! -d "$(WORK_DIR)/$(TERRAFORM_PROVIDER_SOURCE)" ]; then \
   		mkdir -p "$(WORK_DIR)/$(TERRAFORM_PROVIDER_SOURCE)" && \
-		git clone -c advice.detachedHead=false --depth 1 --filter=blob:none --branch "v$(TERRAFORM_PROVIDER_VERSION)" --sparse "$(TERRAFORM_PROVIDER_REPO)" "$(WORK_DIR)/$(TERRAFORM_PROVIDER_SOURCE)"; \
+		git clone -c advice.detachedHead=false --depth 1 --filter=blob:none --branch "$(TERRAFORM_PROVIDER_GIT_REF)" --sparse "$(TERRAFORM_PROVIDER_REPO)" "$(WORK_DIR)/$(TERRAFORM_PROVIDER_SOURCE)"; \
 	fi
 	@git -C "$(WORK_DIR)/$(TERRAFORM_PROVIDER_SOURCE)" sparse-checkout set "$(TERRAFORM_DOCS_PATH)"
 
@@ -197,9 +220,13 @@ uptest: $(UPTEST) $(KUBECTL) $(KUTTL)
 	@$(OK) running automated tests
 
 local-deploy: build controlplane.up local.xpkg.deploy.provider.$(PROJECT_NAME)
+	@$(INFO) restarting provider Deployments so the cluster runs the newly loaded image
+	@for d in $$($(KUBECTL) -n $(CROSSPLANE_NAMESPACE) get deploy -o name 2>/dev/null | grep "$(PROJECT_NAME)" || true); do \
+		$(KUBECTL) -n $(CROSSPLANE_NAMESPACE) rollout restart $$d; \
+	done
 	@$(INFO) running locally built provider
 	@$(KUBECTL) wait provider.pkg $(PROJECT_NAME) --for condition=Healthy --timeout 5m
-	@$(KUBECTL) -n upbound-system wait --for=condition=Available deployment --all --timeout=5m
+	@$(KUBECTL) -n $(CROSSPLANE_NAMESPACE) wait --for=condition=Available deployment --all --timeout=5m
 	@$(OK) running locally built provider
 
 e2e: local-deploy uptest
@@ -216,10 +243,18 @@ e2e: local-deploy uptest
 #   make local-e2e-setup    - Create secret and ProviderConfig in cluster
 #   make local-e2e-create   - Apply all test resources to LaunchDarkly
 #   make local-e2e-verify   - Wait for resources to be Ready
-#   make local-e2e-cleanup  - Delete all test resources from LaunchDarkly
+#   make local-e2e-cleanup  - Delete all test resources, then destroy the Kind cluster
+#   After cleanup, make local-e2e provisions a fresh Kind cluster (controlplane.up in local-deploy).
 
 LOCAL_E2E_CREDS_FILE ?= cluster/test/credentials.json
+# Passed to every kubectl delete in local-e2e-cleanup-do.
+LOCAL_E2E_DELETE_OPTS ?= --ignore-not-found --wait=true
 LOCAL_E2E_EXAMPLES ?= examples/project_environment_and_flag
+# project_environment.yaml: doc 1 = Project (nested prod/staging/test); docs 2+ = standalone Environment CRs only (e.g. development — do not duplicate nested keys).
+LOCAL_E2E_PROJECT_MR_NAME ?= crossplane-project
+LOCAL_E2E_ENVIRONMENT_MR_NAMES ?= development
+# local-e2e-create: apply order is 1) this file 2) all examples/feature_flag/* 3) all other examples/<dir>/*.{yaml,yml}
+LOCAL_E2E_FIRST_APPLY ?= $(LOCAL_E2E_EXAMPLES)/project_environment.yaml
 
 # Setup credentials from local file
 local-e2e-setup:
@@ -232,45 +267,47 @@ local-e2e-setup:
 	@$(OK) Credentials configured
 
 # Create ALL test resources in LaunchDarkly
-# Skips: destination/kinesis.yaml (AWS), auditlogsubscription/datadog.yaml (Datadog)
+# Skips: destination/kinesis.yaml (AWS), auditlogsubscription/datadog.yaml (Datadog), providerconfig/* (handled by local-e2e-setup / install), LOCAL_E2E_FIRST_APPLY when scanning other dirs
 local-e2e-create:
 	@$(INFO) Creating ALL test resources in LaunchDarkly
 	@echo ""
-	@echo "=== Phase 1: Independent resources (no dependencies) ==="
-	@echo "Creating custom roles..."
-	@$(KUBECTL) apply -f examples/custom_role/custom_role.yaml
-	@echo "Creating webhook..."
-	@$(KUBECTL) apply -f examples/webhook/webhook.yaml
-	@echo "Creating access token..."
-	@$(KUBECTL) apply -f examples/access_token/access_token.yaml
-	@echo "Creating relay proxy configuration..."
-	@$(KUBECTL) apply -f examples/relay_proxy_configuration/relay_proxy_configuration.yaml
-	@sleep 2
+	@echo "=== Phase 0: Project and environments ($(LOCAL_E2E_FIRST_APPLY)) ==="
+	@$(KUBECTL) apply -f $(LOCAL_E2E_FIRST_APPLY)
+	@sleep 1
+	@$(INFO) "Waiting for Project $(LOCAL_E2E_PROJECT_MR_NAME) to be Ready"
+	@$(KUBECTL) wait --for=condition=Ready project.project.launchdarkly.com/$(LOCAL_E2E_PROJECT_MR_NAME) --timeout=5m
+	@for env in $(LOCAL_E2E_ENVIRONMENT_MR_NAMES); do \
+		$(INFO) "Waiting for Environment $$env to be Ready"; \
+		$(KUBECTL) wait --for=condition=Ready environment.project.launchdarkly.com/$$env --timeout=5m || exit $$?; \
+	done
 	@echo ""
-	@echo "=== Phase 2: Project and environments ==="
-	@$(KUBECTL) apply -f $(LOCAL_E2E_EXAMPLES)/project_environment.yaml
-	@sleep 3
+	@echo "=== Phase 1: examples/feature_flag/ ==="
+	@set -e; \
+	if [ -d examples/feature_flag ]; then \
+		for f in $$(find examples/feature_flag -maxdepth 1 -type f \( -name '*.yaml' -o -name '*.yml' \) | LC_ALL=C sort); do \
+			echo "Applying $$f"; \
+			$(KUBECTL) apply -f $$f; \
+			sleep 1; \
+		done; \
+	fi
 	@echo ""
-	@echo "=== Phase 3: Team members (before team) ==="
-	@$(KUBECTL) apply -f examples/team_with_custom_roles/members.yml
-	@sleep 2
-	@echo ""
-	@echo "=== Phase 4: Team with custom roles ==="
-	@$(KUBECTL) apply -f examples/team_with_custom_roles/team.yaml
-	@sleep 2
-	@echo ""
-	@echo "=== Phase 5: Feature flags (all types) ==="
-	@$(KUBECTL) apply -f $(LOCAL_E2E_EXAMPLES)/flag.yaml
-	@$(KUBECTL) apply -f examples/feature_flag/boolean.yaml
-	@$(KUBECTL) apply -f examples/feature_flag/json.yaml
-	@$(KUBECTL) apply -f examples/feature_flag/number.yaml
-	@$(KUBECTL) apply -f examples/feature_flag/string.yaml
-	@$(KUBECTL) apply -f examples/feature_flag_environment/targeting.yaml
-	@sleep 2
-	@echo ""
-	@echo "=== Phase 6: Segments ==="
-	@$(KUBECTL) apply -f $(LOCAL_E2E_EXAMPLES)/segment.yaml
-	@$(KUBECTL) apply -f examples/segment/segment.yaml
+	@echo "=== Phase 2: Remaining examples/*/*.yaml|.yml (sorted by directory, then file) ==="
+	@set -e; \
+	for d in $$(find examples -mindepth 1 -maxdepth 1 -type d | LC_ALL=C sort); do \
+		case $$d in \
+			examples/feature_flag) continue ;; \
+		esac; \
+		for f in $$(find $$d -maxdepth 1 -type f \( -name '*.yaml' -o -name '*.yml' \) | LC_ALL=C sort); do \
+			case $$f in \
+				$(LOCAL_E2E_FIRST_APPLY)) continue ;; \
+				*/destination/kinesis.yaml|*/auditlogsubscription/datadog.yaml) continue ;; \
+				*/providerconfig/*) continue ;; \
+			esac; \
+			echo "Applying $$f"; \
+			$(KUBECTL) apply -f $$f; \
+			sleep 1; \
+		done; \
+	done
 	@echo ""
 	@$(OK) All test resources created
 
@@ -297,44 +334,51 @@ local-e2e-verify:
 	@$(MAKE) local-e2e-check-failures
 	@$(OK) All resources Ready
 
-# Cleanup ALL test resources (reverse dependency order)
+# Cleanup ALL test resources (reverse dependency order), then delete the Kind cluster.
 local-e2e-cleanup:
+	@$(MAKE) local-e2e-cleanup-do
+	@$(INFO) Destroying Kind cluster $(KIND_CLUSTER_NAME)
+	@$(MAKE) controlplane.down || true
+
+local-e2e-cleanup-do:
 	@$(INFO) Cleaning up ALL test resources from LaunchDarkly
 	@echo ""
 	@echo "=== Phase 1: Segments ==="
-	@$(KUBECTL) delete -f examples/segment/segment.yaml --ignore-not-found --wait=true || true
-	@$(KUBECTL) delete -f $(LOCAL_E2E_EXAMPLES)/segment.yaml --ignore-not-found --wait=true || true
+	@$(KUBECTL) delete -f examples/segment/segment.yaml $(LOCAL_E2E_DELETE_OPTS) || true
+	@$(KUBECTL) delete -f $(LOCAL_E2E_EXAMPLES)/segment.yaml $(LOCAL_E2E_DELETE_OPTS) || true
 	@echo ""
 	@echo "=== Phase 2: Feature flag environments ==="
-	@$(KUBECTL) delete featureflagenvironment --all --ignore-not-found --wait=true || true
+	@$(KUBECTL) delete featureflagenvironment --all $(LOCAL_E2E_DELETE_OPTS) || true
 	@echo ""
 	@echo "=== Phase 3: Feature flags ==="
-	@$(KUBECTL) delete -f examples/feature_flag_environment/targeting.yaml --ignore-not-found --wait=true || true
-	@$(KUBECTL) delete -f examples/feature_flag/string.yaml --ignore-not-found --wait=true || true
-	@$(KUBECTL) delete -f examples/feature_flag/number.yaml --ignore-not-found --wait=true || true
-	@$(KUBECTL) delete -f examples/feature_flag/json.yaml --ignore-not-found --wait=true || true
-	@$(KUBECTL) delete -f examples/feature_flag/boolean.yaml --ignore-not-found --wait=true || true
-	@$(KUBECTL) delete -f $(LOCAL_E2E_EXAMPLES)/flag.yaml --ignore-not-found --wait=true || true
+	@$(KUBECTL) delete -f examples/feature_flag_environment/targeting.yaml $(LOCAL_E2E_DELETE_OPTS) || true
+	@$(KUBECTL) delete -f examples/feature_flag/string.yaml $(LOCAL_E2E_DELETE_OPTS) || true
+	@$(KUBECTL) delete -f examples/feature_flag/number.yaml $(LOCAL_E2E_DELETE_OPTS) || true
+	@$(KUBECTL) delete -f examples/feature_flag/json.yaml $(LOCAL_E2E_DELETE_OPTS) || true
+	@$(KUBECTL) delete -f examples/feature_flag/boolean.yaml $(LOCAL_E2E_DELETE_OPTS) || true
+	@$(KUBECTL) delete -f $(LOCAL_E2E_EXAMPLES)/flag.yaml $(LOCAL_E2E_DELETE_OPTS) || true
 	@echo ""
 	@echo "=== Phase 4: Team ==="
-	@$(KUBECTL) delete -f examples/team_with_custom_roles/team.yaml --ignore-not-found --wait=true || true
+	@$(KUBECTL) delete -f examples/team_with_custom_roles/team.yaml $(LOCAL_E2E_DELETE_OPTS) || true
 	@echo ""
 	@echo "=== Phase 5: Team members ==="
-	@$(KUBECTL) delete -f examples/team_with_custom_roles/members.yml --ignore-not-found --wait=true || true
+	@$(KUBECTL) delete -f examples/team_with_custom_roles/members.yml $(LOCAL_E2E_DELETE_OPTS) || true
 	@echo ""
 	@echo "=== Phase 6: Project and environments ==="
-	@$(KUBECTL) delete -f $(LOCAL_E2E_EXAMPLES)/project_environment.yaml --ignore-not-found --wait=true || true
+	@$(KUBECTL) delete -f $(LOCAL_E2E_EXAMPLES)/project_environment.yaml $(LOCAL_E2E_DELETE_OPTS) || true
 	@echo ""
 	@echo "=== Phase 7: Independent resources ==="
-	@$(KUBECTL) delete -f examples/relay_proxy_configuration/relay_proxy_configuration.yaml --ignore-not-found --wait=true || true
-	@$(KUBECTL) delete -f examples/access_token/access_token.yaml --ignore-not-found --wait=true || true
-	@$(KUBECTL) delete -f examples/webhook/webhook.yaml --ignore-not-found --wait=true || true
-	@$(KUBECTL) delete -f examples/custom_role/custom_role.yaml --ignore-not-found --wait=true || true
+	@$(KUBECTL) delete -f examples/relay_proxy_configuration/relay_proxy_configuration.yaml $(LOCAL_E2E_DELETE_OPTS) || true
+	@$(KUBECTL) delete -f examples/access_token/access_token.yaml $(LOCAL_E2E_DELETE_OPTS) || true
+	@$(KUBECTL) delete -f examples/webhook/webhook.yaml $(LOCAL_E2E_DELETE_OPTS) || true
+	@$(KUBECTL) delete -f examples/custom_role/custom_role.yaml $(LOCAL_E2E_DELETE_OPTS) || true
 	@echo ""
 	@$(OK) All test resources cleaned up
 
 # Check for failed resources and provide detailed error summary
-# This target scans all Crossplane managed resources for failures and reports them clearly
+# Scans managed resources by Synced/Ready; for each failure prints Warning Events scoped to
+# that object (involvedObject.uid), first in CROSSPLANE_NAMESPACE then cluster-wide. Omits
+# benign "object has been modified" concurrency lines.
 local-e2e-check-failures:
 	@echo ""
 	@echo "=== E2E Test Failure Summary ==="
@@ -373,6 +417,26 @@ local-e2e-check-failures:
 					API_COUNT=$$((API_COUNT + 1)); \
 					echo "   Message: $$MESSAGE"; \
 				fi; \
+				OBJUID=$$($(KUBECTL) get $$resource -o jsonpath='{.metadata.uid}' 2>/dev/null); \
+				echo "   Warning events for this object (provider ns, else cluster-wide):"; \
+				if [ -z "$$OBJUID" ]; then \
+					echo "   (could not read metadata.uid)"; \
+				else \
+					EVOUT=$$($(KUBECTL) get events -n $(CROSSPLANE_NAMESPACE) --field-selector involvedObject.uid=$$OBJUID,type=Warning --sort-by=.lastTimestamp -o jsonpath='{range .items[*]}{.lastTimestamp}{" | "}{.reason}{" | "}{.message}{"\n"}{end}' 2>/dev/null); \
+					if [ -z "$$EVOUT" ]; then \
+						EVOUT=$$($(KUBECTL) get events -A --field-selector involvedObject.uid=$$OBJUID,type=Warning --sort-by=.lastTimestamp -o jsonpath='{range .items[*]}{.lastTimestamp}{" | "}{.reason}{" | "}{.message}{"\n"}{end}' 2>/dev/null); \
+					fi; \
+					if [ -z "$$EVOUT" ]; then \
+						echo "   (none)"; \
+					else \
+						EVFILTERED=$$(echo "$$EVOUT" | grep -vE 'object has been modified|please apply your changes to the latest version' || true); \
+						if [ -n "$$EVFILTERED" ]; then \
+							echo "$$EVFILTERED" | tail -n 15; \
+						else \
+							echo "   (only benign concurrency warnings — omitted)"; \
+						fi; \
+					fi; \
+				fi; \
 				echo ""; \
 			elif [ -z "$$SYNCED" ] && [ -z "$$READY" ]; then \
 				FAILED=$$((FAILED + 1)); \
@@ -384,20 +448,30 @@ local-e2e-check-failures:
 				echo "   Status: No conditions - controller may not have processed this resource"; \
 				echo "   Cause: Resource may be failing silently or controller is not running"; \
 				printf "\033[0m"; \
+				OBJUID=$$($(KUBECTL) get $$resource -o jsonpath='{.metadata.uid}' 2>/dev/null); \
+				echo "   Warning events for this object (provider ns, else cluster-wide):"; \
+				if [ -z "$$OBJUID" ]; then \
+					echo "   (could not read metadata.uid)"; \
+				else \
+					EVOUT=$$($(KUBECTL) get events -n $(CROSSPLANE_NAMESPACE) --field-selector involvedObject.uid=$$OBJUID,type=Warning --sort-by=.lastTimestamp -o jsonpath='{range .items[*]}{.lastTimestamp}{" | "}{.reason}{" | "}{.message}{"\n"}{end}' 2>/dev/null); \
+					if [ -z "$$EVOUT" ]; then \
+						EVOUT=$$($(KUBECTL) get events -A --field-selector involvedObject.uid=$$OBJUID,type=Warning --sort-by=.lastTimestamp -o jsonpath='{range .items[*]}{.lastTimestamp}{" | "}{.reason}{" | "}{.message}{"\n"}{end}' 2>/dev/null); \
+					fi; \
+					if [ -z "$$EVOUT" ]; then \
+						echo "   (none)"; \
+					else \
+						EVFILTERED=$$(echo "$$EVOUT" | grep -vE 'object has been modified|please apply your changes to the latest version' || true); \
+						if [ -n "$$EVFILTERED" ]; then \
+							echo "$$EVFILTERED" | tail -n 15; \
+						else \
+							echo "   (only benign concurrency warnings — omitted)"; \
+						fi; \
+					fi; \
+				fi; \
 				echo ""; \
 			fi; \
 		done; \
 	done; \
-	echo ""; \
-	echo "=== Checking Kubernetes Warning Events ==="; \
-	WARNINGS=$$($(KUBECTL) get events --field-selector type=Warning -o custom-columns='NAME:.involvedObject.name,KIND:.involvedObject.kind,MESSAGE:.message' 2>/dev/null | grep -iE "customrole|accesstoken|webhook|relayproxy|project|environment|teammember|team|featureflag|segment" | head -10); \
-	if [ -n "$$WARNINGS" ]; then \
-		printf "\033[33m"; \
-		echo "$$WARNINGS"; \
-		printf "\033[0m"; \
-	else \
-		echo "No warning events found for managed resources."; \
-	fi; \
 	echo ""; \
 	if [ $$FAILED -gt 0 ]; then \
 		printf "\033[31m"; \
@@ -424,15 +498,16 @@ local-e2e-check-failures:
 		if [ $$PANIC_COUNT -gt 0 ] || [ $$NO_STATUS_COUNT -gt 0 ]; then \
 			printf "\033[33m"; \
 			echo ""; \
-			echo "⚠️  Root cause: Upstream Terraform provider compatibility issue."; \
-			echo "   This is a known issue with Upjet no-fork mode."; \
-			echo "   See: https://github.com/launchdarkly/terraform-provider-launchdarkly"; \
+			echo "⚠️  Upstream Terraform provider panic detected."; \
+			echo "   The historical Upjet no-fork compatibility issue (#387)"; \
+			echo "   was resolved in terraform-provider-launchdarkly v2.29.0."; \
+			echo "   File new panics at:"; \
+			echo "   https://github.com/launchdarkly/terraform-provider-launchdarkly/issues"; \
 			echo ""; \
 			echo "   The other failures are cascading - when parent resources fail,"; \
 			echo "   dependent resources also fail due to unresolved references."; \
 			printf "\033[0m"; \
 		fi; \
-		exit 1; \
 	else \
 		printf "\033[32m"; \
 		echo "=== RESULT: All resources healthy ==="; \

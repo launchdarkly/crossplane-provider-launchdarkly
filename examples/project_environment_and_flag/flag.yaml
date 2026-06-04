@@ -39,7 +39,7 @@ spec:
     flagIdRef:
       name: my-first-string-flag
     envKeyRef:
-      name: name-dev-environment
+      name: development
     "on": true
     offVariation: 0
     fallthrough:

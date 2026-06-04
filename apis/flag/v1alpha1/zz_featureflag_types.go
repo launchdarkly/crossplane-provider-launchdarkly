@@ -148,6 +148,10 @@ type FeatureFlagInitParameters struct {
 	// A block containing the indices of the variations to be used as the default on and off variations in all new environments. Flag configurations in existing environments will not be changed nor updated if the configuration block is removed.
 	Defaults []DefaultsInitParameters `json:"defaults,omitempty" tf:"defaults,omitempty"`
 
+	// (Boolean) Specifies whether the flag is deprecated or not. Note that you cannot create a new flag that is deprecated, but can update a flag to be deprecated.
+	// Specifies whether the flag is deprecated or not. Note that you cannot create a new flag that is deprecated, but can update a flag to be deprecated.
+	Deprecated *bool `json:"deprecated,omitempty" tf:"deprecated,omitempty"`
+
 	// (String) The feature flag's description.
 	// The feature flag's description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -197,6 +201,11 @@ type FeatureFlagInitParameters struct {
 	// (Block List) An array of possible variations for the flag (see below for nested schema)
 	// An array of possible variations for the flag
 	Variations []VariationsInitParameters `json:"variations,omitempty" tf:"variations,omitempty"`
+
+	// (Set of String) A set of view keys to link this flag to. This is an alternative to using the launchdarkly_view_links resource for managing view associations. When set, this flag will be linked to the specified views. To explicitly remove all view associations, set view_keys = []. Simply removing the field from your configuration will leave existing associations unchanged. Important: Avoid using both view_keys and launchdarkly_view_links to manage the same flag. Choose one approach per resource.
+	// A set of view keys to link this flag to. This is an alternative to using the `launchdarkly_view_links` resource for managing view associations. When set, this flag will be linked to the specified views. To explicitly remove all view associations, set `view_keys = []`. Simply removing the field from your configuration will leave existing associations unchanged. **Important**: Avoid using both `view_keys` and `launchdarkly_view_links` to manage the same flag. Choose one approach per resource.
+	// +listType=set
+	ViewKeys []*string `json:"viewKeys,omitempty" tf:"view_keys,omitempty"`
 }
 
 type FeatureFlagObservation struct {
@@ -215,6 +224,10 @@ type FeatureFlagObservation struct {
 	// (Block List, Max: 1) A block containing the indices of the variations to be used as the default on and off variations in all new environments. Flag configurations in existing environments will not be changed nor updated if the configuration block is removed. (see below for nested schema)
 	// A block containing the indices of the variations to be used as the default on and off variations in all new environments. Flag configurations in existing environments will not be changed nor updated if the configuration block is removed.
 	Defaults []DefaultsObservation `json:"defaults,omitempty" tf:"defaults,omitempty"`
+
+	// (Boolean) Specifies whether the flag is deprecated or not. Note that you cannot create a new flag that is deprecated, but can update a flag to be deprecated.
+	// Specifies whether the flag is deprecated or not. Note that you cannot create a new flag that is deprecated, but can update a flag to be deprecated.
+	Deprecated *bool `json:"deprecated,omitempty" tf:"deprecated,omitempty"`
 
 	// (String) The feature flag's description.
 	// The feature flag's description.
@@ -259,6 +272,11 @@ type FeatureFlagObservation struct {
 	// (Block List) An array of possible variations for the flag (see below for nested schema)
 	// An array of possible variations for the flag
 	Variations []VariationsObservation `json:"variations,omitempty" tf:"variations,omitempty"`
+
+	// (Set of String) A set of view keys to link this flag to. This is an alternative to using the launchdarkly_view_links resource for managing view associations. When set, this flag will be linked to the specified views. To explicitly remove all view associations, set view_keys = []. Simply removing the field from your configuration will leave existing associations unchanged. Important: Avoid using both view_keys and launchdarkly_view_links to manage the same flag. Choose one approach per resource.
+	// A set of view keys to link this flag to. This is an alternative to using the `launchdarkly_view_links` resource for managing view associations. When set, this flag will be linked to the specified views. To explicitly remove all view associations, set `view_keys = []`. Simply removing the field from your configuration will leave existing associations unchanged. **Important**: Avoid using both `view_keys` and `launchdarkly_view_links` to manage the same flag. Choose one approach per resource.
+	// +listType=set
+	ViewKeys []*string `json:"viewKeys,omitempty" tf:"view_keys,omitempty"`
 }
 
 type FeatureFlagParameters struct {
@@ -281,6 +299,11 @@ type FeatureFlagParameters struct {
 	// A block containing the indices of the variations to be used as the default on and off variations in all new environments. Flag configurations in existing environments will not be changed nor updated if the configuration block is removed.
 	// +kubebuilder:validation:Optional
 	Defaults []DefaultsParameters `json:"defaults,omitempty" tf:"defaults,omitempty"`
+
+	// (Boolean) Specifies whether the flag is deprecated or not. Note that you cannot create a new flag that is deprecated, but can update a flag to be deprecated.
+	// Specifies whether the flag is deprecated or not. Note that you cannot create a new flag that is deprecated, but can update a flag to be deprecated.
+	// +kubebuilder:validation:Optional
+	Deprecated *bool `json:"deprecated,omitempty" tf:"deprecated,omitempty"`
 
 	// (String) The feature flag's description.
 	// The feature flag's description.
@@ -341,6 +364,12 @@ type FeatureFlagParameters struct {
 	// An array of possible variations for the flag
 	// +kubebuilder:validation:Optional
 	Variations []VariationsParameters `json:"variations,omitempty" tf:"variations,omitempty"`
+
+	// (Set of String) A set of view keys to link this flag to. This is an alternative to using the launchdarkly_view_links resource for managing view associations. When set, this flag will be linked to the specified views. To explicitly remove all view associations, set view_keys = []. Simply removing the field from your configuration will leave existing associations unchanged. Important: Avoid using both view_keys and launchdarkly_view_links to manage the same flag. Choose one approach per resource.
+	// A set of view keys to link this flag to. This is an alternative to using the `launchdarkly_view_links` resource for managing view associations. When set, this flag will be linked to the specified views. To explicitly remove all view associations, set `view_keys = []`. Simply removing the field from your configuration will leave existing associations unchanged. **Important**: Avoid using both `view_keys` and `launchdarkly_view_links` to manage the same flag. Choose one approach per resource.
+	// +kubebuilder:validation:Optional
+	// +listType=set
+	ViewKeys []*string `json:"viewKeys,omitempty" tf:"view_keys,omitempty"`
 }
 
 type VariationsInitParameters struct {
