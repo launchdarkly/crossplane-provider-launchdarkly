@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.1](https://github.com/launchdarkly/crossplane-provider-launchdarkly/compare/v0.7.0...v0.7.1) (2026-10-21)
+
+
+### Bug Fixes
+
+* **security:** build with Go 1.26.10 for eMudhra intermediate distrust ([#72](https://github.com/launchdarkly/crossplane-provider-launchdarkly/issues/72)) ([3570458](https://github.com/launchdarkly/crossplane-provider-launchdarkly/commit/3570458f9b933d6441a8f780313fe9423537905b))
+* Update Go 1.25.7 to remediate CVE-2025-68121, add more logging t0 e2e verify ([#59](https://github.com/launchdarkly/crossplane-provider-launchdarkly/issues/59)) ([f33fd48](https://github.com/launchdarkly/crossplane-provider-launchdarkly/commit/f33fd4810e35e7bda75f9b54dc893d94522cdfcb))
+
 ## [0.7.0](https://github.com/launchdarkly/crossplane-provider-launchdarkly/compare/v0.6.0...v0.7.0) (2026-02-05)
 
 
