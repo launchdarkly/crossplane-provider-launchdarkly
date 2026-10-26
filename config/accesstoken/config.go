@@ -13,8 +13,8 @@ func Configure(p *config.Provider) {
 			TerraformName: "launchdarkly_custom_role",
 		}
 
-		// Remove deprecated fields
-		delete(r.TerraformResource.Schema, "expire")
-		delete(r.TerraformResource.Schema, "policy_statements")
+		// Hide deprecated fields from spec. Keep them in the schema: in no-fork mode the
+		// Terraform provider code runs against this schema and reads these fields.
+		config.MoveToStatus(r.TerraformResource, "expire", "policy_statements")
 	})
 }
