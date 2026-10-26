@@ -86,21 +86,34 @@ var crudCases = map[string]crudCase{
 	"relay-proxy": {"launchdarkly_relay_proxy_configuration",
 		`{"name": "relay", "policy": [{"effect": "allow", "actions": ["*"], "resources": ["proj/*:env/*"]}]}`,
 		`{"name": "relay 2", "policy": [{"effect": "allow", "actions": ["*"], "resources": ["proj/*:env/*"]}]}`},
+	"metric": {tfMetric,
+		`{"project_key": "proj", "key": "metric", "name": "Metric", "kind": "custom", "event_key": "ev"}`,
+		`{"project_key": "proj", "key": "metric", "name": "Metric 2", "kind": "custom", "event_key": "ev2"}`},
+	"metric-pageview": {tfMetric,
+		`{"project_key": "proj", "key": "pv", "name": "PV", "kind": "pageview", "urls": [{"kind": "substring", "substring": "checkout"}]}`,
+		`{"project_key": "proj", "key": "pv", "name": "PV", "kind": "pageview", "urls": [{"kind": "exact", "url": "https://example.com/"}]}`},
+	"metric-click": {tfMetric,
+		`{"project_key": "proj", "key": "click", "name": "Click", "kind": "click", "selector": ".buy", "urls": [{"kind": "canonical", "url": "https://example.com/"}]}`,
+		`{"project_key": "proj", "key": "click", "name": "Click", "kind": "click", "selector": ".buy2", "urls": [{"kind": "canonical", "url": "https://example.com/"}]}`},
+	"metric-numeric": {tfMetric,
+		`{"project_key": "proj", "key": "num", "name": "Num", "kind": "custom", "event_key": "ev", "is_numeric": true, "unit": "ms", "success_criteria": "LowerThanBaseline"}`,
+		`{"project_key": "proj", "key": "num", "name": "Num", "kind": "custom", "event_key": "ev", "is_numeric": true, "unit": "s", "success_criteria": "LowerThanBaseline"}`},
+	"destination": {"launchdarkly_destination",
+		`{"project_key": "proj", "env_key": "test", "name": "Dest", "kind": "segment", "config": {"write_key": "secret"}}`,
+		`{"project_key": "proj", "env_key": "test", "name": "Dest 2", "kind": "segment", "config": {"write_key": "secret"}}`},
+	"audit-log-subscription": {"launchdarkly_audit_log_subscription",
+		`{"integration_key": "datadog", "name": "Audit", "on": true, "config": {"api_key": "secret", "host_url": "https://api.datadoghq.com"},
+		  "statements": [{"effect": "allow", "actions": ["*"], "resources": ["proj/*"]}]}`,
+		`{"integration_key": "datadog", "name": "Audit 2", "on": false, "config": {"api_key": "secret", "host_url": "https://api.datadoghq.com"},
+		  "statements": [{"effect": "allow", "actions": ["*"], "resources": ["proj/*"]}]}`},
 }
 
 // Cases that currently fail because of a known bug. They are skipped, and the
 // test fails once they pass so the entry gets removed.
-var crudKnownBugs = map[string]string{
-	"project-minimal": "upstream customizeProjectDiff panics (\"value is null\") when default_client_side_availability is omitted",
-}
+var crudKnownBugs = map[string]string{}
 
-// Resources without a CRUD smoke case. Add a case to crudCases instead of
-// growing this list where possible.
-var crudSkipped = map[string]string{
-	"launchdarkly_audit_log_subscription": "needs third-party integration config",
-	"launchdarkly_destination":            "needs third-party integration config",
-	"launchdarkly_metric":                 "not covered yet",
-}
+// Resources without a CRUD smoke case. Prefer adding a case to crudCases.
+var crudSkipped = map[string]string{}
 
 func TestMain(m *testing.M) {
 	var srv *httptest.Server
@@ -126,7 +139,10 @@ var (
 	fakeLDHost string
 )
 
-const tfFeatureFlag = "launchdarkly_feature_flag"
+const (
+	tfFeatureFlag = "launchdarkly_feature_flag"
+	tfMetric      = "launchdarkly_metric"
+)
 
 // TestCRUDSmoke runs each resource's Terraform create, read, update and delete
 // against an in-memory fake of the LD API, using the runtime schema the
@@ -206,9 +222,10 @@ func runCRUD(r *schema.Resource, meta any, c crudCase) error {
 				return fmt.Errorf("raw config: %w", err)
 			}
 			if state == nil {
-				state = &terraform.InstanceState{}
+				// Like upjet, only a reconstructed state carries the raw config;
+				// later operations use the cached state, which has none.
+				state = &terraform.InstanceState{RawConfig: rawConfig}
 			}
-			state.RawConfig = rawConfig
 			diff, err := schema.InternalMap(r.Schema).Diff(ctx, state, rc, r.CustomizeDiff, meta, false)
 			if err != nil {
 				return fmt.Errorf("diff: %w", err)
@@ -263,4 +280,44 @@ func runCRUD(r *schema.Resource, meta any, c crudCase) error {
 		}
 	}
 	return nil
+}
+
+// The metric and project CustomizeDiff replacements must still reject invalid
+// configs the way upstream does.
+func TestCustomizeDiffValidation(t *testing.T) {
+	cases := map[string]struct {
+		resource, cfg, wantErr string
+	}{
+		"custom metric without event_key": {tfMetric,
+			`{"project_key": "proj", "key": "m", "name": "M", "kind": "custom"}`, "require 'event_key'"},
+		"pageview metric without urls": {tfMetric,
+			`{"project_key": "proj", "key": "m", "name": "M", "kind": "pageview"}`, "require an 'urls' block"},
+		"click metric without selector": {tfMetric,
+			`{"project_key": "proj", "key": "m", "name": "M", "kind": "click", "urls": [{"kind": "exact", "url": "https://example.com"}]}`, "require 'selector'"},
+		"url block missing its field": {tfMetric,
+			`{"project_key": "proj", "key": "m", "name": "M", "kind": "pageview", "urls": [{"kind": "substring", "url": "https://example.com"}]}`, "misconfigured"},
+		"numeric metric without unit": {tfMetric,
+			`{"project_key": "proj", "key": "m", "name": "M", "kind": "custom", "event_key": "e", "is_numeric": true, "success_criteria": "LowerThanBaseline"}`, "require 'unit'"},
+		"custom metric with urls": {tfMetric,
+			`{"project_key": "proj", "key": "m", "name": "M", "kind": "custom", "event_key": "e", "urls": [{"kind": "exact", "url": "https://example.com"}]}`, "do not accept a 'urls' block"},
+	}
+	resources := GetProvider().Resources
+	for name, c := range cases {
+		t.Run(name, func(t *testing.T) {
+			r := resources[c.resource].TerraformResource
+			var cfg map[string]any
+			if err := json.Unmarshal([]byte(c.cfg), &cfg); err != nil {
+				t.Fatal(err)
+			}
+			rawConfig, err := schema.JSONMapToStateValue(cfg, r.CoreConfigSchema())
+			if err != nil {
+				t.Fatal(err)
+			}
+			_, err = schema.InternalMap(r.Schema).Diff(context.Background(), &terraform.InstanceState{RawConfig: rawConfig},
+				terraform.NewResourceConfigRaw(cfg), r.CustomizeDiff, nil, false)
+			if err == nil || !strings.Contains(err.Error(), c.wantErr) {
+				t.Fatalf("got error %v, want one containing %q", err, c.wantErr)
+			}
+		})
+	}
 }

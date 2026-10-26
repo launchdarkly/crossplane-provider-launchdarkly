@@ -14,5 +14,6 @@ func Configure(p *config.Provider) {
 		r.References["maintainer_id"] = config.Reference{
 			TerraformName: "launchdarkly_team_member",
 		}
+		r.TerraformResource.CustomizeDiff = customizeDiff
 	})
 }
