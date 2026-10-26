@@ -2,6 +2,8 @@ module github.com/launchdarkly/crossplane-provider-launchdarkly
 
 go 1.25.7
 
+toolchain go1.26.10
+
 require (
 	dario.cat/mergo v1.0.2
 	github.com/crossplane/crossplane-runtime/v2 v2.1.0
