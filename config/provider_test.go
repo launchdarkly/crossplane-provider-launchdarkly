@@ -10,8 +10,6 @@ import (
 // r.TerraformResource, so removing a field there makes the upstream code panic
 // when it reads that field (e.g. d.Get("include_in_snippet").(bool)).
 func TestRuntimeSchemaKeepsAllTerraformFields(t *testing.T) {
-	// Upstream only reads custom_role.policy via d.GetOk, which is nil-safe.
-	allowedRemovals := map[string]bool{"launchdarkly_custom_role.policy": true}
 	upstream := ldProvider.Provider().ResourcesMap
 	for name, r := range GetProvider().Resources {
 		u, ok := upstream[name]
@@ -19,7 +17,7 @@ func TestRuntimeSchemaKeepsAllTerraformFields(t *testing.T) {
 			continue
 		}
 		for field := range u.Schema {
-			if _, ok := r.TerraformResource.Schema[field]; !ok && !allowedRemovals[name+"."+field] {
+			if _, ok := r.TerraformResource.Schema[field]; !ok {
 				t.Errorf("%s: field %q was removed from the runtime Terraform schema", name, field)
 			}
 		}
@@ -31,6 +29,7 @@ func TestDeprecatedFieldsAreNotInSpec(t *testing.T) {
 		"launchdarkly_feature_flag": {"include_in_snippet"},
 		"launchdarkly_project":      {"include_in_snippet"},
 		"launchdarkly_access_token": {"expire", "policy_statements"},
+		"launchdarkly_custom_role":  {"policy"},
 	}
 	resources := GetProvider().Resources
 	for name, fields := range deprecated {

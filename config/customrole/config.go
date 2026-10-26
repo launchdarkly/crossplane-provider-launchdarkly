@@ -9,7 +9,8 @@ func Configure(p *config.Provider) {
 		r.ShortGroup = "account"
 		r.Kind = "CustomRole"
 
-		// Remove deprecated fields
-		delete(r.TerraformResource.Schema, "policy")
+		// Hide deprecated fields from spec. Keep them in the schema: in no-fork mode the
+		// Terraform provider code runs against this schema and reads these fields.
+		config.MoveToStatus(r.TerraformResource, "policy")
 	})
 }

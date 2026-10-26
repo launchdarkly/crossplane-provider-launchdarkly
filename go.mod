@@ -20,7 +20,11 @@ require (
 	sigs.k8s.io/controller-tools v0.20.0
 )
 
-require github.com/hashicorp/terraform-plugin-sdk/v2 v2.38.1
+require (
+	github.com/hashicorp/go-cty v1.5.0
+	github.com/hashicorp/terraform-plugin-sdk/v2 v2.38.1
+	github.com/launchdarkly/api-client-go/v17 v17.1.0
+)
 
 require (
 	github.com/agext/levenshtein v1.2.3 // indirect
@@ -67,7 +71,6 @@ require (
 	github.com/google/go-cmp v0.7.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
-	github.com/hashicorp/go-cty v1.5.0 // indirect
 	github.com/hashicorp/go-hclog v1.6.3 // indirect
 	github.com/hashicorp/go-plugin v1.7.0 // indirect
 	github.com/hashicorp/go-retryablehttp v0.7.7 // indirect
@@ -85,7 +88,6 @@ require (
 	github.com/iancoleman/strcase v0.3.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
-	github.com/launchdarkly/api-client-go/v17 v17.1.0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mitchellh/copystructure v1.2.0 // indirect
