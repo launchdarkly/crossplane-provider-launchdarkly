@@ -60,6 +60,9 @@ UPTEST_VERSION = v2.2.0
 # ====================================================================================
 # Setup Images
 
+# Also publish on v* tag builds so release tags get a clean version on the registry.
+RELEASE_BRANCH_FILTER = main master release-% v%
+
 REGISTRY_ORGS ?= xpkg.upbound.io/launchdarkly
 IMAGES = $(PROJECT_NAME)
 -include build/makelib/imagelight.mk
