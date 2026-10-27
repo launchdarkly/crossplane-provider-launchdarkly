@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.2](https://github.com/launchdarkly/crossplane-provider-launchdarkly/compare/v0.7.1...v0.7.2) (2026-10-27)
+
+
+### Bug Fixes
+
+* stop provider panics on create/update in no-fork mode (FeatureFlag, Project, Metric, AccessToken, CustomRole) ([#74](https://github.com/launchdarkly/crossplane-provider-launchdarkly/issues/74)) ([2166e84](https://github.com/launchdarkly/crossplane-provider-launchdarkly/commit/2166e8489f5741ff7e1d0b667f6a4ea0b8c1b155))
+
 ## [0.7.1](https://github.com/launchdarkly/crossplane-provider-launchdarkly/compare/v0.7.0...v0.7.1) (2026-10-21)
 
 
