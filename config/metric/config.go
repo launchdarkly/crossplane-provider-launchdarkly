@@ -14,5 +14,20 @@ func Configure(p *config.Provider) {
 		r.References["maintainer_id"] = config.Reference{
 			TerraformName: "launchdarkly_team_member",
 		}
+		r.TerraformResource.CustomizeDiff = customizeDiff
+		// customizeDiff validates spec.forProvider as the raw config, so a value
+		// late-initialized from LD's response would be checked as if the user had
+		// set it. For example, include_units_without_events=true (the default for
+		// mean metrics) would then reject a switch to percentile.
+		r.LateInitializer = config.LateInitializer{
+			IgnoredFields: []string{
+				"event_key",
+				"include_units_without_events",
+				"percentile_value",
+				"selector",
+				"success_criteria",
+				"unit",
+			},
+		}
 	})
 }
