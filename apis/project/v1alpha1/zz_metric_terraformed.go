@@ -118,6 +118,12 @@ func (tr *Metric) LateInitialize(attrs []byte) (bool, error) {
 		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
 	}
 	opts := []resource.GenericLateInitializerOption{resource.WithZeroValueJSONOmitEmptyFilter(resource.CNameWildcard)}
+	opts = append(opts, resource.WithNameFilter("EventKey"))
+	opts = append(opts, resource.WithNameFilter("IncludeUnitsWithoutEvents"))
+	opts = append(opts, resource.WithNameFilter("PercentileValue"))
+	opts = append(opts, resource.WithNameFilter("Selector"))
+	opts = append(opts, resource.WithNameFilter("SuccessCriteria"))
+	opts = append(opts, resource.WithNameFilter("Unit"))
 
 	li := resource.NewGenericLateInitializer(opts...)
 	return li.LateInitialize(&tr.Spec.ForProvider, params)

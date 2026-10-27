@@ -221,11 +221,12 @@ func runCRUD(r *schema.Resource, meta any, c crudCase) error {
 			if err != nil {
 				return fmt.Errorf("raw config: %w", err)
 			}
+			// Like upjet, every diff carries the raw config built from
+			// spec.forProvider, on create and on updates of an existing resource.
 			if state == nil {
-				// Like upjet, only a reconstructed state carries the raw config;
-				// later operations use the cached state, which has none.
-				state = &terraform.InstanceState{RawConfig: rawConfig}
+				state = &terraform.InstanceState{}
 			}
+			state.RawConfig = rawConfig
 			diff, err := schema.InternalMap(r.Schema).Diff(ctx, state, rc, r.CustomizeDiff, meta, false)
 			if err != nil {
 				return fmt.Errorf("diff: %w", err)
@@ -261,6 +262,18 @@ func runCRUD(r *schema.Resource, meta any, c crudCase) error {
 			return nil
 		})
 	}
+	// upjet diffs the cached state without a raw config when the resource no
+	// longer exists (e.g. after a failed create).
+	diffMissing := func() error {
+		return step("diff without raw config", func() error {
+			var cfg map[string]any
+			if err := json.Unmarshal([]byte(c.create), &cfg); err != nil {
+				return err
+			}
+			_, err := schema.InternalMap(r.Schema).Diff(ctx, &terraform.InstanceState{}, terraform.NewResourceConfigRaw(cfg), r.CustomizeDiff, meta, false)
+			return err
+		})
+	}
 	del := func() error {
 		return step("delete", func() error {
 			if _, d := r.Apply(ctx, state, &terraform.InstanceDiff{Destroy: true}, meta); d.HasError() {
@@ -274,6 +287,7 @@ func runCRUD(r *schema.Resource, meta any, c crudCase) error {
 		read,
 		func() error { return apply("update", c.update) },
 		del,
+		diffMissing,
 	} {
 		if err := fn(); err != nil {
 			return err
