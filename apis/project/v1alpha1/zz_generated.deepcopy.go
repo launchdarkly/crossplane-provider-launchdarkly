@@ -2850,6 +2850,11 @@ func (in *ProjectObservation) DeepCopyInto(out *ProjectObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.IncludeInSnippet != nil {
+		in, out := &in.IncludeInSnippet, &out.IncludeInSnippet
+		*out = new(bool)
+		**out = **in
+	}
 	if in.Key != nil {
 		in, out := &in.Key, &out.Key
 		*out = new(string)

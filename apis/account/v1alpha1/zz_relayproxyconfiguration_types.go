@@ -13,7 +13,49 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 )
 
-type PolicyInitParameters struct {
+type RelayProxyConfigurationInitParameters struct {
+
+	// readable name for your Relay Proxy configuration.
+	// The human-readable name for your Relay Proxy configuration.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// (Block List, Min: 1) The Relay Proxy configuration's rule policy block. This determines what content the Relay Proxy receives. To learn more, read Understanding policies. (see below for nested schema)
+	// The Relay Proxy configuration's rule policy block. This determines what content the Relay Proxy receives. To learn more, read [Understanding policies](https://docs.launchdarkly.com/home/members/role-policies#understanding-policies).
+	Policy []RelayProxyConfigurationPolicyInitParameters `json:"policy,omitempty" tf:"policy,omitempty"`
+}
+
+type RelayProxyConfigurationObservation struct {
+
+	// (String) The last 4 characters of the Relay Proxy configuration's unique key.
+	// The last 4 characters of the Relay Proxy configuration's unique key.
+	DisplayKey *string `json:"displayKey,omitempty" tf:"display_key,omitempty"`
+
+	// (String) The ID of this resource.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// readable name for your Relay Proxy configuration.
+	// The human-readable name for your Relay Proxy configuration.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// (Block List, Min: 1) The Relay Proxy configuration's rule policy block. This determines what content the Relay Proxy receives. To learn more, read Understanding policies. (see below for nested schema)
+	// The Relay Proxy configuration's rule policy block. This determines what content the Relay Proxy receives. To learn more, read [Understanding policies](https://docs.launchdarkly.com/home/members/role-policies#understanding-policies).
+	Policy []RelayProxyConfigurationPolicyObservation `json:"policy,omitempty" tf:"policy,omitempty"`
+}
+
+type RelayProxyConfigurationParameters struct {
+
+	// readable name for your Relay Proxy configuration.
+	// The human-readable name for your Relay Proxy configuration.
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// (Block List, Min: 1) The Relay Proxy configuration's rule policy block. This determines what content the Relay Proxy receives. To learn more, read Understanding policies. (see below for nested schema)
+	// The Relay Proxy configuration's rule policy block. This determines what content the Relay Proxy receives. To learn more, read [Understanding policies](https://docs.launchdarkly.com/home/members/role-policies#understanding-policies).
+	// +kubebuilder:validation:Optional
+	Policy []RelayProxyConfigurationPolicyParameters `json:"policy,omitempty" tf:"policy,omitempty"`
+}
+
+type RelayProxyConfigurationPolicyInitParameters struct {
 
 	// (List of String) The list of action specifiers defining the actions to which the statement applies.
 	// Either actions or not_actions must be specified. For a list of available actions read Actions reference.
@@ -38,7 +80,7 @@ type PolicyInitParameters struct {
 	Resources []*string `json:"resources,omitempty" tf:"resources,omitempty"`
 }
 
-type PolicyObservation struct {
+type RelayProxyConfigurationPolicyObservation struct {
 
 	// (List of String) The list of action specifiers defining the actions to which the statement applies.
 	// Either actions or not_actions must be specified. For a list of available actions read Actions reference.
@@ -63,7 +105,7 @@ type PolicyObservation struct {
 	Resources []*string `json:"resources,omitempty" tf:"resources,omitempty"`
 }
 
-type PolicyParameters struct {
+type RelayProxyConfigurationPolicyParameters struct {
 
 	// (List of String) The list of action specifiers defining the actions to which the statement applies.
 	// Either actions or not_actions must be specified. For a list of available actions read Actions reference.
@@ -91,48 +133,6 @@ type PolicyParameters struct {
 	// The list of resource specifiers defining the resources to which the statement applies.
 	// +kubebuilder:validation:Optional
 	Resources []*string `json:"resources,omitempty" tf:"resources,omitempty"`
-}
-
-type RelayProxyConfigurationInitParameters struct {
-
-	// readable name for your Relay Proxy configuration.
-	// The human-readable name for your Relay Proxy configuration.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// (Block List, Min: 1) The Relay Proxy configuration's rule policy block. This determines what content the Relay Proxy receives. To learn more, read Understanding policies. (see below for nested schema)
-	// The Relay Proxy configuration's rule policy block. This determines what content the Relay Proxy receives. To learn more, read [Understanding policies](https://docs.launchdarkly.com/home/members/role-policies#understanding-policies).
-	Policy []PolicyInitParameters `json:"policy,omitempty" tf:"policy,omitempty"`
-}
-
-type RelayProxyConfigurationObservation struct {
-
-	// (String) The last 4 characters of the Relay Proxy configuration's unique key.
-	// The last 4 characters of the Relay Proxy configuration's unique key.
-	DisplayKey *string `json:"displayKey,omitempty" tf:"display_key,omitempty"`
-
-	// (String) The ID of this resource.
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
-
-	// readable name for your Relay Proxy configuration.
-	// The human-readable name for your Relay Proxy configuration.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// (Block List, Min: 1) The Relay Proxy configuration's rule policy block. This determines what content the Relay Proxy receives. To learn more, read Understanding policies. (see below for nested schema)
-	// The Relay Proxy configuration's rule policy block. This determines what content the Relay Proxy receives. To learn more, read [Understanding policies](https://docs.launchdarkly.com/home/members/role-policies#understanding-policies).
-	Policy []PolicyObservation `json:"policy,omitempty" tf:"policy,omitempty"`
-}
-
-type RelayProxyConfigurationParameters struct {
-
-	// readable name for your Relay Proxy configuration.
-	// The human-readable name for your Relay Proxy configuration.
-	// +kubebuilder:validation:Optional
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// (Block List, Min: 1) The Relay Proxy configuration's rule policy block. This determines what content the Relay Proxy receives. To learn more, read Understanding policies. (see below for nested schema)
-	// The Relay Proxy configuration's rule policy block. This determines what content the Relay Proxy receives. To learn more, read [Understanding policies](https://docs.launchdarkly.com/home/members/role-policies#understanding-policies).
-	// +kubebuilder:validation:Optional
-	Policy []PolicyParameters `json:"policy,omitempty" tf:"policy,omitempty"`
 }
 
 // RelayProxyConfigurationSpec defines the desired state of RelayProxyConfiguration
