@@ -357,6 +357,10 @@ type ProjectObservation struct {
 	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// side SDKs by default. Please migrate to default_client_side_availability to maintain future compatibility.
+	// Whether feature flags created under the project should be available to client-side SDKs by default. Please migrate to `default_client_side_availability` to maintain future compatibility.
+	IncludeInSnippet *bool `json:"includeInSnippet,omitempty" tf:"include_in_snippet,omitempty"`
+
 	// unique key for the environment. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	// The project's unique key. A change in this field will force the destruction of the existing resource and the creation of a new one.
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`

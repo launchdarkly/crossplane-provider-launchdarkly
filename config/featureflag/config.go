@@ -12,7 +12,8 @@ func Configure(p *config.Provider) {
 			TerraformName: "launchdarkly_project",
 		}
 
-		// Remove deprecated fields
-		delete(r.TerraformResource.Schema, "include_in_snippet")
+		// Hide deprecated fields from spec. Keep them in the schema: in no-fork mode the
+		// Terraform provider code runs against this schema and reads these fields.
+		config.MoveToStatus(r.TerraformResource, "include_in_snippet")
 	})
 }
